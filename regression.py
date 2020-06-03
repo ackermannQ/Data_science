@@ -1,8 +1,12 @@
 import pandas as pd
 import os
 
-DATASET_PATH = os.path.join("", "")
+DATASET_PATH = 'Peugeot.xls'
 
 
 def load_dataset(dataset_path=DATASET_PATH):
-    pass
+    data = pd.read_excel(dataset_path)
+    print(data.head())
+
+
+load_dataset(dataset_path=DATASET_PATH)
