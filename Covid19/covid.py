@@ -57,6 +57,10 @@ def missing_values_percentage(df):
     return missing_values
 
 
+def missing_rate(df):
+    return df.isna().sum() / df.shape[0]
+
+
 def keep_values(df, percentage_to_keep=0.9):
     return df[df.columns[df.isna().sum() / df.shape[0] < percentage_to_keep]]  # Keep the values where there are
     # less than 90% of missing values
@@ -72,9 +76,35 @@ def analyse_target(df, target, normalized=False):
 
 def draw_histograms(df, data_type='float'):
     for col in df.select_dtypes(data_type):
-        sns.distplot(df[col])
+        if data_type == 'float' or data_type == 'int':
+            sns.distplot(df[col])
+
+        if data_type == 'object':
+            plt.figure()
+            df[col].value_counts().plot.pie()
 
         plt.show()
+
+
+def description_object(df, target):
+    return df[target].unique()
+
+
+def qual_to_quan(df, target, criteria1):
+    return df[df[target] == criteria1]
+
+
+def rate_borned(df, missing_rate, rate_inf, rate_sup):
+    return df.columns[(missing_rate < rate_sup) & (missing_rate > rate_inf)]
+
+
+def display_relations(column_name, relation):
+    for col in column_name:
+        plt.figure()
+        for rel, lab in relation:
+            sns.distplot(rel[col], label=lab)
+        plt.legend()
+    plt.show()
 
 
 if __name__ == "__main__":
@@ -87,6 +117,24 @@ if __name__ == "__main__":
     df = keep_values(df, percentage_to_keep=0.9)
     df = dropColumn(df, 'Patient ID')
     # analyse_target(df, "SARS-Cov-2 exam result", True)
-    draw_histograms(df)
+    # draw_histograms(df, 'object')
+
+
+    """
+    Target/Variables relation :
+    """
+    ### Positive and Negative collections
+    positive_df = qual_to_quan(df, "SARS-Cov-2 exam result", 'positive')
+    negative_df = qual_to_quan(df, "SARS-Cov-2 exam result", 'negative')
+
+    ### Blood and Viral collections
+    MR = missing_rate(df)
+    blood_columns = rate_borned(df, MR, 0.88, 0.9)
+    viral_columns = rate_borned(df, MR, 0.75, 0.88)
+
+    relation = [(positive_df, 'positive'), (negative_df, 'negative')]
+    display_relations(blood_columns, relation)
+
+
 
 
