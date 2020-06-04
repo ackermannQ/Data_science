@@ -1,6 +1,7 @@
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import numpy as np
 
 DATASET_PATH = 'dataset.xlsx'
 
@@ -144,6 +145,24 @@ def check_correlation(df, value_for_correlation):
     return df.corr()[value_for_correlation].sort_values()
 
 
+def is_sick(df, column, parameter):
+    return np.sum(df[column[:-2]] == parameter, axis=1) >= 1
+
+
+def hospitalisation(df):
+    if df['Patient addmited to regular ward (1=yes, 0=no)'] == 1:
+        return 'surveillance'
+
+    elif df['Patient addmited to semi-intensive unit (1=yes, 0=no)'] == 1:
+        return 'semi-intensives'
+
+    elif df['Patient addmited to intensive care unit (1=yes, 0=no)'] == 1:
+        return 'ICU'
+
+    else:
+        return 'unknown'
+
+
 if __name__ == "__main__":
     df = load_dataset(dataset_path=DATASET_PATH)
     # general_info(df)
@@ -190,4 +209,18 @@ if __name__ == "__main__":
     # quantile"))  # Check if age is correlated with anything ?
 
     # Blood / Age relations
-    crossTable(df, 'Influenza A', 'Influenza A, rapid test')
+    # print(crossTable(df, 'Influenza A', 'Influenza A, rapid test'))
+    # print(crossTable(df, 'Influenza B', 'Influenza B, rapid test'))
+
+    # Viral / Blood relations
+    df['is sick'] = is_sick(df, viral_columns, 'detected')
+
+    # Relation Sickness / Blood_data
+    sick_df = qual_to_quan(df, "is sick", True)
+    not_sick_df = qual_to_quan(df, "is sick", False)
+
+    relation = [(sick_df, 'is sick'), (not_sick_df, 'is not sick')]
+    display_relations(blood_columns, relation)
+
+    # Relation hospitalisation / is Sick
+    df['status'] = df.apply()
