@@ -5,8 +5,15 @@ import numpy as np
 from scipy.stats import ttest_ind
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import f1_score, confusion_matrix, classification_report
 from sklearn.model_selection import learning_curve
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
+from sklearn.pipeline import make_pipeline
+from sklearn.feature_selection import SelectKBest, f_classif
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+from sklearn.decomposition import PCA
 
 DATASET_PATH = 'dataset.xlsx'
 
@@ -196,21 +203,34 @@ def student_test(column, t_test):
 
 
 def encoding(df, type_values, swap_these_values):
-    for col in type_values:
+    for col in df.select_dtypes(type_values).columns:
         df.loc[:, col] = df[col].map(swap_these_values)
     return df
 
 
+def feature_engineering(df, column):
+    # print(viral_columns2)
+    # df['is sick'] = 'no'
+    print(displayHead(df, True, False))
+    # df['is sick'] = df[viral_columns2].sum(axis=1) >= 1
+    # df = df.drop(viral_columns2, axis=1)
+    return df
+
+
 def imputation(df):
-    return df.dropna(axis=0)
+    # df['is na'] = (df['Parainfluenza 3'].isna()) | (df['Leukocytes'].isna())
+    # df = df.fillna(-999) # not working after few trials
+    df = df.dropna(axis=0)
+    return df
 
 
-def preprocessing(df, target, type_values, swap_these_values):
+def preprocessing(df, Target, type_values, swap_these_values, new_feature, column):
     df = encoding(df, type_values, swap_these_values)
+    feature_engineering(df, column)
     df = imputation(df)
 
-    X = df.drop(target, axis=1)
-    y = df[target]
+    X = df.drop(Target, axis=1)
+    y = df[Target]
 
     print(y.value_counts())
     return X, y
@@ -222,6 +242,15 @@ def evaluation(model, X_train, y_train, X_test, y_test):
 
     print(confusion_matrix(y_test, ypred))
     print(classification_report(y_test, ypred))
+
+    N, train_score, val_score = learning_curve(model, X_train, y_train, cv=4, scoring='f1',
+                                               train_sizes=np.linspace(0.1, 1, 10))
+
+    plt.figure(figsize=(12, 8))
+    plt.plot(N, train_score.mean(axis=1), label='Train score')
+    plt.plot(N, val_score.mean(axis=1), label='Validation score')
+    plt.legend()
+
 
 
 def exploration_of_data():
@@ -308,19 +337,34 @@ if __name__ == "__main__":
     blood_columns2 = list(rate_borned(df2, MR2, 0.88, 0.9))
     viral_columns2 = list(rate_borned(df2, MR2, 0.75, 0.88))
     important_columns = ['Patient age quantile', 'SARS-Cov-2 exam result']
-    df2 = df2[important_columns + blood_columns2 + viral_columns2]
+    df2 = df2[important_columns + blood_columns2]  # + viral_columns2]
     # print(displayHead(df2, every_column=True, every_row=False))
     trainset, testset = train_test_split(df2, test_size=0.2, random_state=0)
 
     # Encoding
     swap_values = {'positive': 1, 'negative': 0, 'detected': 1, 'not_detected': 0}
     target = 'SARS-Cov-2 exam result'
-    X_train, y_train = preprocessing(trainset, target, df2.select_dtypes('object').columns, swap_values)
-    X_test, y_test = preprocessing(testset, target, df2.select_dtypes('object').columns, swap_values)
+    X_train, y_train = preprocessing(trainset, target, 'object', swap_values, 'is sick',
+                                     viral_columns2)
+    X_test, y_test = preprocessing(testset, target, 'object', swap_values, 'is sick',
+                                   viral_columns2)
 
     # Modelisation
-    model = DecisionTreeClassifier(random_state=0)
+    # model = make_pipeline(SelectKBest(f_classif, k=7), RandomForestClassifier(random_state=0))
 
+    # Machine Learning models
+    preprocessor = make_pipeline(PolynomialFeatures(2, include_bias=False), SelectKBest(f_classif, k=10))
+    RandomForest = make_pipeline(preprocessor, RandomForestClassifier(random_state=0))
+    AdaBoost = make_pipeline(preprocessor, AdaBoostClassifier(random_state=0))
+    Svm = make_pipeline(preprocessor, StandardScaler(),SVC(random_state=0))
+    KNN = make_pipeline(preprocessor, StandardScaler(), KNeighborsClassifier())
+    list_of_models = [RandomForest, AdaBoost, Svm, KNN]
     # Eval Procedure
-    evaluation(model, X_train, y_train, X_test, y_test)
+    for model in list_of_models:
+        evaluation(model, X_train, y_train, X_test, y_test)
+
+    # pd.DataFrame(model, index=X_train.columns).plot.bar()  # useful to check what variables are
+    # rly important
+
+
 
