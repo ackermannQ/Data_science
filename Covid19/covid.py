@@ -2,9 +2,16 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.stats import ttest_ind
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import f1_score, confusion_matrix, classification_report
+from sklearn.model_selection import learning_curve
 
 DATASET_PATH = 'dataset.xlsx'
 
+
+# Exploration of DATA
 
 def load_dataset(dataset_path=DATASET_PATH):
     data = pd.read_excel(dataset_path)
@@ -163,7 +170,61 @@ def hospitalisation(df):
         return 'unknown'
 
 
-if __name__ == "__main__":
+def relation_in_newcol(df, column, newcol):
+    for col in column:
+        plt.figure()
+        for cat in newcol.unique():
+            sns.distplot(df[newcol == cat][col], label=cat)
+        plt.legend()
+
+    plt.show()
+
+
+def t_test(col, alpha, a, b):
+    stat, p = ttest_ind(a[col].dropna(), b[col].dropna())
+    if p < alpha:
+        return 'H0 rejetée'
+    else:
+        return 0
+
+
+def student_test(column, t_test):
+    for col in column:
+        print(f'{col :-<50} {t_test(col)}')
+
+    # Exploration of DATA #
+
+
+def encoding(df, type_values, swap_these_values):
+    for col in type_values:
+        df.loc[:, col] = df[col].map(swap_these_values)
+    return df
+
+
+def imputation(df):
+    return df.dropna(axis=0)
+
+
+def preprocessing(df, target, type_values, swap_these_values):
+    df = encoding(df, type_values, swap_these_values)
+    df = imputation(df)
+
+    X = df.drop(target, axis=1)
+    y = df[target]
+
+    print(y.value_counts())
+    return X, y
+
+
+def evaluation(model, X_train, y_train, X_test, y_test):
+    model.fit(X_train, y_train)
+    ypred = model.predict(X_test)
+
+    print(confusion_matrix(y_test, ypred))
+    print(classification_report(y_test, ypred))
+
+
+def exploration_of_data():
     df = load_dataset(dataset_path=DATASET_PATH)
     # general_info(df)
     displayHead(df, True, True)
@@ -220,7 +281,46 @@ if __name__ == "__main__":
     not_sick_df = qual_to_quan(df, "is sick", False)
 
     relation = [(sick_df, 'is sick'), (not_sick_df, 'is not sick')]
-    display_relations(blood_columns, relation)
+    # display_relations(blood_columns, relation)
 
-    # Relation hospitalisation / is Sick
-    df['status'] = df.apply()
+    # Relation Hospitalisation / is Sick
+    df['status'] = df.apply(hospitalisation, axis=1)
+    # print(df.head())
+
+    # Relation Hospitalisation / Blood
+    relation_in_newcol(df, blood_columns, df['status'])
+
+    # Student's Test : needs to have balanced sample
+    positive_df.shape  # (558, 38)
+    negative_df.shape  # (5086, 38)
+
+    balanced_neg = negative_df.sample(positive_df.shape[0])  # Same sample dimension
+
+    # for col in blood_columns:
+    #  print(f'{col :-<50} {t_test(col, 0.02, balanced_neg, positive_df)}')
+
+
+if __name__ == "__main__":
+    # Preprocessing #
+
+    df2 = load_dataset(dataset_path=DATASET_PATH)
+    MR2 = missing_rate(df2)
+    blood_columns2 = list(rate_borned(df2, MR2, 0.88, 0.9))
+    viral_columns2 = list(rate_borned(df2, MR2, 0.75, 0.88))
+    important_columns = ['Patient age quantile', 'SARS-Cov-2 exam result']
+    df2 = df2[important_columns + blood_columns2 + viral_columns2]
+    # print(displayHead(df2, every_column=True, every_row=False))
+    trainset, testset = train_test_split(df2, test_size=0.2, random_state=0)
+
+    # Encoding
+    swap_values = {'positive': 1, 'negative': 0, 'detected': 1, 'not_detected': 0}
+    target = 'SARS-Cov-2 exam result'
+    X_train, y_train = preprocessing(trainset, target, df2.select_dtypes('object').columns, swap_values)
+    X_test, y_test = preprocessing(testset, target, df2.select_dtypes('object').columns, swap_values)
+
+    # Modelisation
+    model = DecisionTreeClassifier(random_state=0)
+
+    # Eval Procedure
+    evaluation(model, X_train, y_train, X_test, y_test)
+
