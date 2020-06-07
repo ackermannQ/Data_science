@@ -114,6 +114,10 @@ def qual_to_quan(df, target, criteria1):
     return df[df[target] == criteria1]
 
 
+def subset_creator(df, target, criteria1):
+    return df[df[target] == criteria1]
+
+
 def rate_borned(df, missing_rate, rate_inf, rate_sup):
     return df.columns[(missing_rate < rate_sup) & (missing_rate > rate_inf)]
 
@@ -132,11 +136,11 @@ def count_histogram(df, x, hue):
     plt.show()
 
 
-def crossTable(df, cross1, cross2):
+def cross_table(df, cross1, cross2):
     return pd.crosstab(df[cross1], df[cross2])
 
 
-def crossTables(df, column_name, cross):
+def cross_tables(df, column_name, cross):
     for col in column_name:
         plt.figure()
         sns.heatmap(pd.crosstab(df[cross], df[col]), annot=True, fmt='d')
@@ -260,7 +264,7 @@ def exploration_of_data():
     df = load_dataset(dataset_path=DATASET_PATH)
     # general_info(df)
     displayHead(df, True, True)
-    checkNan(df)
+    NaN = checkNan(df)
     # constructHeatMap(NaN)
     missing_values_percentage(df)
     df = keep_values(df, percentage_to_keep=0.9)
