@@ -7,12 +7,13 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import f1_score, confusion_matrix, classification_report, precision_recall_curve, recall_score
-from sklearn.model_selection import learning_curve, GridSearchCV, RandomizedSearchCV
+from sklearn.metrics import f1_score, confusion_matrix, classification_report
+from sklearn.model_selection import learning_curve
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.pipeline import make_pipeline
 from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+from sklearn.decomposition import PCA
 
 DATASET_PATH = 'dataset.xlsx'
 
@@ -210,7 +211,7 @@ def encoding(df, type_values, swap_these_values):
 def feature_engineering(df, column):
     # print(viral_columns2)
     # df['is sick'] = 'no'
-    # print(displayHead(df, True, False))
+    print(displayHead(df, True, False))
     # df['is sick'] = df[viral_columns2].sum(axis=1) >= 1
     # df = df.drop(viral_columns2, axis=1)
     return df
@@ -231,7 +232,7 @@ def preprocessing(df, Target, type_values, swap_these_values, new_feature, colum
     X = df.drop(Target, axis=1)
     y = df[Target]
 
-    # print(y.value_counts())
+    print(y.value_counts())
     return X, y
 
 
@@ -239,8 +240,8 @@ def evaluation(model, X_train, y_train, X_test, y_test):
     model.fit(X_train, y_train)
     ypred = model.predict(X_test)
 
-    # print(confusion_matrix(y_test, ypred))
-    # print(classification_report(y_test, ypred))
+    print(confusion_matrix(y_test, ypred))
+    print(classification_report(y_test, ypred))
 
     N, train_score, val_score = learning_curve(model, X_train, y_train, cv=4, scoring='f1',
                                                train_sizes=np.linspace(0.1, 1, 10))
@@ -249,6 +250,7 @@ def evaluation(model, X_train, y_train, X_test, y_test):
     plt.plot(N, train_score.mean(axis=1), label='Train score')
     plt.plot(N, val_score.mean(axis=1), label='Validation score')
     plt.legend()
+
 
 
 def exploration_of_data():
@@ -327,10 +329,6 @@ def exploration_of_data():
     #  print(f'{col :-<50} {t_test(col, 0.02, balanced_neg, positive_df)}')
 
 
-def model_final(model, X, threshold=0):
-    return model.decision_function(X) > threshold
-
-
 if __name__ == "__main__":
     # Preprocessing #
 
@@ -358,56 +356,15 @@ if __name__ == "__main__":
     preprocessor = make_pipeline(PolynomialFeatures(2, include_bias=False), SelectKBest(f_classif, k=10))
     RandomForest = make_pipeline(preprocessor, RandomForestClassifier(random_state=0))
     AdaBoost = make_pipeline(preprocessor, AdaBoostClassifier(random_state=0))
-    SVM = make_pipeline(preprocessor, StandardScaler(), SVC(random_state=0))
+    Svm = make_pipeline(preprocessor, StandardScaler(),SVC(random_state=0))
     KNN = make_pipeline(preprocessor, StandardScaler(), KNeighborsClassifier())
-    list_of_models = [RandomForest, AdaBoost, SVM, KNN]
+    list_of_models = [RandomForest, AdaBoost, Svm, KNN]
     # Eval Procedure
-    # for model in list_of_models:
-    # evaluation(model, X_train, y_train, X_test, y_test)
+    for model in list_of_models:
+        evaluation(model, X_train, y_train, X_test, y_test)
 
     # pd.DataFrame(model, index=X_train.columns).plot.bar()  # useful to check what variables are
     # rly important
 
-    # Model optimization
-    """
-    hyper_param_svc = {'svc__gamma': [1e-3, 1e-4], 'svc__C': [1, 10, 100, 1000],
-                       'pipeline__polynomialfeatures__degree': [2, 3, 4], 'pipeline__selectkbest__k': range(47, 51)}
-    grid_svc = RandomizedSearchCV(SVM, hyper_param_svc, scoring='recall', cv=4, n_iter=200)
-    grid_svc.fit(X_train, y_train)
-    # print(grid_svc.best_params_)
-    y_pred = grid_svc.predict(X_test)
 
-    # print(classification_report(y_test, y_pred))
 
-    # evaluation(grid_svc.best_estimator_, X_train, y_train, X_test, y_test)
-
-    precision, recall, threshold = precision_recall_curve(y_test, grid_svc.best_estimator_.decision_function(X_test))
-
-    # plt.plot(threshold, precision[:-1], label="Precision")
-    # plt.plot(threshold, recall[:-1], label="Recall")
-    # plt.show()
-
-    # y_pred = model_final(grid_svc.best_estimator_, X_test, threshold=-2)
-    # print(f1_score(y_test, y_pred))
-    # print(recall_score(y_test, y_pred))
-    """
-
-    hyper_param_ada = {'adaboostclassifier__n_estimators': [1, 10, 80, 100, 120, 1000],
-                       'adaboostclassifier__learning_rate': [1]}
-    grid_ada = RandomizedSearchCV(AdaBoost, hyper_param_ada, scoring='recall', cv=4, n_iter=100)
-    grid_ada.fit(X_train, y_train)
-    print(grid_ada.best_params_)
-    y_pred = grid_ada.predict(X_test)
-
-    print(classification_report(y_test, y_pred))
-
-    # evaluation(grid_ada.best_estimator_, X_train, y_train, X_test, y_test)
-    precision, recall, threshold = precision_recall_curve(y_test, grid_ada.best_estimator_.decision_function(X_test))
-
-    plt.plot(threshold, precision[:-1], label="Precision")
-    plt.plot(threshold, recall[:-1], label="Recall")
-    plt.show()
-
-    y_pred = model_final(grid_ada.best_estimator_, X_test, threshold=-0.05)
-    print(f1_score(y_test, y_pred))
-    print(recall_score(y_test, y_pred))
