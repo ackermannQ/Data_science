@@ -232,9 +232,9 @@ def imputation(df):
     return df
 
 
-def preprocessing(df, Target, type_values, swap_these_values, new_feature, column):
+def preprocessing(df, Target, type_values, swap_these_values):
     df = encoding(df, type_values, swap_these_values)
-    feature_engineering(df, column)
+    # feature_engineering(df, column)
     df = imputation(df)
 
     X = df.drop(Target, axis=1)
