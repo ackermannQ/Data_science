@@ -1,9 +1,11 @@
+from Tools.scripts.dutree import display
 from sklearn.ensemble import BaggingClassifier
 from sklearn.linear_model import LogisticRegression, SGDClassifier
-from sklearn.metrics import roc_auc_score
+from sklearn.metrics import roc_auc_score, roc_curve
 from sklearn.model_selection import GridSearchCV, StratifiedKFold
 from sklearn.pipeline import Pipeline
 
+import plotly.graph_objs as go
 from data_lib import *
 
 DATASET_PATH = 'bank-additional-full.csv'
@@ -117,13 +119,14 @@ if __name__ == "__main__":
 
     # models that we iterate over
     # dict for later use
-    model_dict = {0: 'Logistic_reg', 1: 'RandomForest', 2: 'Knn', 3: 'DesionTree', 4: 'Bagging with SGDClassifier',
-                  5: 'SGD Class'}
+    model_dict = {0: 'Logistic_reg', 1: 'RandomForest', 2: 'Knn', 3: 'DesionTree', 4: 'Bagging with SGDClassifier'
+                  }
 
     result_acc = {}
     result_auc = {}
     models = []
     look_for = [gs_LR, gs_RF, gs_KNN, gs_DT, gs_BAG]
+    # look_for = [gs_RF]
 
     for index, model in enumerate(look_for):
         print()
@@ -144,9 +147,8 @@ if __name__ == "__main__":
         result_acc[index] = model.best_score_
         result_auc[index] = auc
 
-    for k, l, m in model_dict.values(), result_acc.values(), result_auc.values():
-        plt.plot(k, l, c='r')
-        plt.plot(k, m, c='b')
+    plt.plot(list(model_dict.values()), list(result_acc.values()), c='r')
+    plt.plot(list(model_dict.values()), list(result_auc.values()), c='b')
     plt.xlabel('Models')
     plt.xticks(rotation=45)
     plt.ylabel('Accuracy and ROC_AUC')
@@ -154,7 +156,32 @@ if __name__ == "__main__":
     plt.legend(['Accuracy', 'ROC_AUC'])
     plt.show()
     pd.DataFrame(list(zip(model_dict.values(), result_acc.values(), result_auc.values())),
-                 columns=['Model', 'Accuracy_rate', 'Roc_auc_rate'])
-    
+                  columns=['Model', 'Accuracy_rate', 'Roc_auc_rate'])
 
+    # graph(RandomForestClassifier, X_train, y_train)
+    fpr, tpr, threshold = roc_curve(y_test, models[1].predict_proba(X_test)[:, 1])
 
+    trace0 = go.Scatter(
+        x=fpr,
+        y=tpr,
+        text=threshold,
+        fill='tozeroy',
+        name='ROC Curve')
+
+    trace1 = go.Scatter(
+        x=[0, 1],
+        y=[0, 1],
+        line={'color': 'red', 'width': 1, 'dash': 'dash'},
+        name='Baseline')
+
+    data = [trace0, trace1]
+
+    layout = go.Layout(
+        title='ROC Curve',
+        xaxis={'title': 'False Positive Rate'},
+        yaxis={'title': 'True Positive Rate'})
+
+    fig = go.Figure(data, layout)
+    # fig.show()
+
+    build_feature_importance(RandomForestClassifier, X_train, y_train)

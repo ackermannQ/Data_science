@@ -2,6 +2,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
+from tqdm import tqdm
 from scipy.stats import ttest_ind
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
@@ -258,6 +259,36 @@ def evaluation(model, X_train, y_train, X_test, y_test):
     plt.plot(N, train_score.mean(axis=1), label='Train score')
     plt.plot(N, val_score.mean(axis=1), label='Validation score')
     plt.legend()
+
+
+def graph(model, X_train, y_train):
+    obb = []
+    est = list(range(5, 200, 5))
+    for i in tqdm(est):
+        random_forest = model(n_estimators=i, criterion='entropy', random_state=11, oob_score=True, n_jobs=-1,
+                              max_depth=25, min_samples_leaf=80, min_samples_split=3, )
+        random_forest.fit(X_train, y_train)
+        obb.append(random_forest.oob_score_)
+
+    plt.plot(est, obb)
+    plt.title('model')
+    plt.xlabel('number of estimators')
+    plt.ylabel('oob score')
+    plt.show()
+
+
+def build_feature_importance(model, X_train, y_train):
+
+    models = RandomForestClassifier(criterion='entropy', random_state=11, oob_score=True, n_jobs=-1, \
+                                    max_depth=25, min_samples_leaf=80, min_samples_split=3, n_estimators=70)
+    models.fit(X_train, y_train)
+    data = pd.DataFrame(models.feature_importances_, X_train.columns, columns=["feature"])
+    data = data.sort_values(by='feature', ascending=False).reset_index()
+    plt.figure(figsize=[6, 6])
+    sns.barplot(x='index', y='feature', data=data[:10], palette="Blues_d")
+    plt.title('Feature importance of the model after Grid Search')
+    plt.xticks(rotation=45)
+    plt.show()
 
 
 def exploration_of_data():
