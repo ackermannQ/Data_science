@@ -69,10 +69,16 @@ Others seems to be in direct correlation with the service where the patient get 
 ![Monocytes](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/Monocytes.png)
 
 __Student’s test (H0) :__
-*	Patients infected with covid-19 have higher leucocyte, monocyte et platelets rate than regular individuals ;
+*	Patients infected with covid-19 have higher leucocyte, monocyte et platelets (+ eosinophils) rate than regular individuals ;
   *	H0 = These average rates are EQUALS between people tested positive and negative to covid-19.
 
 Result : Rejected, because patients with a more common decease also get significantly higher rates, not exclusively covid-19 patients.
+
+
+Hematocrit| Hemoglobin | Platelets | MPV | Red blood Cells | Lymphocytes | MCHC | Leukocytes | Basophils | MCH | Eosinophils | MCV | Monocytes | RDW
+------------ |------------ |------------ |------------ |------------ |------------ |------------ |------------ |------------ |------------ |------------ |------------ |
+X | X | H0 rejected | X | X | X | X | H0 rejected | X | X | H0 rejected | X | H0 rejected | X
+
 
 ### Conclusions
 *	A large part of the dataset is missing : only 20% is exploitable ;
