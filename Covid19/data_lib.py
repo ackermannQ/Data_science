@@ -2,6 +2,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
+from tqdm import tqdm
 from scipy.stats import ttest_ind
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
@@ -13,14 +14,18 @@ from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.pipeline import make_pipeline
 from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+from sklearn.decomposition import PCA
 
 DATASET_PATH = 'dataset.xlsx'
 
 
 # Exploration of DATA
 
-def load_dataset(dataset_path=DATASET_PATH):
-    data = pd.read_excel(dataset_path)
+def load_dataset(dataset_path=DATASET_PATH, separator=''):
+    if dataset_path.split('.')[-1] == "xls":
+        data = pd.read_excel(dataset_path, sep=separator)
+    if dataset_path.split('.')[-1] == "csv":
+        data = pd.read_csv(dataset_path, sep=separator)
     df = data.copy()
     return df
 
@@ -38,7 +43,7 @@ def displayHead(df, every_column=False, every_row=False):
     if every_row:
         pd.set_option('display.max_row', 111)
 
-    # print(df.head())
+    print(df.head())
     return df.head()
 
 
@@ -53,7 +58,7 @@ def typeOfDFValues(df):
 
 
 def checkNan(df):
-    # print(df.isna())
+    print(df.isna())
     return df.isna()
 
 
@@ -81,17 +86,18 @@ def keep_values(df, percentage_to_keep=0.9):
     # less than 90% of missing values
 
 
-def dropColumn(df, colonName):
-    return df.drop(colonName, axis=1)
+def dropColumn(df, columnName):
+    return df.drop(columnName, axis=1)
 
 
 def analyse_target(df, target, normalized=False):
     return df[target].value_counts(normalize=normalized)
 
 
-def draw_histograms(df, data_type='float'):
+def draw_histograms(df, data_type):
     for col in df.select_dtypes(data_type):
-        if data_type == 'float' or data_type == 'int':
+        print(col)
+        if data_type == 'float' or data_type == 'int' or data_type == 'float64' or data_type == 'int64':
             sns.distplot(df[col])
 
         if data_type == 'object':
@@ -106,6 +112,10 @@ def description_object(df, target):
 
 
 def qual_to_quan(df, target, criteria1):
+    return df[df[target] == criteria1]
+
+
+def subset_creator(df, target, criteria1):
     return df[df[target] == criteria1]
 
 
@@ -127,11 +137,11 @@ def count_histogram(df, x, hue):
     plt.show()
 
 
-def crossTable(df, cross1, cross2):
+def cross_table(df, cross1, cross2):
     return pd.crosstab(df[cross1], df[cross2])
 
 
-def crossTables(df, column_name, cross):
+def cross_tables(df, column_name, cross):
     for col in column_name:
         plt.figure()
         sns.heatmap(pd.crosstab(df[cross], df[col]), annot=True, fmt='d')
@@ -223,9 +233,9 @@ def imputation(df):
     return df
 
 
-def preprocessing(df, Target, type_values, swap_these_values, new_feature, column):
+def preprocessing(df, Target, type_values, swap_these_values):
     df = encoding(df, type_values, swap_these_values)
-    feature_engineering(df, column)
+    # feature_engineering(df, column)
     df = imputation(df)
 
     X = df.drop(Target, axis=1)
@@ -251,12 +261,42 @@ def evaluation(model, X_train, y_train, X_test, y_test):
     plt.legend()
 
 
+def graph(model, X_train, y_train):
+    obb = []
+    est = list(range(5, 200, 5))
+    for i in tqdm(est):
+        random_forest = model(n_estimators=i, criterion='entropy', random_state=11, oob_score=True, n_jobs=-1,
+                              max_depth=25, min_samples_leaf=80, min_samples_split=3, )
+        random_forest.fit(X_train, y_train)
+        obb.append(random_forest.oob_score_)
+
+    plt.plot(est, obb)
+    plt.title('model')
+    plt.xlabel('number of estimators')
+    plt.ylabel('oob score')
+    plt.show()
+
+
+def build_feature_importance(model, X_train, y_train):
+
+    models = RandomForestClassifier(criterion='entropy', random_state=11, oob_score=True, n_jobs=-1, \
+                                    max_depth=25, min_samples_leaf=80, min_samples_split=3, n_estimators=70)
+    models.fit(X_train, y_train)
+    data = pd.DataFrame(models.feature_importances_, X_train.columns, columns=["feature"])
+    data = data.sort_values(by='feature', ascending=False).reset_index()
+    plt.figure(figsize=[6, 6])
+    sns.barplot(x='index', y='feature', data=data[:10], palette="Blues_d")
+    plt.title('Feature importance of the model after Grid Search')
+    plt.xticks(rotation=45)
+    plt.show()
+
+
 def exploration_of_data():
     df = load_dataset(dataset_path=DATASET_PATH)
     # general_info(df)
     displayHead(df, True, True)
     NaN = checkNan(df)
-    constructHeatMap(NaN)
+    # constructHeatMap(NaN)
     missing_values_percentage(df)
     df = keep_values(df, percentage_to_keep=0.9)
     df = dropColumn(df, 'Patient ID')
@@ -323,46 +363,9 @@ def exploration_of_data():
 
     balanced_neg = negative_df.sample(positive_df.shape[0])  # Same sample dimension
 
-    for col in blood_columns:
-     print(f'{col :-<50} {t_test(col, 0.02, balanced_neg, positive_df)}')
+    # for col in blood_columns:
+    #  print(f'{col :-<50} {t_test(col, 0.02, balanced_neg, positive_df)}')
 
 
-if __name__ == "__main__":
-    # Preprocessing #
 
-    df2 = load_dataset(dataset_path=DATASET_PATH)
-    MR2 = missing_rate(df2)
-    blood_columns2 = list(rate_borned(df2, MR2, 0.88, 0.9))
-    viral_columns2 = list(rate_borned(df2, MR2, 0.75, 0.88))
-    important_columns = ['Patient age quantile', 'SARS-Cov-2 exam result']
-    df2 = df2[important_columns + blood_columns2]  # + viral_columns2]
-    # print(displayHead(df2, every_column=True, every_row=False))
-    trainset, testset = train_test_split(df2, test_size=0.2, random_state=0)
-
-    # Encoding
-    swap_values = {'positive': 1, 'negative': 0, 'detected': 1, 'not_detected': 0}
-    target = 'SARS-Cov-2 exam result'
-    X_train, y_train = preprocessing(trainset, target, 'object', swap_values, 'is sick',
-                                     viral_columns2)
-    X_test, y_test = preprocessing(testset, target, 'object', swap_values, 'is sick',
-                                   viral_columns2)
-
-
-    # Modelisation
-    model = make_pipeline(SelectKBest(f_classif, k=7), RandomForestClassifier(random_state=0))
-
-    # Machine Learning models
-    preprocessor = make_pipeline(PolynomialFeatures(2, include_bias=False), SelectKBest(f_classif, k=10))
-    RandomForest = make_pipeline(preprocessor, RandomForestClassifier(random_state=0))
-    AdaBoost = make_pipeline(preprocessor, AdaBoostClassifier(random_state=0))
-    Svm = make_pipeline(preprocessor, StandardScaler(),SVC(random_state=0))
-    KNN = make_pipeline(preprocessor, StandardScaler(), KNeighborsClassifier())
-    list_of_models = [RandomForest, AdaBoost, Svm, KNN]
-    # Eval Procedure
-    for model in list_of_models:
-        evaluation(model, X_train, y_train, X_test, y_test)
-
-    plt.show()
-    # pd.DataFrame(model, index=X_train.columns).plot.bar()  # useful to check what variables are
-    # rly important
 
