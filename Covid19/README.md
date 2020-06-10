@@ -47,5 +47,20 @@ Relation variables to target
 *	 Target/Viral : It’s rare to find people with more than one sickness at a time.
 
 As already said, Rhinovirus/Entérovirus positive may implied a negative Covid19 result. This hypothesis requires to be validate because it’s likely that the area from where the data are collected just suffered an outberak simultenously to the Covid19.
+
 It may be unrelated.
 
+
+## Exploratory Data Analysis
+* Relation between the variables :
+  * Blood_data / Blood_data : some variables are correlated (+0.9 !)
+  * Blood_data / Age : week correlation
+  * Viral / Viral : influeza rapid test gives bad results and needs to be droped
+  *	Relation sickness / Blood_data : Blood rates between regular patient and covid19 patient are différent (lymphocyte, hemoglobine et hematocrite)
+*	NaN analyse : viral 1350 (92%/8%), blood sample 600 (87%/13%), previously : 90% of the dataset
+
+__Student’s test (H0) :__
+*	Patients infected with covid-19 have higher leucocyte, monocyte et platelets rate than regular individuals
+  *	H0 = These average rates are EQUALS between people tested positive and negative to covid-19
+
+Result : Rejected, because patients with a more common decease also get significantly higher rates, not exclusively covid-19 patients
