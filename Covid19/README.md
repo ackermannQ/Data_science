@@ -41,7 +41,7 @@ Relation variables to target
   *	Monocyte ;
   *	Platelets.
 
---> These rates are different between patient positively and negatively tested for the Covid1. We have to check later if it seems likely correlated.
+--> These rates are different between patient positively and negatively tested for the Covid19. We have to check later if it seems likely correlated.
 
 *	Target/Age : Young individuals seems less likely to be tested positives (it doesn’t mean they are not infected). The exact age is unknown ;
 *	 Target/Viral : It’s rare to find people with more than one sickness at a time.
@@ -59,13 +59,28 @@ It may be unrelated.
   *	Relation sickness / Blood_data : Blood rates between regular patient and covid19 patient are différent (lymphocyte, hemoglobine et hematocrite) ;
 *	NaN analyse : viral 1350 (92%/8%), blood sample 600 (87%/13%), previously : 90% of the dataset.
 
+Some parameters are not related, as shown for the MCH and the hopsitalisation service :
+
+![MCH](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/MCH.png)
+
+Others seems to be in direct correlation with the service where the patient get into !
+![Lymphocytes](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/Lymphocytes.png)
+
+![Monocytes](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/Monocytes.png)
+
 __Student’s test (H0) :__
-*	Patients infected with covid-19 have higher leucocyte, monocyte et platelets rate than regular individuals ;
+*	Patients infected with covid-19 have higher leucocyte, monocyte et platelets (+ eosinophils) rate than regular individuals ;
   *	H0 = These average rates are EQUALS between people tested positive and negative to covid-19.
 
-Result : Rejected, because patients with a more common decease also get significantly higher rates, not exclusively covid-19 patients.
+X : Not relevant because it was not an hypothesis needed to be tested.
 
-## Conclusions
+
+Hematocrit | Hemoglobin | Platelets | MPV | Red blood Cells | Lymphocytes | MCHC | Leukocytes | Basophils | MCH | Eosinophils | MCV | Monocytes | RDW
+------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ 
+X | X | H0 rejected | X | X | X | X | H0 rejected | X | X | H0 rejected | X | H0 rejected | X
+
+
+### Conclusions
 *	A large part of the dataset is missing : only 20% is exploitable ;
 *	Two main groups interesting : blood and viral analysis ;
 *	The blood sample can’t give the certainty of Covid19 cases ;
