@@ -7,12 +7,16 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import f1_score, confusion_matrix, classification_report
+from sklearn.metrics import f1_score, confusion_matrix, classification_report, roc_auc_score, roc_curve
 from sklearn.model_selection import learning_curve
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
-from sklearn.pipeline import make_pipeline
+from sklearn.pipeline import make_pipeline, Pipeline
 from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+from sklearn.model_selection import GridSearchCV, StratifiedKFold
+import plotly.graph_objs as go
+
+from Covid19.data_lib import graph, build_feature_importance
 
 DATASET_PATH = 'dataset.xlsx'
 
@@ -324,7 +328,7 @@ def exploration_of_data():
     balanced_neg = negative_df.sample(positive_df.shape[0])  # Same sample dimension
 
     for col in blood_columns:
-     print(f'{col :-<50} {t_test(col, 0.02, balanced_neg, positive_df)}')
+        print(f'{col :-<50} {t_test(col, 0.02, balanced_neg, positive_df)}')
 
 
 if __name__ == "__main__":
@@ -347,22 +351,113 @@ if __name__ == "__main__":
     X_test, y_test = preprocessing(testset, target, 'object', swap_values, 'is sick',
                                    viral_columns2)
 
-
     # Modelisation
+
     model = make_pipeline(SelectKBest(f_classif, k=7), RandomForestClassifier(random_state=0))
 
     # Machine Learning models
     preprocessor = make_pipeline(PolynomialFeatures(2, include_bias=False), SelectKBest(f_classif, k=10))
     RandomForest = make_pipeline(preprocessor, RandomForestClassifier(random_state=0))
     AdaBoost = make_pipeline(preprocessor, AdaBoostClassifier(random_state=0))
-    Svm = make_pipeline(preprocessor, StandardScaler(),SVC(random_state=0))
+    Svm = make_pipeline(preprocessor, StandardScaler(), SVC(random_state=0))
     KNN = make_pipeline(preprocessor, StandardScaler(), KNeighborsClassifier())
-    list_of_models = [RandomForest, AdaBoost, Svm, KNN]
-    # Eval Procedure
+    # list_of_models = [RandomForest, AdaBoost, Svm, KNN]
+    #
+    # # Eval Procedure
+    # for model in list_of_models:
+    #     evaluation(model, X_train, y_train, X_test, y_test)
+
+    cv = StratifiedKFold(shuffle=True, n_splits=5, random_state=11)
+
+    grid_params_ADA = [{
+        'adaboostclassifier__n_estimators': range(50, 60),
+        'adaboostclassifier__learning_rate': [1, 2, 3]
+    }]
+
+    gs_ADA = GridSearchCV(AdaBoost, param_grid=grid_params_ADA,
+                          scoring='accuracy', cv=cv)
+
+    model_dict = {0: 'Adaboost'}
+
+    result_acc = {}
+    result_auc = {}
+    models = []
+    look_for = [gs_ADA]
+    # look_for = [gs_RF]
+
+    for index, model in enumerate(look_for):
+        print()
+        print('+++++++ Start New Model ++++++++++++++++++++++')
+        print('Estimator is {}'.format(model_dict[index]))
+        model.fit(X_train, y_train)
+        print('---------------------------------------------')
+        print('best params {}'.format(model.best_params_))
+        print('best score is {}'.format(model.best_score_))
+        auc = roc_auc_score(y_test, model.predict_proba(X_test)[:, 1])
+        print('---------------------------------------------')
+        print('ROC_AUC is {} and accuracy rate is {}'.format(auc, model.score(X_test, y_test)))
+
+        print('++++++++ End Model +++++++++++++++++++++++++++')
+        print()
+        print()
+        models.append(model.best_estimator_)
+        result_acc[index] = model.best_score_
+        result_auc[index] = auc
+
+    plt.plot(list(model_dict.values()), list(result_acc.values()), c='r')
+    plt.plot(list(model_dict.values()), list(result_auc.values()), c='b')
+    plt.xlabel('Models')
+    plt.xticks(rotation=45)
+    plt.ylabel('Accuracy and ROC_AUC')
+    plt.title('Result of Grid Search')
+    plt.legend(['Accuracy', 'ROC_AUC'])
+    plt.show()
+    pd.DataFrame(list(zip(model_dict.values(), result_acc.values(), result_auc.values())),
+                 columns=['Model', 'Accuracy_rate', 'Roc_auc_rate'])
+
+    fpr, tpr, threshold = roc_curve(y_test, models[0].predict_proba(X_test)[:, 1])
+
+    trace0 = go.Scatter(
+        x=fpr,
+        y=tpr,
+        text=threshold,
+        fill='tozeroy',
+        name='ROC Curve')
+
+    trace1 = go.Scatter(
+        x=[0, 1],
+        y=[0, 1],
+        line={'color': 'red', 'width': 1, 'dash': 'dash'},
+        name='Baseline')
+
+    data = [trace0, trace1]
+
+    layout = go.Layout(
+        title='ROC Curve',
+        xaxis={'title': 'False Positive Rate'},
+        yaxis={'title': 'True Positive Rate'})
+
+    fig = go.Figure(data, layout)
+    # fig.show()
+
+    # build_feature_importance(RandomForestClassifier, X_train, y_train)
+
+    AdaBoost = make_pipeline(preprocessor, AdaBoostClassifier(random_state=0, n_estimators=54, learning_rate=1))
+    list_of_models = [AdaBoost]
+    # # Eval Procedure
     for model in list_of_models:
-        evaluation(model, X_train, y_train, X_test, y_test)
+        model.fit(X_train, y_train)
+        ypred = model.predict(X_test)
+        print(confusion_matrix(y_test, ypred))
+        print(classification_report(y_test, ypred))
+
+        N, train_score, val_score = learning_curve(model, X_train, y_train,
+                                                   cv=4, scoring='f1',
+                                                   train_sizes=np.linspace(0.1, 1, 10))
+
+    plt.figure(figsize=(12, 8))
+    plt.plot(N, train_score.mean(axis=1), label='train score')
+    plt.plot(N, val_score.mean(axis=1), label='validation score')
+    plt.legend()
 
     plt.show()
-    # pd.DataFrame(model, index=X_train.columns).plot.bar()  # useful to check what variables are
-    # rly important
-
