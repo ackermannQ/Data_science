@@ -42,3 +42,10 @@ Relation variables to target
 *	Platelets
 
 --> These rates are different between patient positively and negatively tested for the Covid1. We have to check later if it seems likely correlated.
+
+*	Target/Age : Young individuals seems less likely to be tested positives (it doesn’t mean they are not infected). The exact age is unknown.
+*	 Target/Viral : It’s rare to find people with more than one sickness at a time.
+
+As already said, Rhinovirus/Entérovirus positive may implied a negative Covid19 result. This hypothesis requires to be validate because it’s likely that the area from where the data are collected just suffered an outberak simultenously to the Covid19.
+It may be unrelated.
+
