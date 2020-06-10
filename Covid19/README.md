@@ -60,6 +60,7 @@ It may be unrelated.
 *	NaN analyse : viral 1350 (92%/8%), blood sample 600 (87%/13%), previously : 90% of the dataset.
 
 Some parameters are not related, as shown for the MCH and the hopsitalisation service :
+
 ![MCH](https://github.com/ackermannQ/MachineLearning/tree/master/Covid19/images/MCH.png)
 
 Others seems to be in direct correlation with the service where the patient get into !
