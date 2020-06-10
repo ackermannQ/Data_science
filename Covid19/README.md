@@ -98,7 +98,7 @@ RandomForest :
 ![RandomForest](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/RandomForest.png)
 
 AdaBoost :
-![AdaBoost](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/AdaBoost.png)
+![AdaBoost](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/Adaboost.png)
 
 Svm :
 ![Svm](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/SVM.png)
