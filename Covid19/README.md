@@ -13,10 +13,10 @@ One of the motivations for this challenge is the fact that in the context of an 
 **Dataset :** https://www.kaggle.com/einsteindata4u/covid19
 
 ## Form analysis
-The target is the « SARS-Cov-2 exam result » taking « positive » or « negative » state, in a dataset of 5644 lines and 111 columns. The variables analysis shows 74 quantitatives, 37 qualitatives.
+The target is the « SARS-Cov-2 exam result » taking « positive » or « negative » state, in a dataset of 5644 lines and 111 columns. The analysis shows 74 quantitatives and 37 qualitatives variables.
 Some values are missing and two groups appears separated :
-o	~ 76 % missing values for other virus tests
-o	~ 89 % missing valeurs for blood analysis
+* ~ 76 % missing values for other virus tests
+*	~ 89 % missing valeurs for blood analysis
 
 ## Substance analysis
 For the target :
@@ -36,5 +36,6 @@ Relation variables to target
 * Target/Blood, idea of features that may be correlated :
 * Leucocyte
 *	Monocyte
-*	Platelets 
+*	Platelets
+
 --> These rates are different between patient positively and negatively tested for the Covid1. We have to check later if it seems likely correlated.
