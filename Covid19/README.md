@@ -86,3 +86,25 @@ X | X | H0 rejected | X | X | X | X | H0 rejected | X | X | H0 rejected | X | H0
 *	The blood sample can’t give the certainty of Covid19 cases ;
 *	Some missing values need to be replaced, we can’t just drop them all. If we do so, we get 99 lines instead of 5644, so we lose to much information ;
 *	Blood_column : 600 values, viral_column : 1354.
+
+## Preprocessing and encoding
+The missing values are eliminated - using the rate_borned() function from the data_lib is created, and the dataset is splitted between a trainset and a trainset.
+The relevant qualitatives values are encoded - using the preprocessing() function from the data_lib.
+
+## Modelization
+Four different models were tested and evaluated, using the learning curve method.
+
+RandomForest :
+![RandomForest](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/RandomForest.png)
+
+AdaBoost :
+![AdaBoost](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/Adaboost.png)
+
+Svm :
+![Svm](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/SVM.png)
+
+KNN :
+![KNN](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/KNN.png)
+
+
+
