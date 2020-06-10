@@ -1,5 +1,5 @@
-# # Covid-19 Dataset Analysis
-Project overview
+# Covid-19 Dataset Analysis
+# Project overview
 The Covid-19 virus crushed the world during the year 2019-2020, killing thousands of people, destroyed companies and the economy of many countries - among other things. It became primarly important to analyze every aspect known of the virus to prevent another outbreak, synthesize a vaccine or understand how to manage the people likely to be contaminated considering their symptoms. 
 The current dataset focuses on this ending point. Using different analysis conducted on patients, the objective is to determine if they are really infected (false positives) and therefore which unit they need to be conducted to.
 
@@ -11,12 +11,13 @@ Python Version: 3.8
 Packages: pandas, numpy, sklearn, matplotlib, seaborn, scipy
 Dataset : https://www.kaggle.com/einsteindata4u/covid19
 
-Form analysis
+# Form analysis
 The target is the « SARS-Cov-2 exam result » taking « positive » or « negative » state, in a dataset of 5644 lines and 111 columns. The variables analysis shows 74 quantitatives, 37 qualitatives.
 Some values are missing and two groups appears separated :
 o	~ 76 % missing values for other virus tests
 o	~ 89 % missing valeurs for blood analysis
-Substance analysis
+
+# Substance analysis
 For the target :
 •	10 % positives
 •	90% negatives 
