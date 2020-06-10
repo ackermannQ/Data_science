@@ -94,16 +94,17 @@ The relevant qualitatives values are encoded - using the preprocessing() functio
 ## Modelization
 Four different models were tested and evaluated, using the learning curve method.
 
+RandomForest :
 ![RandomForest](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/RandomForest.png)
-RandomForest
 
-![AdaBoost](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/RandomForest.png)
-AdaBoost
+AdaBoost :
+![AdaBoost](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/AdaBoost.png)
 
-![Svm](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/RandomForest.png)
-Svm
+Svm :
+![Svm](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/SVM.png)
 
-![KNN](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/RandomForest.png)
-KNN
+KNN :
+![KNN](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/KNN.png)
+
 
 
