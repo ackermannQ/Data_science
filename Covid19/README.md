@@ -6,7 +6,8 @@ The current dataset focuses on this ending point. Using different analysis condu
 Abstract : 
 « Until March 27, the state of São Paulo had recorded 1,223 confirmed cases of COVID-19, with 68 related deaths, while the county of São Paulo, with a population of approximately 12 million people and where Hospital Israelita Albert Einstein is located, had 477 confirmed cases and 30 associated death, as of March 23. Both the state and the county of São Paulo decided to establish quarantine and social distancing measures, that will be enforced at least until early April, in an effort to slow the virus spread.
 One of the motivations for this challenge is the fact that in the context of an overwhelmed health system with the possible limitation to perform tests for the detection of SARS-CoV-2, testing every case would be impractical and tests results could be delayed even if only a target subpopulation would be tested. »
-Code and Resources Used
+
+# Code and Resources Used
 Python Version: 3.8
 Packages: pandas, numpy, sklearn, matplotlib, seaborn, scipy
 Dataset : https://www.kaggle.com/einsteindata4u/covid19
