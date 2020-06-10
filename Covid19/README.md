@@ -60,11 +60,11 @@ It may be unrelated.
 *	NaN analyse : viral 1350 (92%/8%), blood sample 600 (87%/13%), previously : 90% of the dataset.
 
 Some parameters are not related, as shown for the MCH and the hopsitalisation service :
-![MCH](/images/MCH.png)
+![MCH](https://github.com/ackermannQ/MachineLearning/tree/master/Covid19/images/MCH.png)
 
 Others seems to be in direct correlation with the service where the patient get into !
-![Lymphocytes](/images/Lymphocytes.png)
-![Monocytes](/images/Monocytes.png)
+![Lymphocytes](https://github.com/ackermannQ/MachineLearning/tree/master/Covid19/images/Lymphocytes.png)
+![Monocytes](https://github.com/ackermannQ/MachineLearning/tree/master/Covid19/images/Monocytes.png)
 
 __Student’s test (H0) :__
 *	Patients infected with covid-19 have higher leucocyte, monocyte et platelets rate than regular individuals ;
