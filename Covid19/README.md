@@ -72,7 +72,7 @@ __Student’s test (H0) :__
 *	Patients infected with covid-19 have higher leucocyte, monocyte et platelets (+ eosinophils) rate than regular individuals ;
   *	H0 = These average rates are EQUALS between people tested positive and negative to covid-19.
 
-Result : Rejected, because patients with a more common decease also get significantly higher rates, not exclusively covid-19 patients.
+X : Not relevant because it was not an hypothesis needed to be tested.
 
 
 Hematocrit | Hemoglobin | Platelets | MPV | Red blood Cells | Lymphocytes | MCHC | Leukocytes | Basophils | MCH | Eosinophils | MCV | Monocytes | RDW
