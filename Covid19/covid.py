@@ -325,11 +325,13 @@ def exploration_of_data():
 
     balanced_neg = negative_df.sample(positive_df.shape[0])  # Same sample dimension
 
-    # for col in blood_columns:
-    #  print(f'{col :-<50} {t_test(col, 0.02, balanced_neg, positive_df)}')
+    for col in blood_columns:
+     print(f'{col :-<50} {t_test(col, 0.02, balanced_neg, positive_df)}')
 
 
 if __name__ == "__main__":
+    exploration_of_data()
+    """
     # Preprocessing #
 
     df2 = load_dataset(dataset_path=DATASET_PATH)
@@ -368,3 +370,4 @@ if __name__ == "__main__":
 
 
 
+"""
