@@ -96,6 +96,7 @@ The relevant qualitatives values are encoded - using the preprocessing() functio
 Four different models were tested and evaluated, using the learning curve method.
 
 RandomForest :
+Very flexible and can be applied to both classification and regression.
 ![RandomForest](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/RandomForest.png)
 
 AdaBoost :
