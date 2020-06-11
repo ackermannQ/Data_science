@@ -2,7 +2,7 @@
 ## Project overview
 The Covid-19 virus crushed the world during the year 2019-2020, killing thousands of people, destroyed companies and the economy of many countries - among other things. It became primarly important to analyze every aspect known of the virus to prevent another outbreak, synthesize a vaccine or understand how to manage the people likely to be contaminated considering their symptoms.
 
-The current dataset focuses on this ending point. Using different analysis conducted on patients, the objective is to determine if they are really infected (false positives) and therefore which unit they need to be conducted to.
+The current dataset focuses on this ending point. Using different analysis conducted on patients, the objective is to determine if they are really infected and therefore which unit they need to be conducted to.
 
 ### Abstract : 
 _« Until March 27, the state of São Paulo had recorded 1,223 confirmed cases of COVID-19, with 68 related deaths, while the county of São Paulo, with a population of approximately 12 million people and where Hospital Israelita Albert Einstein is located, had 477 confirmed cases and 30 associated death, as of March 23. Both the state and the county of São Paulo decided to establish quarantine and social distancing measures, that will be enforced at least until early April, in an effort to slow the virus spread.
@@ -88,10 +88,10 @@ X | X | H0 rejected | X | X | X | X | H0 rejected | X | X | H0 rejected | X | H0
 *	Blood_column : 600 values, viral_column : 1354.
 
 ## Preprocessing and encoding
-The missing values are eliminated - using the rate_borned() function from the data_lib is created, and the dataset is splitted between a trainset and a trainset.
+The missing values are eliminated - using the rate_borned() function from the data_lib I created - , and the dataset is splitted between a trainset and a testset.
 The relevant qualitatives values are encoded - using the preprocessing() function from the data_lib.
 
-## Modelization
+## Modelisation
 Four different models were tested and evaluated, using the learning curve method.
 
 RandomForest :
@@ -106,5 +106,14 @@ Svm :
 KNN :
 ![KNN](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/KNN.png)
 
+
+Conclusion : 
+
+Adaboost seems to be the best model there but needs to have its parameters adjusted. Using GridSearchCV to find the right parameters, we get :
+
+* best params {'adaboostclassifier__learning_rate': 1, 'adaboostclassifier__n_estimators': 54}
+* best score is 0.885019987376394
+
+* ROC_AUC is 0.7815789473684209 and accuracy rate is 0.8468468468468469
 
 
