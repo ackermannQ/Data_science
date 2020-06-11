@@ -59,8 +59,8 @@ It may be unrelated.
   *	Relation sickness / Blood_data : Blood rates between regular patient and covid19 patient are différent (lymphocyte, hemoglobine et hematocrite) ;
 *	NaN analyse : viral 1350 (92%/8%), blood sample 600 (87%/13%), previously : 90% of the dataset.
 
-Some parameters are not related, as shown for the MCH and the hopsitalisation service :
 
+Some parameters are not related, as shown for the MCH and the hopsitalisation service :
 ![MCH](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/MCH.png)
 
 Others seems to be in direct correlation with the service where the patient get into !
