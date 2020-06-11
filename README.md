@@ -1,2 +1,2 @@
 # Data Science
-The Data Science is INCREDIBLE !
+Data Science rocks !
