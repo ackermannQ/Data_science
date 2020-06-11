@@ -61,12 +61,12 @@ It may be unrelated.
 
 Some parameters are not related, as shown for the MCH and the hopsitalisation service :
 
-![MCH](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/MCH.png)
+![MCH](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/MCH.png)
 
 Others seems to be in direct correlation with the service where the patient get into !
-![Lymphocytes](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/Lymphocytes.png)
+![Lymphocytes](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/Lymphocytes.png)
 
-![Monocytes](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/Covid19/images/Monocytes.png)
+![Monocytes](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/Monocytes.png)
 
 __Student’s test (H0) :__
 *	Patients infected with covid-19 have higher leucocyte, monocyte et platelets (+ eosinophils) rate than regular individuals ;
