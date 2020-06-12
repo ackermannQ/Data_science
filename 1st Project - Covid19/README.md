@@ -18,16 +18,16 @@
 Conclusion
 
 
-## [Project overview](overview)
+## [Project overview](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 The Covid-19 virus crushed the world during the year 2019-2020, killing thousands of people, destroyed companies and the economy of many countries - among other things. It became primarly important to analyze every aspect known of the virus to prevent another outbreak, synthesize a vaccine or understand how to manage the people likely to be contaminated considering their symptoms.
 
 The current dataset focuses on this ending point. Using different analysis conducted on patients, the objective is to determine if they are really infected (false positives) and therefore which unit they need to be conducted to.
 
-### [Abstract](abstract) : 
+### [Abstract](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis) : 
 _« Until March 27, the state of São Paulo had recorded 1,223 confirmed cases of COVID-19, with 68 related deaths, while the county of São Paulo, with a population of approximately 12 million people and where Hospital Israelita Albert Einstein is located, had 477 confirmed cases and 30 associated death, as of March 23. Both the state and the county of São Paulo decided to establish quarantine and social distancing measures, that will be enforced at least until early April, in an effort to slow the virus spread.
 One of the motivations for this challenge is the fact that in the context of an overwhelmed health system with the possible limitation to perform tests for the detection of SARS-CoV-2, testing every case would be impractical and tests results could be delayed even if only a target subpopulation would be tested. »_
 
-## [Resources Used](resources)
+## [Resources Used](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 **Python Version:** 3.8.
 
 **Packages:** pandas, numpy, sklearn, matplotlib, seaborn, scipy.
@@ -35,9 +35,9 @@ One of the motivations for this challenge is the fact that in the context of an 
 **Dataset :** https://www.kaggle.com/einsteindata4u/covid19
 
 
-## [Exploratory Data Analysis](EDA)
+## [Exploratory Data Analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 
-### [Form analysis](form)
+### [Form analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 The target is the « SARS-Cov-2 exam result » taking « positive » or « negative » state, in a dataset of 5644 lines and 111 columns. The analysis shows 74 quantitatives and 37 qualitatives variables.
 
 A very large part of the dataset is missing :
@@ -86,7 +86,7 @@ _In black_ : Actual values
 _In pink _ : Missing values
 
 
-### [Substance analysis](substance)
+### [Substance analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 For the target :
 * 10 % positives ;
 *	90% negatives.
@@ -144,7 +144,7 @@ Hematocrit | Hemoglobin | Platelets | MPV | Red blood Cells | Lymphocytes | MCHC
 X | X | H0 rejected | X | X | X | X | H0 rejected | X | X | H0 rejected | X | H0 rejected | X
 
 
-### [Conclusions](conclusion1)
+### [Conclusions](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 *	A large part of the dataset is missing : only 20% is exploitable ;
 *	Two main groups interesting : blood and viral analysis ;
 *	The blood sample can’t give the certainty of Covid19 cases ;
@@ -152,11 +152,11 @@ X | X | H0 rejected | X | X | X | X | H0 rejected | X | X | H0 rejected | X | H0
 *	Blood_column : 600 values, viral_column : 1354.
 
 
-## [Preprocessing and encoding](prepross)
+## [Preprocessing and encoding](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 The missing values are eliminated - using the rate_borned() function from the data_lib is created, and the dataset is splitted between a trainset and a trainset.
 The relevant qualitatives values are encoded - using the preprocessing() function from the data_lib.
 
-## [Modelization](modelization)
+## [Modelization](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 Four different models were tested and evaluated, using the learning curve method.
 
 RandomForest :
