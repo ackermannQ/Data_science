@@ -37,15 +37,16 @@ def general_info(df, nb_column):
     Display quickly some inforrmation to get started with the analysis of a dataframe
     :param df: Dataframe used
     """
-    displayHead(df, True, True, nb_column)
+    displayHead(df, 111, True, True, nb_column)
     shapeOfDF(df)
     typeOfDFValues(df)
 
 
-def displayHead(df, every_column=False, every_row=False, nb_column):
+def displayHead(df, nb_column, every_column=False, every_row=False):
     """
     Display the head of the dataframe df - 5 rows by default
     Using the boolean for every_column and every_row, it's possible to display more
+    :param nb_column: Number of column to visualize
     :param df: Dataframe used
     :param every_column: Default is False, if True every column is displayed
     :param every_row: Default is False, if True every row is displayed
@@ -62,6 +63,11 @@ def displayHead(df, every_column=False, every_row=False, nb_column):
 
 
 def shapeOfDF(df):
+    """
+
+    :param df:
+    :return:
+    """
     print("Shape is : {}".format(df.shape))
     return df.shape
 
@@ -115,11 +121,12 @@ def draw_histograms(df, data_type='float', nb_columns=4):
     for index, col in enumerate(cols):
         col_index = index % nb_columns
         row_index = index // nb_columns
+
         if data_type == 'float' or data_type == 'int':
             sns.distplot(df[col], ax=axes[row_index, col_index])
 
         if data_type == 'object':
-            plt.figure()
+            # ax1 = plt.subplot2grid((col_index, row_index), (col_index, row_index))
             df[col].value_counts().plot.pie()
 
     plt.show()
@@ -234,7 +241,7 @@ def encoding(df, type_values, swap_these_values):
 def feature_engineering(df, column):
     # print(viral_columns2)
     # df['is sick'] = 'no'
-    print(displayHead(df, True, False))
+    print(displayHead(df, 111, True, False))
     # df['is sick'] = df[viral_columns2].sum(axis=1) >= 1
     # df = df.drop(viral_columns2, axis=1)
     return df
@@ -286,7 +293,7 @@ def exploration_of_data():
     df = keep_values(df, percentage_to_keep=0.9)
     df = dropColumn(df, 'Patient ID')
     analyse_target(df, "SARS-Cov-2 exam result", True)
-    draw_histograms(df, 'float')
+    draw_histograms(df, 'object')
     
 
 
@@ -365,7 +372,7 @@ if __name__ == "__main__":
     viral_columns2 = list(rate_borned(df2, MR2, 0.75, 0.88))
     important_columns = ['Patient age quantile', 'SARS-Cov-2 exam result']
     df2 = df2[important_columns + blood_columns2]  # + viral_columns2]
-    # print(displayHead(df2, every_column=True, every_row=False))
+    # print(displayHead(df2, 111, every_column=True, every_row=False))
     trainset, testset = train_test_split(df2, test_size=0.2, random_state=0)
 
     # Encoding
