@@ -1,20 +1,16 @@
 # Covid-19 Dataset Analysis
 
 
-[Project overview](overview)
+[Project overview](project-overview)
+* [Abstract](abstract-)
 
-    [Abstract](abstract)
-    
-[Resources Used](resources)
+[Resources Used](resources-)
 
 [Exploratory Data Analysis](EDA)
+* [Form analysis](form)  
+* [Substance analysis](substance)  
+* [Conclusions](conclusion1)
 
-    [Form analysis](form)
-    
-    [Substance analysis](substance)
-    
-    [Conclusions](conclusion1)
-    
 [Preprocessing and encoding](prepross)
 
 [Modelization](modelization)
