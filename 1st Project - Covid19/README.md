@@ -1,19 +1,19 @@
 # Covid-19 Dataset Analysis
 
 
-[Project overview](project-overview)
-* [Abstract](abstract-)
+[Project overview](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#project-overview)
+* [Abstract](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#abstract-)
 
-[Resources Used](resources-)
+[Resources Used](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#resources-used)
 
 [Exploratory Data Analysis](EDA)
-* [Form analysis](form)  
-* [Substance analysis](substance)  
-* [Conclusions](conclusion1)
+* [Form analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#form-analysis)  
+* [Substance analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#substance-analysis)  
+* [Conclusions](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#conclusions)
 
-[Preprocessing and encoding](prepross)
+[Preprocessing and encoding](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#preprocessing-and-encoding)
 
-[Modelization](modelization)
+[Modelization](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#modelization)
 
 Conclusion
 
