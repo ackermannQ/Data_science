@@ -39,7 +39,7 @@ def displayHead(df, every_column=False, every_row=False):
     if every_row:
         pd.set_option('display.max_row', 111)
 
-    # print(df.head())
+    print(df.head())
     return df.head()
 
 
@@ -54,7 +54,7 @@ def typeOfDFValues(df):
 
 
 def checkNan(df):
-    # print(df.isna())
+    print(df.isna())
     return df.isna()
 
 
@@ -67,8 +67,8 @@ def constructHeatMap(data, show=False):
 
 def missing_values_percentage(df):
     missing_values = (checkNan(df).sum() / df.shape[0]).sort_values(ascending=True)
-    # print(len(missing_values[missing_values > 0.9])  # Ex : 0.98 = 98% of missing values
-    #     / len(missing_values[missing_values > 0.0]))  # Give the percentage of missing values > 90% compared to all
+    print(len(missing_values[missing_values > 0.9])  # Ex : 0.98 = 98% of missing values
+        / len(missing_values[missing_values > 0.0]))  # Give the percentage of missing values > 90% compared to all
     # the missing values : 68 % (more than half the variables are > 90% of NaN)
     return missing_values
 
@@ -254,15 +254,19 @@ def evaluation(model, X_train, y_train, X_test, y_test):
 
 def exploration_of_data():
     df = load_dataset(dataset_path=DATASET_PATH)
-    general_info(df)
-    # displayHead(df, True, True)
+    displayHead(df, False, False)
+    # general_info(df)
     NaN = checkNan(df)
     constructHeatMap(NaN)
-    missing_values_percentage(df)
+    print(missing_values_percentage(df))
+    print(missing_rate(df))
+    """
     df = keep_values(df, percentage_to_keep=0.9)
     df = dropColumn(df, 'Patient ID')
-    # analyse_target(df, "SARS-Cov-2 exam result", True)
-    # draw_histograms(df, 'object')
+    analyse_target(df, "SARS-Cov-2 exam result", True)
+    draw_histograms(df, 'object')
+    
+"""
 
     """
     Target/Variables relation :
