@@ -146,13 +146,22 @@ Results of the test for SARS-Cov-2 :
 * 10% positives ;
 * 90% negatives.
 
-It’s very unbalanced, and we will need to sample the negatives results during the subset analysis to get relevant information.
+It’s very unbalanced, and will require to sample the negatives results during the subset analysis to get relevant information.
+Let's have a look at our variables :
+* <ins>Quantitatives :</ins>
+![Quantitatives](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Figure_1.png)
+
+
+* <ins>Qualitatives :</ins>
+![Qualitatives](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Figure_1.png)
+
+
 Signification of the variables :
 * Variables standardized, somethimes asymetrics, concerning the blood samples ;
 * age quantile : hard to conclude anything because the data have been mathematically shifted or transformed ;
 * qualitatives variables : are binaries (0, 1) detected/not detected.
 
-NB : Rhinovirus seems to be anormaly high, this hypothesis needs to be checked later.
+<ins>NB :</ins> Rhinovirus seems to be anormaly high, this hypothesis needs to be checked later.
 
 Relation variables to target :
 * Target/Blood, idea of features that may be correlated :
