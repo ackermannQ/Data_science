@@ -114,7 +114,13 @@ _In black_ : Actual values
 _In pink_ : Missing values
 
 It's going to be difficult to extrapolate the missing data, therefore every variable with a rate of 90% missing values are going to be removed.
-A function is created to conserve the variables with 90% 
+A function is created to conserve the variables with less than 90% of missing values :
+
+```python
+def keep_values(df, percentage_to_keep=0.9):
+    return df[df.columns[df.isna().sum() / df.shape[0] < percentage_to_keep]]  # Keep the values where there are
+    # less than 90% of missing values
+```
 
 ### [Substance analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 For the target :
