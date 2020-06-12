@@ -120,16 +120,35 @@ A function is created to conserve the variables with less than 90% of missing va
 def keep_values(df, percentage_to_keep=0.9):
     return df[df.columns[df.isna().sum() / df.shape[0] < percentage_to_keep]]  # Keep the values where there are
     # less than 90% of missing values
+    
+df = keep_values(df, percentage_to_keep=0.9)   
+```
+
+Once this function is applied only 39 columns remains, easing the treatment of the data.
+Finally, the "Patient ID" is not a relevant parameter and can be removed using :
+```python
+def dropColumn(df, colonName):
+    return df.drop(colonName, axis=1)
+
+df = dropColumn(df, 'Patient ID')
 ```
 
 ### [Substance analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
-For the target :
-* 10 % positives ;
+Now let's analyze furthermore the target, especially the rate of positive and negative results :
+
+```python
+def analyse_target(df, target, normalized=False):
+    return df[target].value_counts(normalize=normalized)
+    
+analyse_target(df, "SARS-Cov-2 exam result", True)    
+```
+Results of the test for SARS-Cov-2 :
+* 10% positives ;
 * 90% negatives.
 
 It’s very unbalanced, and we will need to sample the negatives results during the subset analysis to get relevant information.
 Signification of the variables :
-*	Variables standardized, somethimes asymetrics, concerning the blood samples ;
+* Variables standardized, somethimes asymetrics, concerning the blood samples ;
 * age quantile : hard to conclude anything because the data have been mathematically shifted or transformed ;
 * qualitatives variables : are binaries (0, 1) detected/not detected.
 
