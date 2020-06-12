@@ -252,13 +252,12 @@ def evaluation(model, X_train, y_train, X_test, y_test):
     plt.legend()
 
 
-
 def exploration_of_data():
     df = load_dataset(dataset_path=DATASET_PATH)
-    # general_info(df)
-    displayHead(df, True, True)
+    general_info(df)
+    # displayHead(df, True, True)
     NaN = checkNan(df)
-    # constructHeatMap(NaN)
+    constructHeatMap(NaN)
     missing_values_percentage(df)
     df = keep_values(df, percentage_to_keep=0.9)
     df = dropColumn(df, 'Patient ID')
@@ -330,8 +329,10 @@ def exploration_of_data():
 
 
 if __name__ == "__main__":
-    # Preprocessing #
+    exploration_of_data()
 
+    # Preprocessing #
+"""
     df2 = load_dataset(dataset_path=DATASET_PATH)
     MR2 = missing_rate(df2)
     blood_columns2 = list(rate_borned(df2, MR2, 0.88, 0.9))
@@ -367,4 +368,4 @@ if __name__ == "__main__":
     # rly important
 
 
-
+"""
