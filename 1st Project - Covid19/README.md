@@ -15,13 +15,20 @@ One of the motivations for this challenge is the fact that in the context of an 
 
 **Dataset :** https://www.kaggle.com/einsteindata4u/covid19
 
-## Form analysis
+
+## Exploratory Data Analysis
+
+### Form analysis
 The target is the « SARS-Cov-2 exam result » taking « positive » or « negative » state, in a dataset of 5644 lines and 111 columns. The analysis shows 74 quantitatives and 37 qualitatives variables.
 Some values are missing and two groups appears separated :
 * ~ 76 % missing values for other virus tests ;
 *	~ 89 % missing valeurs for blood analysis.
 
-## Substance analysis
+![Representation of missing values](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/MissingValues.png)
+_In black_ : Actual values
+_In pink _ : Missing values
+
+### Substance analysis
 For the target :
 * 10 % positives ;
 *	90% negatives.
@@ -51,7 +58,6 @@ As already said, Rhinovirus/Entérovirus positive may implied a negative Covid19
 It may be unrelated.
 
 
-## Exploratory Data Analysis
 * Relation between the variables :
   * Blood_data / Blood_data : some variables are correlated (+0.9 !) ;
   * Blood_data / Age : week correlation ;
