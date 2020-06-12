@@ -40,25 +40,25 @@ def missing_rate(df):
 
 Patient ID --------------------------------------------- 0.000000
 
-Patient age quantile ----------------------------------- 0.000000
+Patient age quantile --------------------------------------------- 0.000000
 
-SARS-Cov-2 exam result --------------------------------- 0.000000
+SARS-Cov-2 exam result --------------------------------------------- 0.000000
 
-Patient addmited to regular ward (1=yes, 0=no) --------- 0.000000
+Patient addmited to regular ward (1=yes, 0=no) --------------------------------------------- 0.000000
 
-Patient addmited to semi-intensive unit (1=yes, 0=no) -- 0.000000
+Patient addmited to semi-intensive unit (1=yes, 0=no) --------------------------------------------- 0.000000
 
                                                            ...   
                                                            
-HCO3 (arterial blood gas analysis) --------------------- 0.995216
+HCO3 (arterial blood gas analysis) --------------------------------------------- 0.995216
 
-pO2 (arterial blood gas analysis) ---------------------- 0.995216
+pO2 (arterial blood gas analysis) --------------------------------------------- 0.995216
 
-Arteiral Fio2 ------------------------------------------ 0.996456
+Arteiral Fio2 --------------------------------------------- 0.996456
 
-Phosphor ----------------------------------------------- 0.996456
+Phosphor --------------------------------------------- 0.996456
 
-ctO2 (arterial blood gas analysis) --------------------- 0.995216
+ctO2 (arterial blood gas analysis) --------------------------------------------- 0.995216
 
 Some values are missing (displayed one the next plot).
 
