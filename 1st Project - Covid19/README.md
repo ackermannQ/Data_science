@@ -37,8 +37,36 @@ One of the motivations for this challenge is the fact that in the context of an 
 
 ## [Exploratory Data Analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 
+It's good to get familiair with the dataset using the pandas head() function once the dataframe is loaded in a variable called df  :
+
+```python
+def displayHead(df, every_column=False, every_row=False, column_nbr):
+    if every_column:
+        pd.set_option('display.max_column', column_nbr)
+
+    if every_row:
+        pd.set_option('display.max_row', column_nbr)
+
+    print(df.head())
+    return df.head()
+    
+displayHead(df, every_column=False, every_row=False, column_nbr=111)
+```
+
+Row number | Patient ID | ... | ctO2 (arterial blood gas analysis)
+----- | ----- | ----- | ----- 
+0 | 44477f75e8169d2 | ... | NaN
+1 | 126e9dd13932f68 | ... | NaN
+2 | a46b4402a0e5696 | ... | NaN
+3 | f7d619a94f97c45 | ... | NaN
+4 | d9e41465789c2b5 | ... | NaN
+
+[5 rows x 111 columns]
+
 ### [Form analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 The target is the « SARS-Cov-2 exam result » taking « positive » or « negative » state, in a dataset of 5644 lines and 111 columns. The analysis shows 74 quantitatives and 37 qualitatives variables.
+
+
 
 A very large part of the dataset is missing :
 
@@ -75,21 +103,23 @@ ctO2 (arterial blood gas analysis) | 0.995216
 Some values are missing (displayed one the next plot).
 
 Two main groups appears separated :
-* ~ 76 % missing values for other virus tests ;
-*	~ 89 % missing valeurs for blood analysis.
+* ~ 76 % missing values corresponding to virus diagnostic ;
+* ~ 89 % missing values corresponding to blood analysis.
 
-
+Moreover it's easier to understand how much values are actually missing using a visual representation :
 ![Representation of missing values](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/MissingValues.png)
 
 _In black_ : Actual values
 
-_In pink _ : Missing values
+_In pink_ : Missing values
 
+It's going to be difficult to extrapolate the missing data, therefore every variable with a rate of 90% missing values are going to be removed.
+A function is created to conserve the variables with 90% 
 
 ### [Substance analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 For the target :
 * 10 % positives ;
-*	90% negatives.
+* 90% negatives.
 
 It’s very unbalanced, and we will need to sample the negatives results during the subset analysis to get relevant information.
 Signification of the variables :
@@ -99,8 +129,7 @@ Signification of the variables :
 
 NB : Rhinovirus seems to be anormaly high, this hypothesis needs to be checked later.
 
-Relation variables to target 
-:
+Relation variables to target :
 * Target/Blood, idea of features that may be correlated :
   * Leucocyte ;
   *	Monocyte ;
