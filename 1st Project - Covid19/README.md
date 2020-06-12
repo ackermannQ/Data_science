@@ -20,15 +20,59 @@ One of the motivations for this challenge is the fact that in the context of an 
 
 ### Form analysis
 The target is the « SARS-Cov-2 exam result » taking « positive » or « negative » state, in a dataset of 5644 lines and 111 columns. The analysis shows 74 quantitatives and 37 qualitatives variables.
-Some values are missing and two groups appears separated :
+
+A very large part of the dataset is missing :
+
+```python
+
+def missing_values_percentage(df):
+    missing_values = (checkNan(df).sum() / df.shape[0]).sort_values(ascending=True)
+    print(len(missing_values[missing_values > 0.9])  # Ex : 0.98 = 98% of missing values
+        / len(missing_values[missing_values > 0.0]))  # Give the percentage of missing values > 90% compared to all
+    # the missing values : 68 % (more than half the variables are > 90% of NaN)
+    return missing_values
+
+
+def missing_rate(df):
+    return df.isna().sum() / df.shape[0]
+
+```
+
+Patient ID --------------------------------------------- 0.000000
+
+Patient age quantile ----------------------------------- 0.000000
+
+SARS-Cov-2 exam result --------------------------------- 0.000000
+
+Patient addmited to regular ward (1=yes, 0=no) --------- 0.000000
+
+Patient addmited to semi-intensive unit (1=yes, 0=no) -- 0.000000
+
+                                                           ...   
+                                                           
+HCO3 (arterial blood gas analysis) --------------------- 0.995216
+
+pO2 (arterial blood gas analysis) ---------------------- 0.995216
+
+Arteiral Fio2 ------------------------------------------ 0.996456
+
+Phosphor ----------------------------------------------- 0.996456
+
+ctO2 (arterial blood gas analysis) --------------------- 0.995216
+
+Some values are missing (displayed one the next plot).
+
+Two main groups appears separated :
 * ~ 76 % missing values for other virus tests ;
 *	~ 89 % missing valeurs for blood analysis.
+
 
 ![Representation of missing values](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/MissingValues.png)
 
 _In black_ : Actual values
 
 _In pink _ : Missing values
+
 
 ### Substance analysis
 For the target :
