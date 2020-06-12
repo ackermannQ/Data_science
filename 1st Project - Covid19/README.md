@@ -25,7 +25,9 @@ Some values are missing and two groups appears separated :
 *	~ 89 % missing valeurs for blood analysis.
 
 ![Representation of missing values](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/MissingValues.png)
+
 _In black_ : Actual values
+
 _In pink _ : Missing values
 
 ### Substance analysis
