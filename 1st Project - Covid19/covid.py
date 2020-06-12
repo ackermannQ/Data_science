@@ -1,3 +1,5 @@
+import math
+
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -19,25 +21,41 @@ DATASET_PATH = 'dataset.xlsx'
 
 
 # Exploration of DATA
-
 def load_dataset(dataset_path=DATASET_PATH):
+    """
+    Load the dataset and work on a copy
+    :param dataset_path: Global variable to define the path where the dataset is located
+    :return: Return the copy of the dataset loaded
+    """
     data = pd.read_excel(dataset_path)
     df = data.copy()
     return df
 
 
-def general_info(df):
-    displayHead(df, True, True)
+def general_info(df, nb_column):
+    """
+    Display quickly some inforrmation to get started with the analysis of a dataframe
+    :param df: Dataframe used
+    """
+    displayHead(df, True, True, nb_column)
     shapeOfDF(df)
     typeOfDFValues(df)
 
 
-def displayHead(df, every_column=False, every_row=False):
+def displayHead(df, every_column=False, every_row=False, nb_column):
+    """
+    Display the head of the dataframe df - 5 rows by default
+    Using the boolean for every_column and every_row, it's possible to display more
+    :param df: Dataframe used
+    :param every_column: Default is False, if True every column is displayed
+    :param every_row: Default is False, if True every row is displayed
+    :return:
+    """
     if every_column:
-        pd.set_option('display.max_column', 111)
+        pd.set_option('display.max_column', nb_column)
 
     if every_row:
-        pd.set_option('display.max_row', 111)
+        pd.set_option('display.max_row', nb_column)
 
     print(df.head())
     return df.head()
@@ -90,16 +108,21 @@ def analyse_target(df, target, normalized=False):
     return df[target].value_counts(normalize=normalized)
 
 
-def draw_histograms(df, data_type='float'):
-    for col in df.select_dtypes(data_type):
+def draw_histograms(df, data_type='float', nb_columns=4):
+    cols = df.select_dtypes(data_type)
+    ceiling = math.ceil(len(cols.columns) / nb_columns)
+    f, axes = plt.subplots(nb_columns, ceiling, figsize=(7, 7), sharex=True)
+    for index, col in enumerate(cols):
+        col_index = index % nb_columns
+        row_index = index // nb_columns
         if data_type == 'float' or data_type == 'int':
-            sns.distplot(df[col])
+            sns.distplot(df[col], ax=axes[row_index, col_index])
 
         if data_type == 'object':
             plt.figure()
             df[col].value_counts().plot.pie()
 
-        plt.show()
+    plt.show()
 
 
 def description_object(df, target):
@@ -254,19 +277,18 @@ def evaluation(model, X_train, y_train, X_test, y_test):
 
 def exploration_of_data():
     df = load_dataset(dataset_path=DATASET_PATH)
-    displayHead(df, False, False)
-    # general_info(df)
-    NaN = checkNan(df)
-    constructHeatMap(NaN)
-    print(missing_values_percentage(df))
-    print(missing_rate(df))
-    """
+    # # general_info(df, 111)
+    # NaN = checkNan(df)
+    # constructHeatMap(NaN)
+    # print(missing_values_percentage(df))
+    # print(missing_rate(df))
+
     df = keep_values(df, percentage_to_keep=0.9)
     df = dropColumn(df, 'Patient ID')
     analyse_target(df, "SARS-Cov-2 exam result", True)
-    draw_histograms(df, 'object')
+    draw_histograms(df, 'float')
     
-"""
+
 
     """
     Target/Variables relation :
