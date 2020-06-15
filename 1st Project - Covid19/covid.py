@@ -332,6 +332,7 @@ def check_correlation(df, value_for_correlation):
     :param value_for_correlation: Specified the value with which every other parameter would be correlated checked
     :return: The values corresponding to the correation between value_for_correlation and every other parameters
     """
+    print(df.corr()[value_for_correlation].sort_values())
     return df.corr()[value_for_correlation].sort_values()
 
 
@@ -395,10 +396,6 @@ def encoding(df, type_values, swap_these_values):
     for col in df.select_dtypes(type_values).columns:
         df.loc[:, col] = df[col].map(swap_these_values)
     return df
-
-
-def is_sick(df, column, parameter):
-    return np.sum(df[column[:-2]] == parameter, axis=1) >= 1
 
 
 def hospitalisation(df):
@@ -528,25 +525,25 @@ def exploration_of_data():
     """
 
     # Blood / Blood relations
-    pairwise_relationships(df, blood_columns)
+    # pairwise_relationships(df, blood_columns)
 
     # Blood / Age relations view_regression(df, blood_columns, "Patient age quantile", "SARS-Cov-2 exam result")  # A
-    # bit messy, using correslation instead, could be used for more analysis print(check_correlation(df, "Patient age
-    # quantile"))  # Check if age is correlated with anything ?
+    # bit messy, using correslation instead, could be used for more analysis
+    # check_correlation(df, "Patient age quantile")  # Check if age is correlated with anything ?
 
     # Blood / Age relations
     # print(crossTable(df, 'Influenza A', 'Influenza A, rapid test'))
     # print(crossTable(df, 'Influenza B', 'Influenza B, rapid test'))
 
     # Viral / Blood relations
-    df['is sick'] = is_sick(df, viral_columns, 'detected')
+    df['is sick'] = np.sum(df[viral_columns[:-2]] == 'detected', axis=1) >= 1
 
     # Relation Sickness / Blood_data
     sick_df = qual_to_quan(df, "is sick", True)
     not_sick_df = qual_to_quan(df, "is sick", False)
 
     relation = [(sick_df, 'is sick'), (not_sick_df, 'is not sick')]
-    # display_relations(blood_columns, relation)
+    display_relations(blood_columns, relation)
 
     # Relation Hospitalisation / is Sick
     df['status'] = df.apply(hospitalisation, axis=1)
