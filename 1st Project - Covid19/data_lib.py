@@ -278,7 +278,6 @@ def graph(model, X_train, y_train):
 
 
 def build_feature_importance(model, X_train, y_train):
-
     models = RandomForestClassifier(criterion='entropy', random_state=11, oob_score=True, n_jobs=-1, \
                                     max_depth=25, min_samples_leaf=80, min_samples_split=3, n_estimators=70)
     models.fit(X_train, y_train)

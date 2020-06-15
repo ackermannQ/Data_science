@@ -17,6 +17,8 @@ from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.preprocessing import PolynomialFeatures, StandardScaler
 from sklearn.decomposition import PCA
 
+from data_lib import build_feature_importance
+
 DATASET_PATH = 'dataset.xlsx'
 
 
@@ -422,9 +424,9 @@ def imputation(df):
     :param df: Dataframe used
     :return: The dataframe with the imputation applied
     """
-    # df = df.dropna(axis=0)  # Remove the data too violently
+    df = df.dropna(axis=0)  # Remove the data too violently
     # df['is na'] = (df['Parainfluenza 3'].isna()) | (df['Leukocytes'].isna())
-    df = df.fillna(-999) # not working after few trials
+    # df = df.fillna(-999)  # not working after few trials
     return df
 
 
@@ -579,7 +581,6 @@ if __name__ == "__main__":
 
     trainset, testset = train_test_split(df2, test_size=0.2, random_state=0)
 
-
     # Encoding and Preprocessing
     swap_values = {'positive': 1, 'negative': 0, 'detected': 1, 'not_detected': 0}
     target = 'SARS-Cov-2 exam result'
@@ -589,7 +590,10 @@ if __name__ == "__main__":
                                    viral_columns2)
 
     model = DecisionTreeClassifier(random_state=0)
+    build_feature_importance(DecisionTreeClassifier, X_train, y_train)
+
     evaluation(model, X_train, y_train, X_test, y_test)
+    
 
     """
     # Modelisation
