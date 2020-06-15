@@ -520,15 +520,15 @@ def exploration_of_data():
     # count_histogram(df, 'Patient age quantile', 'SARS-Cov-2 exam result')
 
     # Relation, comparison between collection : Target and Viral
-    print(crossTable(df, 'SARS-Cov-2 exam result', 'Influenza A'))
-    crossTables(df, viral_columns, "SARS-Cov-2 exam result")
+    # print(crossTable(df, 'SARS-Cov-2 exam result', 'Influenza A'))
+    # crossTables(df, viral_columns, "SARS-Cov-2 exam result")
 
     """
     Advanced analysis
     """
 
     # Blood / Blood relations
-    # pairwise_relationships(df, blood_columns)
+    pairwise_relationships(df, blood_columns)
 
     # Blood / Age relations view_regression(df, blood_columns, "Patient age quantile", "SARS-Cov-2 exam result")  # A
     # bit messy, using correslation instead, could be used for more analysis print(check_correlation(df, "Patient age
