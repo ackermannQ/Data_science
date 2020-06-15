@@ -422,9 +422,9 @@ def imputation(df):
     :param df: Dataframe used
     :return: The dataframe with the imputation applied
     """
+    # df = df.dropna(axis=0)  # Remove the data too violently
     # df['is na'] = (df['Parainfluenza 3'].isna()) | (df['Leukocytes'].isna())
-    # df = df.fillna(-999) # not working after few trials
-    df = df.dropna(axis=0)
+    df = df.fillna(-999) # not working after few trials
     return df
 
 
@@ -466,7 +466,6 @@ def evaluation(model, X_train, y_train, X_test, y_test):
 
     N, train_score, val_score = learning_curve(model, X_train, y_train, cv=4, scoring='f1',
                                                train_sizes=np.linspace(0.1, 1, 10))
-
     plt.figure(figsize=(12, 8))
     plt.plot(N, train_score.mean(axis=1), label='Train score')
     plt.plot(N, val_score.mean(axis=1), label='Validation score')
@@ -581,7 +580,7 @@ if __name__ == "__main__":
     trainset, testset = train_test_split(df2, test_size=0.2, random_state=0)
 
 
-    # Encoding
+    # Encoding and Preprocessing
     swap_values = {'positive': 1, 'negative': 0, 'detected': 1, 'not_detected': 0}
     target = 'SARS-Cov-2 exam result'
     X_train, y_train = preprocessing(trainset, target, 'object', swap_values, 'is sick',
