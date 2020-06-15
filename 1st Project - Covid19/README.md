@@ -692,8 +692,6 @@ model = DecisionTreeClassifier(random_state=0)
 evaluation(model, X_train, y_train, X_test, y_test)
 ```
 
-When the learning curves are plotted,  immediately it seems that our model is overfitting : the train set is perfectly learnt but the machine can't adjust to the testing set
-
 <ins>Decision Tree Classifier :</ins>
 ![DecisionTreeClassifier](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/DecisionTreeClassifier.png) 
 
@@ -708,7 +706,49 @@ When the learning curves are plotted,  immediately it seems that our model is ov
     macro avg    |   0.66   |   0.65  |    0.65   |    111   
     weighted avg    |   0.83   |   0.84  |    0.83   |    111
 
+When the learning curves are plotted,  immediately it seems that our model is overfitting : the train set is perfectly learnt but the machine can't adjust to the testing set
 
+**One option is to increase the amount of data given to the machine to balance the overfitting**
+
+The imputation function seems to be too simple and remove a large amount of data, so we have to change it a bit
+
+```python
+def imputation(df):
+    """
+    Imputation function
+    :param df: Dataframe used
+    :return: The dataframe with the imputation applied
+    """
+    return df.fillna(-999)
+    
+imputation(df2)
+```
+
+![DecisionTreeClassifier2](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/DecisionTreeClassifier2.png) 
+
+
+The model is clearly not very good, the training rate is low (0.3). As a consequence, we can't just fill as we wish the missing values
+
+We are just taking a step back with our imputation function and visualize the features importances
+
+```python
+def build_feature_importance(model, X_train, y_train):
+
+    models = RandomForestClassifier(criterion='entropy', random_state=11, oob_score=True, n_jobs=-1, \
+                                    max_depth=25, min_samples_leaf=80, min_samples_split=3, n_estimators=70)
+    models.fit(X_train, y_train)
+    data = pd.DataFrame(models.feature_importances_, X_train.columns, columns=["feature"])
+    data = data.sort_values(by='feature', ascending=False).reset_index()
+    plt.figure(figsize=[6, 6])
+    sns.barplot(x='index', y='feature', data=data[:10], palette="Blues_d")
+    plt.title('Feature importance of the model after Grid Search')
+    plt.xticks(rotation=45)
+    plt.show()
+   
+build_feature_importance(DecisionTreeClassifier, X_train, y_train)
+```
+
+![DecisionTreeClassifier2](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Feature_importance.png)
 
 
 ## [Modelisation](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
