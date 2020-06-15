@@ -413,8 +413,10 @@ def feature_engineering(df, column):
     :return: A dataframe fetaure engineered
     """
     # df['is sick'] = 'no'
-    # df['is sick'] = df[column].sum(axis=1) >= 1
-    # df = df.drop(column, axis=1)
+    missing_rate = df.isna().sum() / df.shape[0]
+    viral_columns2 = list(df.columns[(missing_rate < 0.80) & (missing_rate > 0.75)])
+    df['is sick'] = df[viral_columns2].sum(axis=1) >= 1
+    df = df.drop(viral_columns2, axis=1)
     return df
 
 
@@ -442,7 +444,7 @@ def preprocessing(df, Target, type_values, swap_these_values, new_feature, colum
     :return: X: Features and y: Target to predict
     """
     df = encoding(df, type_values, swap_these_values)
-    feature_engineering(df, column)
+    df = feature_engineering(df, column)
     df = imputation(df)
     X = dropColumn(df, Target)
     y = df[Target]
@@ -577,7 +579,7 @@ if __name__ == "__main__":
     viral_columns2 = list(rate_borned(df2, MR2, 0.75, 0.88))
     important_columns = ['Patient age quantile', 'SARS-Cov-2 exam result']
 
-    df2 = df2[important_columns + blood_columns2]  # + viral_columns2], finally not a great impact
+    df2 = df2[important_columns + blood_columns2] # + viral_columns2]  # finally not a great impact
 
     trainset, testset = train_test_split(df2, test_size=0.2, random_state=0)
 
@@ -589,16 +591,13 @@ if __name__ == "__main__":
     X_test, y_test = preprocessing(testset, target, 'object', swap_values, 'is sick',
                                    viral_columns2)
 
-    model = DecisionTreeClassifier(random_state=0)
-    build_feature_importance(DecisionTreeClassifier, X_train, y_train)
+    model1 = RandomForestClassifier(random_state=0)
+    build_feature_importance(RandomForestClassifier, X_train, y_train)
+    evaluation(model1, X_train, y_train, X_test, y_test)
 
-    evaluation(model, X_train, y_train, X_test, y_test)
-    
-
-    """
     # Modelisation
-    # model = make_pipeline(SelectKBest(f_classif, k=7), RandomForestClassifier(random_state=0))
-
+    model2 = make_pipeline(SelectKBest(f_classif, k=7), RandomForestClassifier(random_state=0))
+    """
     # Machine Learning models
     preprocessor = make_pipeline(PolynomialFeatures(2, include_bias=False), SelectKBest(f_classif, k=10))
     RandomForest = make_pipeline(preprocessor, RandomForestClassifier(random_state=0))
