@@ -294,11 +294,10 @@ def crossTables(df, column_name, cross):
 
 def pairwise_relationships(df, variable, cluster=True):
     """
-    
-    :param df:
-    :param variable:
-    :param cluster:
-    :return:
+    Display a pairplot, clustermap or heatmap
+    :param df: Dataframe used
+    :param variable: Variable studied
+    :param cluster: True: Clustermap display, False: Heatmap displayed
     """
     sns.pairplot(df[variable])
     if cluster:
@@ -309,6 +308,15 @@ def pairwise_relationships(df, variable, cluster=True):
 
 
 def view_regression(df, column_name, absc, discrimination):
+    """
+    Plot data and regression model fits across a FacetGrid
+    Ex:
+    view_regression(df, blood_columns, "Patient age quantile", "SARS-Cov-2 exam result")
+    :param df: Dataframe used
+    :param column_name: Columns
+    :param absc: Abscisse
+    :param discrimination: Discrimination parameter
+    """
     for col in column_name:
         plt.figure()
         sns.lmplot(x=absc, y=col, hue=discrimination, data=df)
@@ -316,7 +324,75 @@ def view_regression(df, column_name, absc, discrimination):
 
 
 def check_correlation(df, value_for_correlation):
+    """
+    Check if the featurs are correlated
+    :param df: Dataframe used
+    :param value_for_correlation: Specified the value with which every other parameter would be correlated checked
+    :return: The values corresponding to the correation between value_for_correlation and every other parameters
+    """
     return df.corr()[value_for_correlation].sort_values()
+
+
+def relation_in_newcol(df, column, newcol, show=False):
+    """
+    Display the relation between a specified column and another one
+    :param show: True: Display the plot(s)
+    :param df: Dataframe used
+    :param column: First column
+    :param newcol: Second column
+    :return:
+    """
+    for col in column:
+        plt.figure()
+        for cat in newcol.unique():
+            sns.distplot(df[newcol == cat][col], label=cat)
+        plt.legend()
+
+    if show:
+        plt.show()
+
+
+def t_test(col, alpha, a, b):
+    """
+    Calculates the T-test for the means of two independent samples of scores
+    This is a two-sided test for the null hypothesis that 2 independent samples have identical average (expected) values
+    This test assumes that the populations have identical variances by default
+    :param col:
+    :param alpha:
+    :param a:
+    :param b:
+    :return:
+    """
+    stat, p = ttest_ind(a[col].dropna(), b[col].dropna())
+    if p < alpha:
+        return 'H0 rejected'
+    else:
+        return 'X'
+
+
+def student_test(column, t_test):
+    """
+    Print for each column, the result of the Student's test
+    :param column: Column
+    :param t_test: Student test
+    """
+    for col in column:
+        print(f'{col :-<50} {t_test(col)}')
+
+    # Exploration of DATA #
+
+
+def encoding(df, type_values, swap_these_values):
+    """
+    Encode qualitatives values
+    :param df: Dataframe used
+    :param type_values: Type of the value worked with
+    :param swap_these_values: Swap the values {"Value 0": 0, "Value1": 1, ...}
+    :return: A dataframe with the qualitatives values swaped to quantitatives values
+    """
+    for col in df.select_dtypes(type_values).columns:
+        df.loc[:, col] = df[col].map(swap_these_values)
+    return df
 
 
 def is_sick(df, column, parameter):
@@ -337,47 +413,25 @@ def hospitalisation(df):
         return 'unknown'
 
 
-def relation_in_newcol(df, column, newcol):
-    for col in column:
-        plt.figure()
-        for cat in newcol.unique():
-            sns.distplot(df[newcol == cat][col], label=cat)
-        plt.legend()
-
-    plt.show()
-
-
-def t_test(col, alpha, a, b):
-    stat, p = ttest_ind(a[col].dropna(), b[col].dropna())
-    if p < alpha:
-        return 'H0 rejetée'
-    else:
-        return 0
-
-
-def student_test(column, t_test):
-    for col in column:
-        print(f'{col :-<50} {t_test(col)}')
-
-    # Exploration of DATA #
-
-
-def encoding(df, type_values, swap_these_values):
-    for col in df.select_dtypes(type_values).columns:
-        df.loc[:, col] = df[col].map(swap_these_values)
-    return df
-
-
 def feature_engineering(df, column):
-    # print(viral_columns2)
+    """
+    Feature engineering on column
+    :param df: Dataframe used
+    :param column: Column targeted with the feature engineering
+    :return: A dataframe fetaure engineered
+    """
     # df['is sick'] = 'no'
-    print(displayHead(df, 111, True, False))
-    # df['is sick'] = df[viral_columns2].sum(axis=1) >= 1
-    # df = df.drop(viral_columns2, axis=1)
+    # df['is sick'] = df[column].sum(axis=1) >= 1
+    # df = df.drop(column, axis=1)
     return df
 
 
 def imputation(df):
+    """
+    Imputation function
+    :param df: Dataframe used
+    :return: The dataframe with the imputation applied
+    """
     # df['is na'] = (df['Parainfluenza 3'].isna()) | (df['Leukocytes'].isna())
     # df = df.fillna(-999) # not working after few trials
     df = df.dropna(axis=0)
@@ -385,18 +439,35 @@ def imputation(df):
 
 
 def preprocessing(df, Target, type_values, swap_these_values, new_feature, column):
+    """
+    Global preprocessing function
+    :param df: Dataframe used
+    :param Target: Target variable wanted predicted
+    :param type_values: Type of the values
+    :param swap_these_values: Values swaped
+    :param new_feature: New_feature used for the feature engineering
+    :param column: Column concerned by the feature engineering
+    :return: X: Features and y: Target to predict
+    """
     df = encoding(df, type_values, swap_these_values)
     feature_engineering(df, column)
     df = imputation(df)
-
-    X = df.drop(Target, axis=1)
+    X = dropColumn(df, Target)
     y = df[Target]
-
-    print(y.value_counts())
     return X, y
 
 
 def evaluation(model, X_train, y_train, X_test, y_test):
+    """
+    Evaluation of the model, compare on the same plot the prediction on the trainset and the testset
+    Display the confusion matrix and classification report
+    Shows the overfitting/undefitting
+    :param model: model used
+    :param X_train: X trainset
+    :param y_train: y trainset
+    :param X_test: X testset
+    :param y_test: y testset
+    """
     model.fit(X_train, y_train)
     ypred = model.predict(X_test)
 
@@ -422,10 +493,9 @@ def exploration_of_data():
 
     df = keep_values(df, percentage_to_keep=0.9)
     df = dropColumn(df, 'Patient ID')
-    print('------------------------')
-    analyse_target(df, "SARS-Cov-2 exam result", True)
-    print('------------------------')
-    draw_histograms(df, 'object')
+    # analyse_target(df, "SARS-Cov-2 exam result", True)
+    #
+    # draw_histograms(df, 'object')
     
 
 
@@ -481,6 +551,7 @@ def exploration_of_data():
     # print(df.head())
 
     # Relation Hospitalisation / Blood
+    print("-----------------------------")
     relation_in_newcol(df, blood_columns, df['status'])
 
     # Student's Test : needs to have balanced sample
