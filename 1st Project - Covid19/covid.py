@@ -116,7 +116,7 @@ def missing_values_percentage(df, rate_checked):
     """
     missing_values = (checkNan(df).sum() / df.shape[0]).sort_values(ascending=True)
     print(len(missing_values[missing_values > rate_checked])  # Ex : rate_checked = 0.98 : 98% of missing values
-        / len(missing_values[missing_values > 0.0]))  # Give the percentage of missing values > 90% compared to all
+          / len(missing_values[missing_values > 0.0]))  # Give the percentage of missing values > 90% compared to all
     # the missing values : 68 % (more than half the variables are > 90% of NaN)
     return missing_values
 
@@ -360,16 +360,16 @@ def relation_in_newcol(df, column, newcol, show=False):
         plt.show()
 
 
-def t_test(col, alpha, a, b):
+def t_test(col, a, b, alpha):
     """
     Calculates the T-test for the means of two independent samples of scores
     This is a two-sided test for the null hypothesis that 2 independent samples have identical average (expected) values
     This test assumes that the populations have identical variances by default
-    :param col:
-    :param alpha:
-    :param a:
-    :param b:
-    :return:
+    :param col: Column concerned
+    :param alpha: Statistic parameter
+    :param a: Subset A
+    :param b: Subset B
+    :return: String
     """
     stat, p = ttest_ind(a[col].dropna(), b[col].dropna())
     if p < alpha:
@@ -378,14 +378,14 @@ def t_test(col, alpha, a, b):
         return 'X'
 
 
-def student_test(column, t_test):
+def student_test(column, a, b, alpha=0.02):
     """
     Print for each column, the result of the Student's test
     :param column: Column
     :param t_test: Student test
     """
     for col in column:
-        print(f'{col :-<50} {t_test(col)}')
+        print(f'{col :-<50} {t_test(col, a, b, alpha)}')
 
     # Exploration of DATA #
 
@@ -471,22 +471,22 @@ def evaluation(model, X_train, y_train, X_test, y_test):
     plt.plot(N, train_score.mean(axis=1), label='Train score')
     plt.plot(N, val_score.mean(axis=1), label='Validation score')
     plt.legend()
+    plt.show()
 
 
 def exploration_of_data():
     df = load_dataset(dataset_path=DATASET_PATH)
-    # # general_info(df, 111)
-    # NaN = checkNan(df)
-    # constructHeatMap(NaN)
-    # print(missing_values_percentage(df, 0.98))
-    # print(missing_rate(df))
+    general_info(df, 111)
+    NaN = checkNan(df)
+    constructHeatMap(NaN)
+    print(missing_values_percentage(df, 0.98))
+    print(missing_rate(df))
 
     df = keep_values(df, percentage_to_keep=0.9)
     df = dropColumn(df, 'Patient ID')
-    # analyse_target(df, "SARS-Cov-2 exam result", True)
-    #
-    # draw_histograms(df, 'object')
+    analyse_target(df, "SARS-Cov-2 exam result", True)
 
+    draw_histograms(df, 'object')
 
     """
     Target/Variables relation :
@@ -501,30 +501,30 @@ def exploration_of_data():
     viral_columns = rate_borned(df, MR, 0.75, 0.88)
 
     relation = [(positive_df, 'positive'), (negative_df, 'negative')]
-    # display_relations(blood_columns, relation)
-
+    display_relations(blood_columns, relation)
 
     # Relation Target and Age
-    # count_histogram(df, 'Patient age quantile', 'SARS-Cov-2 exam result')
+    count_histogram(df, 'Patient age quantile', 'SARS-Cov-2 exam result')
 
     # Relation, comparison between collection : Target and Viral
-    # print(crossTable(df, 'SARS-Cov-2 exam result', 'Influenza A'))
-    # crossTables(df, viral_columns, "SARS-Cov-2 exam result")
+    print(crossTable(df, 'SARS-Cov-2 exam result', 'Influenza A'))
+    crossTables(df, viral_columns, "SARS-Cov-2 exam result")
 
     """
     Advanced analysis
     """
 
     # Blood / Blood relations
-    # pairwise_relationships(df, blood_columns)
-
-    # Blood / Age relations view_regression(df, blood_columns, "Patient age quantile", "SARS-Cov-2 exam result")  # A
-    # bit messy, using correslation instead, could be used for more analysis
-    # check_correlation(df, "Patient age quantile")  # Check if age is correlated with anything ?
+    pairwise_relationships(df, blood_columns)
 
     # Blood / Age relations
-    # print(crossTable(df, 'Influenza A', 'Influenza A, rapid test'))
-    # print(crossTable(df, 'Influenza B', 'Influenza B, rapid test'))
+    view_regression(df, blood_columns, "Patient age quantile", "SARS-Cov-2 exam result")  # A
+    # bit messy, using correslation instead, could be used for more analysis
+    check_correlation(df, "Patient age quantile")  # Check if age is correlated with anything ?
+
+    # Blood / Age relations
+    print(crossTable(df, 'Influenza A', 'Influenza A, rapid test'))
+    print(crossTable(df, 'Influenza B', 'Influenza B, rapid test'))
 
     # Viral / Blood relations
     df['is sick'] = np.sum(df[viral_columns[:-2]] == 'detected', axis=1) >= 1
@@ -534,7 +534,8 @@ def exploration_of_data():
     not_sick_df = qual_to_quan(df, "is sick", False)
 
     relation = [(sick_df, 'is sick'), (not_sick_df, 'is not sick')]
-    # display_relations(blood_columns, relation)
+
+    display_relations(blood_columns, relation)
 
     # Relation Hospitalisation / is Sick
     def hospitalisation(df):
@@ -553,7 +554,7 @@ def exploration_of_data():
     df['status'] = df.apply(hospitalisation, axis=1)
 
     # Relation Hospitalisation / Blood
-    relation_in_newcol(df, blood_columns, df['status'], True)
+    relation_in_newcol(df, blood_columns, df['status'], False)
 
     # Student's Test : needs to have balanced sample
     positive_df.shape  # (558, 38)
@@ -561,23 +562,24 @@ def exploration_of_data():
 
     balanced_neg = negative_df.sample(positive_df.shape[0])  # Same sample dimension
 
-    # for col in blood_columns:
-    #  print(f'{col :-<50} {t_test(col, 0.02, balanced_neg, positive_df)}')
+    student_test(blood_columns, balanced_neg, positive_df, alpha=0.02)
 
 
 if __name__ == "__main__":
-    exploration_of_data()
+    # exploration_of_data()
 
     # Preprocessing #
-"""
-    df2 = load_dataset(dataset_path=DATASET_PATH)
+    # First we recreate the subset we need
+    df2 = load_dataset(dataset_path=DATASET_PATH)  # Working on a different version of the dataset is a good practice
     MR2 = missing_rate(df2)
     blood_columns2 = list(rate_borned(df2, MR2, 0.88, 0.9))
     viral_columns2 = list(rate_borned(df2, MR2, 0.75, 0.88))
     important_columns = ['Patient age quantile', 'SARS-Cov-2 exam result']
-    df2 = df2[important_columns + blood_columns2]  # + viral_columns2]
-    # print(displayHead(df2, 111, every_column=True, every_row=False))
+
+    df2 = df2[important_columns + blood_columns2]  # + viral_columns2], finally not a great impact
+
     trainset, testset = train_test_split(df2, test_size=0.2, random_state=0)
+
 
     # Encoding
     swap_values = {'positive': 1, 'negative': 0, 'detected': 1, 'not_detected': 0}
@@ -587,6 +589,10 @@ if __name__ == "__main__":
     X_test, y_test = preprocessing(testset, target, 'object', swap_values, 'is sick',
                                    viral_columns2)
 
+    model = DecisionTreeClassifier(random_state=0)
+    evaluation(model, X_train, y_train, X_test, y_test)
+
+    """
     # Modelisation
     # model = make_pipeline(SelectKBest(f_classif, k=7), RandomForestClassifier(random_state=0))
 
