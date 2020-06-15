@@ -319,8 +319,8 @@ def display_relations(column_name, relation):
 relation = [(positive_df, 'positive'), (negative_df, 'negative')]
 display_relations(blood_columns, relation)
 ```
-Some parameters doesn't seem to vary if the result of the exam is positive or negative, for instance :
-<ins>Hematocrit:</ins>
+Some parameters doesn't seem to vary if the result of the exam is positive or negative:
+
 ![Hematocrit](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Hematocrit.png)
 
 
@@ -342,7 +342,62 @@ At the contrary, three variables seems to be correlated to the SARS-Cov-2 exam r
 --> These rates are different between patients positively and negatively tested for the Covid19. We have to check later if it seems correlated.
 
 *	Target/Age : Young individuals seems less likely to be tested positives (it doesn’t mean they are not infected). The exact age is unknown ;
+
+```python
+def count_histogram(df, x, hue, show=True):
+    """
+    Shows the counts of observations in each categorical bin using bars
+    :param show: True to display the plot
+    :param df: Dataframe used
+    :param x: abscisse
+    :param hue:Legend title
+    """
+    sns.countplot(x=x, hue=hue, data=df)
+    if show:
+        plt.show()
+
+count_histogram(df, 'Patient age quantile', 'SARS-Cov-2 exam result')
+```
+
+![Target_Age](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Target_Age.png)
+
 *	Target/Viral : It’s rare to find people with more than one sickness at a time.
+
+```python
+def crossTable(df, cross1, cross2):
+    """
+    Compute a simple cross tabulation of two (or more) factors
+    :param df: Dataframe used
+    :param cross1: First variable to cross with
+    :param cross2: Second variable to cross with
+    :return: Cross tabulation of the data
+    """
+    return pd.crosstab(df[cross1], df[cross2])
+
+
+def crossTables(df, column_name, cross):
+    """
+    Compute a cross tab for every value of the column with a parameter
+    :param df: Dataframe used
+    :param column_name: The column where the values are taken from
+    :param cross: The parameter which the one the values are crossed with
+    """
+    cols = column_name.unique()
+    ceiling = math.ceil(len(cols) / 5)
+    f, axes = plt.subplots(5, ceiling, figsize=(12, 12), sharex=True)
+    for index, col in enumerate(cols):
+        col_index = index % 5
+        row_index = index // 5
+        sns.heatmap(pd.crosstab(df[cross], df[col]), annot=True, fmt='d', ax=axes[col_index, row_index])
+
+    plt.show()
+    
+crossTables(df, viral_columns, "SARS-Cov-2 exam result")    
+```
+
+![crossTable_sickness](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/crossTable_sickness.png)
+
+
 
 As already said, Rhinovirus/Entérovirus positive may implied a negative Covid19 result. This hypothesis requires to be validate because it’s likely that the area from where the data are collected just suffered an outberak simultenously to the Covid19.
 
