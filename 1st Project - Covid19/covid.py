@@ -345,10 +345,15 @@ def relation_in_newcol(df, column, newcol, show=False):
     :param newcol: Second column
     :return:
     """
-    for col in column:
+    cols = column.unique()
+    ceiling = math.ceil(len(cols) / 5)
+    f, axes = plt.subplots(5, ceiling, figsize=(12, 12), sharex=True)
+    for index, col in enumerate(cols):
         plt.figure()
+        col_index = index % 5
+        row_index = index // 5
         for cat in newcol.unique():
-            sns.distplot(df[newcol == cat][col], label=cat)
+            sns.distplot(df[newcol == cat][col], label=cat, ax=axes[col_index, row_index])
         plt.legend()
 
     if show:
@@ -396,20 +401,6 @@ def encoding(df, type_values, swap_these_values):
     for col in df.select_dtypes(type_values).columns:
         df.loc[:, col] = df[col].map(swap_these_values)
     return df
-
-
-def hospitalisation(df):
-    if df['Patient addmited to regular ward (1=yes, 0=no)'] == 1:
-        return 'surveillance'
-
-    elif df['Patient addmited to semi-intensive unit (1=yes, 0=no)'] == 1:
-        return 'semi-intensives'
-
-    elif df['Patient addmited to intensive care unit (1=yes, 0=no)'] == 1:
-        return 'ICU'
-
-    else:
-        return 'unknown'
 
 
 def feature_engineering(df, column):
@@ -543,14 +534,26 @@ def exploration_of_data():
     not_sick_df = qual_to_quan(df, "is sick", False)
 
     relation = [(sick_df, 'is sick'), (not_sick_df, 'is not sick')]
-    display_relations(blood_columns, relation)
+    # display_relations(blood_columns, relation)
 
     # Relation Hospitalisation / is Sick
+    def hospitalisation(df):
+        if df['Patient addmited to regular ward (1=yes, 0=no)'] == 1:
+            return 'Surveillance'
+
+        elif df['Patient addmited to semi-intensive unit (1=yes, 0=no)'] == 1:
+            return 'Semi-intensives'
+
+        elif df['Patient addmited to intensive care unit (1=yes, 0=no)'] == 1:
+            return 'ICU'
+
+        else:
+            return 'Unknown'
+
     df['status'] = df.apply(hospitalisation, axis=1)
-    # print(df.head())
 
     # Relation Hospitalisation / Blood
-    relation_in_newcol(df, blood_columns, df['status'])
+    relation_in_newcol(df, blood_columns, df['status'], True)
 
     # Student's Test : needs to have balanced sample
     positive_df.shape  # (558, 38)
