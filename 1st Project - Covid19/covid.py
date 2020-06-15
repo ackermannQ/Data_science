@@ -188,10 +188,8 @@ def draw_histograms(df, data_type='float', nb_columns=4):
             sns.distplot(df[col], ax=axes[row_index, col_index])
 
         if data_type == 'object':
-            # axes[col_index, row_index].pie(fracs, labels=labels, autopct='%1.1f%%', shadow=True)
-            # axes[col_index, row_index].pie(df[col].value_counts(), autopct='%1.1f%%', shadow=True)
             df[col].value_counts().plot.pie()
-
+            plt.show()
     plt.show()
 
 
@@ -496,7 +494,6 @@ def exploration_of_data():
     # analyse_target(df, "SARS-Cov-2 exam result", True)
     #
     # draw_histograms(df, 'object')
-    
 
 
     """
@@ -512,7 +509,8 @@ def exploration_of_data():
     viral_columns = rate_borned(df, MR, 0.75, 0.88)
 
     relation = [(positive_df, 'positive'), (negative_df, 'negative')]
-    # display_relations(blood_columns, relation)
+    display_relations(blood_columns, relation)
+
 
     # Relation Target and Age
     # count_histogram(df, 'Patient age quantile', 'SARS-Cov-2 exam result')
@@ -551,7 +549,6 @@ def exploration_of_data():
     # print(df.head())
 
     # Relation Hospitalisation / Blood
-    print("-----------------------------")
     relation_in_newcol(df, blood_columns, df['status'])
 
     # Student's Test : needs to have balanced sample
