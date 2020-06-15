@@ -474,10 +474,75 @@ The highest correlation is 0.281655, which is very week
   * Viral / Viral : After some research, the influeza rapid tests giv bad results and may need to be droped ;
   
   
-  *	Relation sickness / Blood_data : Blood rates between regular patient and Covid19 patient are différent (lymphocyte, hemoglobine et hematocrit) ;
+  *	Relation sickness / Blood_data : Blood rates between regular patient and Covid19 patient are different (lymphocyte, hemoglobine et hematocrit) ;
+  ```python
+  def display_relations(column_name, relation):
+    """
+    Display the relation between diff
+    display_relations(blood_columns, relation)
+    :param column_name: Column the relation are being tested with
+    :param relation: List of relation to observe
+    Ex : relation = [(positive_df, 'positive'), (negative_df, 'negative')] shows the relation between the
+    blood_column and the positive and negative results
+    :return:
+    """
+    for col in column_name:
+        plt.figure()
+        for rel, lab in relation:
+            sns.distplot(rel[col], label=lab)
+        plt.legend()
+    plt.show()
+    
+display_relations(blood_columns, relation)
+  ```
 
 ![Differences](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Differences.png)
 
+  * Relation hospitalisation/blood :
+  
+  ```python
+      def hospitalisation(df):
+        if df['Patient addmited to regular ward (1=yes, 0=no)'] == 1:
+            return 'Surveillance'
+
+        elif df['Patient addmited to semi-intensive unit (1=yes, 0=no)'] == 1:
+            return 'Semi-intensives'
+
+        elif df['Patient addmited to intensive care unit (1=yes, 0=no)'] == 1:
+            return 'ICU'
+
+        else:
+            return 'Unknown'
+    
+  def relation_in_newcol(df, column, newcol, show=False):
+    """
+    Display the relation between a specified column and another one
+    :param show: True: Display the plot(s)
+    :param df: Dataframe used
+    :param column: First column
+    :param newcol: Second column
+    :return:
+    """
+    cols = column.unique()
+    ceiling = math.ceil(len(cols) / 5)
+    f, axes = plt.subplots(5, ceiling, figsize=(12, 12), sharex=True)
+    for index, col in enumerate(cols):
+        plt.figure()
+        col_index = index % 5
+        row_index = index // 5
+        for cat in newcol.unique():
+            sns.distplot(df[newcol == cat][col], label=cat, ax=axes[col_index, row_index])
+        plt.legend()
+
+    if show:
+        plt.show()
+
+df['status'] = df.apply(hospitalisation, axis=1)
+relation_in_newcol(df, blood_columns, df['status'], True)
+
+  ```
+![Hospitalisation](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Hospitalisation.png)  
+  
   
 *	NaN analyse : viral 1350 (92%/8%), blood sample 600 (87%/13%), previously : 90% of the dataset.
 
