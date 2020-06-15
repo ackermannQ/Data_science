@@ -760,7 +760,6 @@ df2 = df2[important_columns + blood_columns2]  # + viral_columns2], finally not 
 **During the Exploratory Data Analysis, it appears that lymphacytes and other blood analysis where a symptom of being sick. It's something we have to consider now, that could improve our model **
 
 We give a shot at a random forest classifier:
-
 ![RandomForestClassifier](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/RandomForestClassifier.png)
 
 ```python
