@@ -590,7 +590,7 @@ blood_columns2 = list(rate_borned(df2, MR2, 0.88, 0.9))
 viral_columns2 = list(rate_borned(df2, MR2, 0.75, 0.88))
 important_columns = ['Patient age quantile', 'SARS-Cov-2 exam result']
 
-df2 = df2[important_columns + blood_columns2]  # + viral_columns2], finally viral_columns2 does not have a great impact
+df2 = df2[important_columns + blood_columns2 + viral_columns2]
 
 trainset, testset = train_test_split(df2, test_size=0.2, random_state=0)
 ```    
@@ -750,6 +750,45 @@ build_feature_importance(DecisionTreeClassifier, X_train, y_train)
 
 ![DecisionTreeClassifier2](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Feature_importance.png)
 
+It's interesting to see that for our model, the most important values are related to the blood, so we can remove the virus_column from our dataset
+
+```python
+df2 = df2[important_columns + blood_columns2 + viral_columns2] becomes :
+df2 = df2[important_columns + blood_columns2]  # + viral_columns2], finally not a great impact
+```
+
+**During the Exploratory Data Analysis, it appears that lymphacytes and other blood analysis where a symptom of being sick. It's something we have to consider now, that could improve our model **
+
+We give a shot at a random forest classifier:
+
+![RandomForestClassifier](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/RandomForestClassifier.png)
+
+```python
+def feature_engineering(df, column):
+    """
+    Feature engineering on column
+    :param df: Dataframe used
+    :param column: Column targeted with the feature engineering
+    :return: A dataframe fetaure engineered
+    """
+    # df['is sick'] = 'no'
+    missing_rate = df.isna().sum() / df.shape[0]
+    viral_columns2 = list(df.columns[(missing_rate < 0.80) & (missing_rate > 0.75)])
+    df['is sick'] = df[viral_columns2].sum(axis=1) >= 1
+    df = df.drop(viral_columns2, axis=1)
+    return df
+
+model = RandomForestClassifier(random_state=0)
+```
+
+As we can see, the prediction is still pretty weak..
+Maybe removing the features where the importance is less than 0.05 could be a solution, but for now a SelectKBest will be used:
+```python
+
+
+model1 = RandomForestClassifier(random_state=0)
+model2 = make_pipeline(SelectKBest(f_classif, k=10), RandomForestClassifier(random_state=0))
+```
 
 ## [Modelisation](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 Four different models were tested and evaluated, using the learning curve method.
