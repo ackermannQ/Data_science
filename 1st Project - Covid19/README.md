@@ -405,13 +405,80 @@ As already said, Rhinovirus/Entérovirus positive may implied a negative Covid19
 It may be unrelated.
 
 
-## [Advanced analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#advanced-analysis)
+## [Advanced analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 
 * Relation between the variables :
-  * Blood_data / Blood_data : some variables are correlated (+0.9 !) ;
+  * Blood_data / Blood_data : some variables are correlated (+ 0.9 !) ;
+  
+```python
+def pairwise_relationships(df, variable, cluster=True):
+    """
+    Display a pairplot, clustermap or heatmap
+    :param df: Dataframe used
+    :param variable: Variable studied
+    :param cluster: True: Clustermap display, False: Heatmap displayed
+    """
+    sns.pairplot(df[variable])
+    if cluster:
+        sns.clustermap(df[variable].corr())
+    else:
+        sns.heatmap(df[variable].corr())
+    plt.show()
+    
+    
+pairwise_relationships(df, blood_columns)
+```
+  
+![Visu_correlation](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Visu_correlation.png)
+
+
   * Blood_data / Age : week correlation ;
-  * Viral / Viral : influeza rapid test gives bad results and needs to be droped ;
-  *	Relation sickness / Blood_data : Blood rates between regular patient and covid19 patient are différent (lymphocyte, hemoglobine et hematocrite) ;
+  
+  ```python
+  def check_correlation(df, value_for_correlation):
+    """
+    Check if the featurs are correlated
+    :param df: Dataframe used
+    :param value_for_correlation: Specified the value with which every other parameter would be correlated checked
+    :return: The values corresponding to the correation between value_for_correlation and every other parameters
+    """
+    print(df.corr()[value_for_correlation].sort_values())
+    return df.corr()[value_for_correlation].sort_values()
+
+check_correlation(df, "Patient age quantile"))
+```    
+
+Variable name | Correlation
+-------- | --------
+Leukocytes          |                                    -0.166386
+Platelets            |                                   -0.158683
+Lymphocytes           |                                  -0.125935
+Mean corpuscular hemoglobin concentration (MCHC) |       -0.124671
+Red blood Cells          |                               -0.037510
+Patient addmited to intensive care unit (1=yes, 0=no) |  -0.035772
+Patient addmited to semi-intensive unit (1=yes, 0=no) |   0.015736
+Eosinophils                    |                          0.022085
+Patient addmited to regular ward (1=yes, 0=no)    |       0.046166
+Monocytes                      |                          0.050962
+Hemoglobin        |                                       0.060320
+Hematocrit        |                                       0.096808
+Basophils            |                                    0.107525
+Mean platelet volume       |                              0.119449
+Red blood cell distribution width (RDW)    |              0.166429
+Mean corpuscular hemoglobin (MCH)       |                 0.197394
+Mean corpuscular volume (MCV)       |                     0.281655
+Patient age quantile            |                         1.000000
+
+The highest correlation is 0.281655, which is very week
+
+  * Viral / Viral : After some research, the influeza rapid tests giv bad results and may need to be droped ;
+  
+  
+  *	Relation sickness / Blood_data : Blood rates between regular patient and Covid19 patient are différent (lymphocyte, hemoglobine et hematocrit) ;
+
+![Differences](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Differences.png)
+
+  
 *	NaN analyse : viral 1350 (92%/8%), blood sample 600 (87%/13%), previously : 90% of the dataset.
 
 Some parameters are not related, as shown for the MCH and the hopsitalisation service :
