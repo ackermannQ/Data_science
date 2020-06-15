@@ -14,7 +14,7 @@
 
 [Preprocessing and encoding](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#preprocessing-and-encoding)
 
-[Modelization](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#modelization)
+[Modelisation](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#modelisation)
 
 Conclusion
 
@@ -698,12 +698,10 @@ When the learning curves are plotted,  immediately it seems that our model is ov
 ![DecisionTreeClassifier](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/DecisionTreeClassifier.png) 
 
 
-[[87  8]
+[[87  8]<br/>
  [10  6]]
  
       X      | precision  |  recall | f1-score |  support
------------- | ------------ | ------------ | ------------ | ------------
-
            0    |   0.90  |    0.92  |    0.91   |     95
            1    |   0.43   |   0.38  |    0.40   |     16
     accuracy    |     X    |   X     |    0.84   |    111
