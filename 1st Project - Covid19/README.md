@@ -148,17 +148,46 @@ Results of the test for SARS-Cov-2 :
 
 It’s very unbalanced, and will require to sample the negatives results during the subset analysis to get relevant information.
 Let's have a look at our variables :
+```python
+def draw_histograms(df, data_type='float', nb_columns=4):
+    cols = df.select_dtypes(data_type)
+    ceiling = math.ceil(len(cols.columns) / nb_columns)
+    f, axes = plt.subplots(nb_columns, ceiling, figsize=(7, 7), sharex=True)
+    for index, col in enumerate(cols):
+        col_index = index % nb_columns
+        row_index = index // nb_columns
+
+        if data_type == 'float' or data_type == 'int':
+            sns.distplot(df[col], ax=axes[row_index, col_index])
+
+        if data_type == 'object':
+            df[col].value_counts().plot.pie()
+            plt.show()
+    plt.show()
+```
+
 * <ins>Quantitatives :</ins>
+```python
+draw_histograms(df, 'float')
+```
+
 ![Quantitatives](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Figure_1.png)
 
 
 * <ins>Qualitatives :</ins>
-![Qualitatives](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Figure_1.png)
+```python
+draw_histograms(df, 'object')
+```
 
+![Qualitatives](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Rhino.png)
+
+
+* <ins>Age quantile :</ins>
+![Age quantile](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Age.png)
 
 Signification of the variables :
 * Variables standardized, somethimes asymetrics, concerning the blood samples ;
-* age quantile : hard to conclude anything because the data have been mathematically shifted or transformed ;
+* Age quantile : hard to conclude anything because the data have been mathematically shifted or transformed ;
 * qualitatives variables : are binaries (0, 1) detected/not detected.
 
 <ins>NB :</ins> Rhinovirus seems to be anormaly high, this hypothesis needs to be checked later.
