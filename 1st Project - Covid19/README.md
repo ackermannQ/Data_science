@@ -579,21 +579,149 @@ X | X | H0 rejected | X | X | X | X | H0 rejected | X | X | H0 rejected | X | H0
 
 
 ## [Preprocessing and encoding](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
-The missing values are eliminated - using the rate_borned() function from the data_lib is created, and the dataset is splitted between a trainset and a trainset.
-The relevant qualitatives values are encoded - using the preprocessing() function from the data_lib.
+* We create a brand new dataset we can work on without corrupting the previous one
+* The missing values are eliminated
+* The dataset is splitted between a trainset and a trainset
 
-## [Modelization](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
+```python
+df2 = load_dataset(dataset_path=DATASET_PATH)  # Working on a different version of the dataset is a good practice
+MR2 = missing_rate(df2)
+blood_columns2 = list(rate_borned(df2, MR2, 0.88, 0.9))
+viral_columns2 = list(rate_borned(df2, MR2, 0.75, 0.88))
+important_columns = ['Patient age quantile', 'SARS-Cov-2 exam result']
+
+df2 = df2[important_columns + blood_columns2]  # + viral_columns2], finally viral_columns2 does not have a great impact
+
+trainset, testset = train_test_split(df2, test_size=0.2, random_state=0)
+```    
+
+### Encoding 
+Creation of a dictionnary to change the qualitative values to quantitatives
+```python
+def encoding(df, type_values, swap_these_values):
+    """
+    Encode qualitatives values
+    :param df: Dataframe used
+    :param type_values: Type of the value worked with
+    :param swap_these_values: Swap the values {"Value 0": 0, "Value1": 1, ...}
+    :return: A dataframe with the qualitatives values swaped to quantitatives values
+    """
+    for col in df.select_dtypes(type_values).columns:
+        df.loc[:, col] = df[col].map(swap_these_values)
+    return df
+swap_values = {'positive': 1, 'negative': 0, 'detected': 1, 'not_detected': 0}
+encoding(df2, 'object', swap_these_values)
+```
+
+Then, an imputation function is created to transform the data.
+First, the missing values are removed. Since it's going to create some issues, we are likely to change this function later
+
+```python
+def imputation(df):
+    """
+    Imputation function
+    :param df: Dataframe used
+    :return: The dataframe with the imputation applied
+    """
+    return df.dropna(axis=0)
+    
+imputation(df2)
+```
+
+Now, we can use these function to preprocess our dataset:
+```python
+def preprocessing(df, Target, type_values, swap_these_values, new_feature, column):
+    """
+    Global preprocessing function
+    :param df: Dataframe used
+    :param Target: Target variable wanted predicted
+    :param type_values: Type of the values
+    :param swap_these_values: Values swaped
+    :param new_feature: New_feature used for the feature engineering
+    :param column: Column concerned by the feature engineering
+    :return: X: Features and y: Target to predict
+    """
+    df = encoding(df, type_values, swap_these_values)
+    feature_engineering(df, column)
+    df = imputation(df)
+    X = dropColumn(df, Target)
+    y = df[Target]
+    
+    return X, y
+    
+swap_values = {'positive': 1, 'negative': 0, 'detected': 1, 'not_detected': 0}
+target = 'SARS-Cov-2 exam result'
+X_train, y_train = preprocessing(trainset, target, 'object', swap_values, 'is sick',
+                                 viral_columns2)
+X_test, y_test = preprocessing(testset, target, 'object', swap_values, 'is sick',
+                               viral_columns2)    
+```
+
+Thus, the training and testing datasets are created.
+Now, a first model is quickly tested to find out the reliability of what we are doing from the beginning
+We are going to test a decision tree classifier because it's quick and will give us a good understanding of the important parameters
+```python
+def evaluation(model, X_train, y_train, X_test, y_test):
+    """
+    Evaluation of the model, compare on the same plot the prediction on the trainset and the testset
+    Display the confusion matrix and classification report
+    Shows the overfitting/undefitting
+    :param model: model used
+    :param X_train: X trainset
+    :param y_train: y trainset
+    :param X_test: X testset
+    :param y_test: y testset
+    """
+    model.fit(X_train, y_train)
+    ypred = model.predict(X_test)
+
+    print(confusion_matrix(y_test, ypred))
+    print(classification_report(y_test, ypred))
+
+    N, train_score, val_score = learning_curve(model, X_train, y_train, cv=4, scoring='f1',
+                                               train_sizes=np.linspace(0.1, 1, 10))
+
+    plt.figure(figsize=(12, 8))
+    plt.plot(N, train_score.mean(axis=1), label='Train score')
+    plt.plot(N, val_score.mean(axis=1), label='Validation score')
+    plt.legend()
+    plt.show()
+
+
+model = DecisionTreeClassifier(random_state=0)
+evaluation(model, X_train, y_train, X_test, y_test)
+```
+
+When the learning curves are plotted,  immediately it seems that our model is overfitting : the train set is perfectly learnt but the machine can't adjust to the testing set
+
+<ins>Decision Tree Classifier :</ins>
+![DecisionTreeClassifier](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/DecisionTreeClassifier.png) 
+
+
+[[87  8]
+ [10  6]]
+ 
+      X      | precision  |  recall | f1-score |  support
+------------ | ------------ | ------------ | ------------ | ------------
+           0    |   0.90  |    0.92  |    0.91   |     95
+           1    |   0.43   |   0.38  |    0.40   |     16
+    accuracy    |     X    |   X     |    0.84   |    111
+   macro avg    |   0.66   |   0.65  |    0.65   |    111
+weighted avg    |   0.83   |   0.84  |    0.83   |    111
+
+
+## [Modelisation](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 Four different models were tested and evaluated, using the learning curve method.
 
-RandomForest :
+<ins>RandomForest :</ins>
 Very flexible and can be applied to both classification and regression.
 ![RandomForest](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/RandomForest.png)
 
-AdaBoost :
+<ins>AdaBoost :</ins>
 ![AdaBoost](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/Adaboost.png)
 
-Svm :
+<ins>Svm :</ins>
 ![Svm](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/SVM.png)
 
-KNN :
+<ins>KNN :</ins>
 ![KNN](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/KNN.png)
