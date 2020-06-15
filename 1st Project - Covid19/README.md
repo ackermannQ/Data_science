@@ -251,7 +251,7 @@ Signification of the variables :
 
 Relation variables to target :
 
-The first thing to do in order to facilitate the analysis is to create two subsets associated with the data coming from blood exams and viral exams:
+The first thing to do in order to facilitate the analysis is to create subsets associated with the data coming from blood exams and viral exams, and to regroup positive and negative result of the Covid19 test exam:
 ```python
 def qual_to_quan(df, target, criteria):
     """
@@ -267,14 +267,79 @@ def qual_to_quan(df, target, criteria):
 
 positive_df = qual_to_quan(df, "SARS-Cov-2 exam result", 'positive')
 negative_df = qual_to_quan(df, "SARS-Cov-2 exam result", 'negative')
+
+def missing_rate(df):
+    """
+    Get for each column (feature) the percentage of missing value
+    :param df: Dataframe used
+    :return: Percentage of missing value
+    """
+    return df.isna().sum() / df.shape[0]
+
+def rate_borned(df, missing_rate, rate_inf, rate_sup):
+    """
+    Creates a subset based on the missing rates
+    Ex:
+    blood_columns = rate_borned(df, MR, 0.88, 0.9) create column where the missing rate MR is included between
+    0.88 and 0.9
+    :param df: Dataframe used
+    :param missing_rate: missing_rate to compare the rates
+    :param rate_inf: Decision rate inf
+    :param rate_sup: Decision rate sups
+    :return: The column labels of the DataFrame corresponding to the criteria missing rate, rate inf and sup
+
+    """
+    return df.columns[(missing_rate < rate_sup) & (missing_rate > rate_inf)]
+    
+MR = missing_rate(df)
+blood_columns = rate_borned(df, MR, 0.88, 0.9)
+viral_columns = rate_borned(df, MR, 0.75, 0.88)
+
 ```
 
+Now, a relation between these subset can be searched :
+```python
+def display_relations(column_name, relation):
+    """
+    Display the relation between diff
+    display_relations(blood_columns, relation)
+    :param column_name: Column the relation are being tested with
+    :param relation: List of relation to observe
+    Ex : relation = [(positive_df, 'positive'), (negative_df, 'negative')] shows the relation between the
+    blood_column and the positive and negative results
+    :return:
+    """
+    for col in column_name:
+        plt.figure()
+        for rel, lab in relation:
+            sns.distplot(rel[col], label=lab)
+        plt.legend()
+    plt.show()
+    
+relation = [(positive_df, 'positive'), (negative_df, 'negative')]
+display_relations(blood_columns, relation)
+```
+Some parameters doesn't seem to vary if the result of the exam is positive or negative, for instance :
+<ins>Hematocrit:</ins>
+![Hematocrit](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Hematocrit.png)
+
+
+At the contrary, three variables seems to be correlated to the SARS-Cov-2 exam result.
+
 * Target/Blood, idea of features that may be correlated :
-  * Leucocyte ;
-  *	Monocyte ;
+  * Leukocytes ;
+  *	Monocytes ;
   *	Platelets.
 
---> These rates are different between patient positively and negatively tested for the Covid19. We have to check later if it seems likely correlated.
+
+![Leukocytes](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Leukocytes.png)
+
+![Monocytes](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Monocytes.png)
+
+![Platelets](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Platelets.png)
+
+
+--> These rates are different between patients positively and negatively tested for the Covid19. We have to check later if it seems correlated.
 
 *	Target/Age : Young individuals seems less likely to be tested positives (it doesn’t mean they are not infected). The exact age is unknown ;
 *	Target/Viral : It’s rare to find people with more than one sickness at a time.
