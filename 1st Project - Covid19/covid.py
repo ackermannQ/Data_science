@@ -282,11 +282,15 @@ def crossTables(df, column_name, cross):
     :param df: Dataframe used
     :param column_name: The column where the values are taken from
     :param cross: The parameter which the one the values are crossed with
-    :return:
     """
-    for col in column_name:
-        plt.figure()
-        sns.heatmap(pd.crosstab(df[cross], df[col]), annot=True, fmt='d')
+    cols = column_name.unique()
+    ceiling = math.ceil(len(cols) / 5)
+    f, axes = plt.subplots(5, ceiling, figsize=(12, 12), sharex=True)
+    for index, col in enumerate(cols):
+        col_index = index % 5
+        row_index = index // 5
+        sns.heatmap(pd.crosstab(df[cross], df[col]), annot=True, fmt='d', ax=axes[col_index, row_index])
+
     plt.show()
 
 
@@ -509,18 +513,18 @@ def exploration_of_data():
     viral_columns = rate_borned(df, MR, 0.75, 0.88)
 
     relation = [(positive_df, 'positive'), (negative_df, 'negative')]
-    display_relations(blood_columns, relation)
+    # display_relations(blood_columns, relation)
 
 
     # Relation Target and Age
     # count_histogram(df, 'Patient age quantile', 'SARS-Cov-2 exam result')
 
     # Relation, comparison between collection : Target and Viral
-    # print(crossTable(df, 'SARS-Cov-2 exam result', 'Influenza A'))
-    # crossTables(df, viral_columns, "SARS-Cov-2 exam result")
+    print(crossTable(df, 'SARS-Cov-2 exam result', 'Influenza A'))
+    crossTables(df, viral_columns, "SARS-Cov-2 exam result")
 
     """
-    Advanced anlysis
+    Advanced analysis
     """
 
     # Blood / Blood relations
