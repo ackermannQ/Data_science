@@ -64,57 +64,119 @@ def displayHead(df, nb_column, every_column=False, every_row=False):
 
 def shapeOfDF(df):
     """
-
-    :param df:
-    :return:
+    Give the shape of the dataframe
+    :param df: Dataframe used
+    :return: (row_number, column_number)
     """
     print("Shape is : {}".format(df.shape))
     return df.shape
 
 
 def typeOfDFValues(df):
+    """
+    Print the types of the values contained in the dataframe
+    :param df: Dataframe used
+    :return: Return a Series containing counts of unique values
+    """
     print(df.dtypes.value_counts())
     return df.dtypes.value_counts()
 
 
 def checkNan(df):
+    """
+    Detect missing values.
+    :param df: Dataframe used
+    :return: Return a boolean same-sized object indicating if the values are NA. NA values, such as None or numpy.NaN,
+     gets mapped to True values. Everything else gets mapped to False values
+     Characters such as empty strings '' or numpy.inf are not considered NA values
+    """
     print(df.isna())
     return df.isna()
 
 
 def constructHeatMap(data, show=False):
+    """
+    Build a heatmap of the variables
+    :param data: Variables that will build the heatmap
+    :param show: Display the plot (Default: False)
+    :return:
+    """
     plt.figure(figsize=(20, 10))
     sns.heatmap(data, cbar=False)
     if show:
         plt.show()
 
 
-def missing_values_percentage(df):
+def missing_values_percentage(df, rate_checked):
+    """
+    Print out the percentage of the missing values, compared to the rate checked
+    :param rate_checked: How many values are missing compared to this rate
+    :param df: Dataframe used
+    :return: The global percentage of missing values in the dataset
+    """
     missing_values = (checkNan(df).sum() / df.shape[0]).sort_values(ascending=True)
-    print(len(missing_values[missing_values > 0.9])  # Ex : 0.98 = 98% of missing values
+    print(len(missing_values[missing_values > rate_checked])  # Ex : rate_checked = 0.98 : 98% of missing values
         / len(missing_values[missing_values > 0.0]))  # Give the percentage of missing values > 90% compared to all
     # the missing values : 68 % (more than half the variables are > 90% of NaN)
     return missing_values
 
 
 def missing_rate(df):
+    """
+    Get for each column (feature) the percentage of missing value
+    :param df: Dataframe used
+    :return: Percentage of missing value
+    """
     return df.isna().sum() / df.shape[0]
 
 
 def keep_values(df, percentage_to_keep=0.9):
+    """
+    Keeps the values where there are less than a certain percentage of missing values
+    :param df: Dataframe used
+    :param percentage_to_keep: Percentage to conserve
+    :return: A new dataframe where the variables with more than percentage_to_keep are conserved
+    """
     return df[df.columns[df.isna().sum() / df.shape[0] < percentage_to_keep]]  # Keep the values where there are
     # less than 90% of missing values
 
 
-def dropColumn(df, colonName):
-    return df.drop(colonName, axis=1)
+def dropColumn(df, columnName):
+    """
+    Remove a column
+    :param df: Dataframe used
+    :param columnName: Name of the column to remove
+    :return: A dataframe without the column droped
+    """
+    return df.drop(columnName, axis=1)
 
 
 def analyse_target(df, target, normalized=False):
+    """
+    Compares the number (or percentage) of each value taken by the feature
+    :param df: Dataframe used
+    :param target: The feature analyzed
+    :param normalized: True: Give the proportion of each value taken by the feature
+    :return: The number/proportion of each value taken by the feature (ex :
+    negative    1
+    positive    9
+
+    or
+
+    negative    0.1
+    positive    0.9
+    """
+    print(df[target].value_counts(normalize=normalized))
     return df[target].value_counts(normalize=normalized)
 
 
 def draw_histograms(df, data_type='float', nb_columns=4):
+    """
+    Draw the histograms/plot pie of the quantitatives/qualitatives variables
+    :param df: Dataframe used
+    :param data_type: type of the data : int, int64, float, float64 or object
+    :param nb_columns: Number of column for the subplot created to display the plots
+    """
     cols = df.select_dtypes(data_type)
     ceiling = math.ceil(len(cols.columns) / nb_columns)
     f, axes = plt.subplots(nb_columns, ceiling, figsize=(7, 7), sharex=True)
@@ -126,25 +188,64 @@ def draw_histograms(df, data_type='float', nb_columns=4):
             sns.distplot(df[col], ax=axes[row_index, col_index])
 
         if data_type == 'object':
-            # ax1 = plt.subplot2grid((col_index, row_index), (col_index, row_index))
+            # axes[col_index, row_index].pie(fracs, labels=labels, autopct='%1.1f%%', shadow=True)
+            # axes[col_index, row_index].pie(df[col].value_counts(), autopct='%1.1f%%', shadow=True)
             df[col].value_counts().plot.pie()
 
     plt.show()
 
 
 def description_object(df, target):
+    """
+     Function used on a variable of interest to get the unique values of the column
+     For example, let us say we want to find the unique values of column 'continent'
+     in a data frame. This would result in all continents in the dataframe.
+    :param df: Dataframe used
+    :param target: Target we want to find unique()
+    :return: numpy.ndarray or ExtensionArray
+    """
     return df[target].unique()
 
 
-def qual_to_quan(df, target, criteria1):
-    return df[df[target] == criteria1]
+def qual_to_quan(df, target, criteria):
+    """
+    Creates a subset (or collection) of the target with a certain criteria
+    Ex: positive_df = qual_to_quan(df, "SARS-Cov-2 exam result", 'positive') creates a subset of the positive results
+    to the Covid19 exam
+    :param df: Dataframe used
+    :param target: Target we want to create a subset from
+    :param criteria: Criteria used to create a subset
+    :return: A dataframe responding to the criteria chosed
+    """
+    return df[df[target] == criteria]
 
 
 def rate_borned(df, missing_rate, rate_inf, rate_sup):
+    """
+    Creates a subset based on the missing rates
+    Ex:
+    blood_columns = rate_borned(df, MR, 0.88, 0.9) create column where the missing rate MR is included between
+    0.88 and 0.9
+    :param df: Dataframe used
+    :param missing_rate: missing_rate to compare the rates
+    :param rate_inf: Decision rate inf
+    :param rate_sup: Decision rate sups
+    :return: The column labels of the DataFrame corresponding to the criteria missing rate, rate inf and sup
+
+    """
     return df.columns[(missing_rate < rate_sup) & (missing_rate > rate_inf)]
 
 
 def display_relations(column_name, relation):
+    """
+    Display the relation between diff
+    display_relations(blood_columns, relation)
+    :param column_name: Column the relation are being tested with
+    :param relation: List of relation to observe
+    Ex : relation = [(positive_df, 'positive'), (negative_df, 'negative')] shows the relation between the
+    blood_column and the positive and negative results
+    :return:
+    """
     for col in column_name:
         plt.figure()
         for rel, lab in relation:
@@ -153,16 +254,38 @@ def display_relations(column_name, relation):
     plt.show()
 
 
-def count_histogram(df, x, hue):
+def count_histogram(df, x, hue, show=True):
+    """
+    Shows the counts of observations in each categorical bin using bars
+    :param show: True to display the plot
+    :param df: Dataframe used
+    :param x: abscisse
+    :param hue:Legend title
+    """
     sns.countplot(x=x, hue=hue, data=df)
-    plt.show()
+    if show:
+        plt.show()
 
 
 def crossTable(df, cross1, cross2):
+    """
+    Compute a simple cross tabulation of two (or more) factors
+    :param df: Dataframe used
+    :param cross1: First variable to cross with
+    :param cross2: Second variable to cross with
+    :return: Cross tabulation of the data
+    """
     return pd.crosstab(df[cross1], df[cross2])
 
 
 def crossTables(df, column_name, cross):
+    """
+    Compute a cross tab for every value of the column with a parameter
+    :param df: Dataframe used
+    :param column_name: The column where the values are taken from
+    :param cross: The parameter which the one the values are crossed with
+    :return:
+    """
     for col in column_name:
         plt.figure()
         sns.heatmap(pd.crosstab(df[cross], df[col]), annot=True, fmt='d')
@@ -170,7 +293,14 @@ def crossTables(df, column_name, cross):
 
 
 def pairwise_relationships(df, variable, cluster=True):
-    # sns.pairplot(df[variable])
+    """
+    
+    :param df:
+    :param variable:
+    :param cluster:
+    :return:
+    """
+    sns.pairplot(df[variable])
     if cluster:
         sns.clustermap(df[variable].corr())
     else:
@@ -287,12 +417,14 @@ def exploration_of_data():
     # # general_info(df, 111)
     # NaN = checkNan(df)
     # constructHeatMap(NaN)
-    # print(missing_values_percentage(df))
+    # print(missing_values_percentage(df, 0.98))
     # print(missing_rate(df))
 
     df = keep_values(df, percentage_to_keep=0.9)
     df = dropColumn(df, 'Patient ID')
+    print('------------------------')
     analyse_target(df, "SARS-Cov-2 exam result", True)
+    print('------------------------')
     draw_histograms(df, 'object')
     
 
