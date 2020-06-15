@@ -9,6 +9,7 @@
 [Exploratory Data Analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#exploratory-data-analysis)
 * [Form analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#form-analysis)  
 * [Substance analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#substance-analysis)  
+* [Advanced analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#advanced-analysis)
 * [Conclusions](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#conclusions)
 
 [Preprocessing and encoding](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#preprocessing-and-encoding)
@@ -403,6 +404,8 @@ As already said, Rhinovirus/Entérovirus positive may implied a negative Covid19
 
 It may be unrelated.
 
+
+## [Advanced analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#advanced-analysis)
 
 * Relation between the variables :
   * Blood_data / Blood_data : some variables are correlated (+0.9 !) ;
