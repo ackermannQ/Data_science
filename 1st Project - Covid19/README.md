@@ -41,6 +41,15 @@ It's good to get familiair with the dataset using the pandas head() function onc
 
 ```python
 def displayHead(df, every_column=False, every_row=False, column_nbr):
+    """
+    Display the relation between diff
+    display_relations(blood_columns, relation)
+    :param column_name: Column the relation are being tested with
+    :param relation: List of relation to observe
+    Ex : relation = [(positive_df, 'positive'), (negative_df, 'negative')] shows the relation between the
+    blood_column and the positive and negative results
+    :return:
+    """
     if every_column:
         pd.set_option('display.max_column', column_nbr)
 
@@ -71,16 +80,25 @@ The target is the « SARS-Cov-2 exam result » taking « positive » or « negat
 A very large part of the dataset is missing :
 
 ```python
-
-def missing_values_percentage(df):
+def missing_values_percentage(df, rate_checked):
+    """
+    Print out the percentage of the missing values, compared to the rate checked
+    :param rate_checked: How many values are missing compared to this rate
+    :param df: Dataframe used
+    :return: The global percentage of missing values in the dataset
+    """
     missing_values = (checkNan(df).sum() / df.shape[0]).sort_values(ascending=True)
-    print(len(missing_values[missing_values > 0.9])  # Ex : 0.98 = 98% of missing values
+    print(len(missing_values[missing_values > rate_checked])  # Ex : rate_checked = 0.98 : 98% of missing values
         / len(missing_values[missing_values > 0.0]))  # Give the percentage of missing values > 90% compared to all
     # the missing values : 68 % (more than half the variables are > 90% of NaN)
     return missing_values
 
-
 def missing_rate(df):
+    """
+    Get for each column (feature) the percentage of missing value
+    :param df: Dataframe used
+    :return: Percentage of missing value
+    """
     return df.isna().sum() / df.shape[0]
 
 ```
@@ -118,6 +136,12 @@ A function is created to conserve the variables with less than 90% of missing va
 
 ```python
 def keep_values(df, percentage_to_keep=0.9):
+    """
+    Keeps the values where there are less than a certain percentage of missing values
+    :param df: Dataframe used
+    :param percentage_to_keep: Percentage to conserve
+    :return: A new dataframe where the variables with more than percentage_to_keep are conserved
+    """
     return df[df.columns[df.isna().sum() / df.shape[0] < percentage_to_keep]]  # Keep the values where there are
     # less than 90% of missing values
     
@@ -127,8 +151,14 @@ df = keep_values(df, percentage_to_keep=0.9)
 Once this function is applied only 39 columns remains, easing the treatment of the data.
 Finally, the "Patient ID" is not a relevant parameter and can be removed using :
 ```python
-def dropColumn(df, colonName):
-    return df.drop(colonName, axis=1)
+def dropColumn(df, columnName):
+    """
+    Remove a column
+    :param df: Dataframe used
+    :param columnName: Name of the column to remove
+    :return: A dataframe without the column droped
+    """
+    return df.drop(columnName, axis=1)
 
 df = dropColumn(df, 'Patient ID')
 ```
@@ -138,6 +168,21 @@ Now let's analyze furthermore the target, especially the rate of positive and ne
 
 ```python
 def analyse_target(df, target, normalized=False):
+    """
+    Compares the number (or percentage) of each value taken by the feature
+    :param df: Dataframe used
+    :param target: The feature analyzed
+    :param normalized: True: Give the proportion of each value taken by the feature
+    :return: The number/proportion of each value taken by the feature (ex :
+    negative    1
+    positive    9
+
+    or
+
+    negative    0.1
+    positive    0.9
+    """
+    print(df[target].value_counts(normalize=normalized))
     return df[target].value_counts(normalize=normalized)
     
 analyse_target(df, "SARS-Cov-2 exam result", True)    
@@ -150,6 +195,12 @@ It’s very unbalanced, and will require to sample the negatives results during 
 Let's have a look at our variables :
 ```python
 def draw_histograms(df, data_type='float', nb_columns=4):
+    """
+    Draw the histograms/plot pie of the quantitatives/qualitatives variables
+    :param df: Dataframe used
+    :param data_type: type of the data : int, int64, float, float64 or object
+    :param nb_columns: Number of column for the subplot created to display the plots
+    """
     cols = df.select_dtypes(data_type)
     ceiling = math.ceil(len(cols.columns) / nb_columns)
     f, axes = plt.subplots(nb_columns, ceiling, figsize=(7, 7), sharex=True)
@@ -183,16 +234,41 @@ draw_histograms(df, 'object')
 
 
 * <ins>Age quantile :</ins>
+
 ![Age quantile](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Age.png)
+
+```python
+sns.distplot(df['Patient age quantile'])
+plt.show()
+```
 
 Signification of the variables :
 * Variables standardized, somethimes asymetrics, concerning the blood samples ;
 * Age quantile : hard to conclude anything because the data have been mathematically shifted or transformed ;
-* qualitatives variables : are binaries (0, 1) detected/not detected.
+* Qualitatives variables : are binaries (0/1, ex: detected/not detected).
 
 <ins>NB :</ins> Rhinovirus seems to be anormaly high, this hypothesis needs to be checked later.
 
 Relation variables to target :
+
+The first thing to do in order to facilitate the analysis is to create two subsets associated with the data coming from blood exams and viral exams:
+```python
+def qual_to_quan(df, target, criteria):
+    """
+    Creates a subset (or collection) of the target with a certain criteria
+    Ex: positive_df = qual_to_quan(df, "SARS-Cov-2 exam result", 'positive') creates a subset of the positive results
+    to the Covid19 exam
+    :param df: Dataframe used
+    :param target: Target we want to create a subset from
+    :param criteria: Criteria used to create a subset
+    :return: A dataframe responding to the criteria chosed
+    """
+    return df[df[target] == criteria]
+
+positive_df = qual_to_quan(df, "SARS-Cov-2 exam result", 'positive')
+negative_df = qual_to_quan(df, "SARS-Cov-2 exam result", 'negative')
+```
+
 * Target/Blood, idea of features that may be correlated :
   * Leucocyte ;
   *	Monocyte ;
@@ -201,7 +277,7 @@ Relation variables to target :
 --> These rates are different between patient positively and negatively tested for the Covid19. We have to check later if it seems likely correlated.
 
 *	Target/Age : Young individuals seems less likely to be tested positives (it doesn’t mean they are not infected). The exact age is unknown ;
-*	 Target/Viral : It’s rare to find people with more than one sickness at a time.
+*	Target/Viral : It’s rare to find people with more than one sickness at a time.
 
 As already said, Rhinovirus/Entérovirus positive may implied a negative Covid19 result. This hypothesis requires to be validate because it’s likely that the area from where the data are collected just suffered an outberak simultenously to the Covid19.
 
