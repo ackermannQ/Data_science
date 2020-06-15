@@ -498,7 +498,7 @@ display_relations(blood_columns, relation)
 
 ![Differences](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Differences.png)
 
-  * Relation hospitalisation/blood :
+  * Relation hospitalisation/blood : Important parameter if we need to predict the service a patient needs to be orientated to !
   
   ```python
       def hospitalisation(df):
@@ -546,7 +546,8 @@ relation_in_newcol(df, blood_columns, df['status'], True)
   
 *	NaN analyse : viral 1350 (92%/8%), blood sample 600 (87%/13%), previously : 90% of the dataset.
 
-Some parameters are not related, as shown for the MCH and the hopsitalisation service :
+
+--> Some parameters are not related, as shown for the MCH and the hopsitalisation service :
 
 ![MCH](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/MCH.png)
 
@@ -555,9 +556,11 @@ Others seems to be in direct correlation with the service where the patient get 
 
 ![Monocytes](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/Monocytes.png)
 
+
+
 __Student’s test (H0) :__
-*	Patients infected with covid-19 have higher leucocyte, monocyte et platelets (+ eosinophils) rate than regular individuals ;
-  *	H0 = These average rates are EQUALS between people tested positive and negative to covid-19.
+*	Patients infected with Covid19 have higher leucocyte, monocyte et platelets (+ eosinophils) rate than regular individuals ;
+  *	H0 Rejected = These average rates are EQUALS between people tested positive and negative to covid-19.
 
 X : Not relevant because it was not an hypothesis needed to be tested.
 
