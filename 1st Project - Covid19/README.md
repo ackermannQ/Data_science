@@ -13,6 +13,9 @@
 * [Conclusions](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#conclusions)
 
 [Preprocessing and encoding](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#preprocessing-and-encoding)
+* [Preprocessing](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#preprocessing)
+* [Encoding](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#encoding)
+* [Conclusion](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#conclusions2)
 
 [Modelisation](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#modelisation)
 
@@ -579,6 +582,7 @@ X | X | H0 rejected | X | X | X | X | H0 rejected | X | X | H0 rejected | X | H0
 
 
 ## [Preprocessing and encoding](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
+### [Preprocessing](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 * We create a brand new dataset we can work on without corrupting the previous one
 * The missing values are eliminated
 * The dataset is splitted between a trainset and a trainset
@@ -595,7 +599,7 @@ df2 = df2[important_columns + blood_columns2 + viral_columns2]
 trainset, testset = train_test_split(df2, test_size=0.2, random_state=0)
 ```    
 
-### Encoding 
+### [Encoding](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 Creation of a dictionnary to change the qualitative values to quantitatives
 ```python
 def encoding(df, type_values, swap_these_values):
@@ -802,6 +806,9 @@ X | precision | recall | f1-score | support
 accuracy |  |  | 0.89 | 111
 macro avg | 0.83 | 0.68 | 0.72 | 111
 weighted avg | 0.88 | 0.89 | 0.88 | 111
+
+
+### [Conclusions](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 
 Only 38% of sick people are indeed detected, so the model needs to be enhanced
 However, on the following curve appears a rising slope for the testset so the model is starting to improve:
