@@ -969,9 +969,10 @@ plt.plot(threshold, recall[:-1], label="Recall")
 plt.legend()
 plt.show()
 ```
-
 ![Precision recall](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Precision_recall.png)
 
-
+The recall is 1 with a recall 0, meaning that every patient is declared with Covid19 which is a very poor prediction.
+Then, the recall increased as the precision decrease
+Finally, we have a very good precision with a very low recall
 
 ## [Conclusion](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
