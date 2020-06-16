@@ -591,12 +591,13 @@ if __name__ == "__main__":
     X_test, y_test = preprocessing(testset, target, 'object', swap_values, 'is sick',
                                    viral_columns2)
 
-    model1 = RandomForestClassifier(random_state=0)
-    build_feature_importance(RandomForestClassifier, X_train, y_train)
-    evaluation(model1, X_train, y_train, X_test, y_test)
+    # model1 = RandomForestClassifier(random_state=0)
+    # build_feature_importance(RandomForestClassifier, X_train, y_train)
+    # evaluation(model1, X_train, y_train, X_test, y_test)
 
     # Modelisation
     model2 = make_pipeline(SelectKBest(f_classif, k=7), RandomForestClassifier(random_state=0))
+    evaluation(model2, X_train, y_train, X_test, y_test)
     """
     # Machine Learning models
     preprocessor = make_pipeline(PolynomialFeatures(2, include_bias=False), SelectKBest(f_classif, k=10))
