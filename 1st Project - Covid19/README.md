@@ -781,19 +781,37 @@ model = RandomForestClassifier(random_state=0)
 ```
 
 As we can see, the prediction is still pretty weak..
-Maybe removing the features where the importance is less than 0.05 could be a solution, but for now a SelectKBest will be used:
+Maybe removing the features where the importance is less than 0.05 could be a solution, but for now a SelectKBest will be used to select features according to the k highest scores.
+
 ```python
-
-
 model1 = RandomForestClassifier(random_state=0)
 model2 = make_pipeline(SelectKBest(f_classif, k=10), RandomForestClassifier(random_state=0))
+evaluation(model2, X_train, y_train, X_test, y_test)
 ```
+
+Result:
+
+[[93  2]<br>
+ [10  6]]
+ 
+X | precision | recall | f1-score | support
+---- | ---- | ---- | ---- | ----
+0 | 0.90 | 0.98 | 0.94 | 95
+1 | 0.75 | 0.38 | 0.50 | 16
+accuracy |  |  | 0.89 | 111
+macro avg | 0.83 | 0.68 | 0.72 | 111
+weighted avg | 0.88 | 0.89 | 0.88 | 111
+
+Only 38% of sick people are indeed detected, so the model needs to be enhanced
+However, on the following curve appears a rising slope for the testset so the model is begining to improve:
+
+![RandomForestClassifier2](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/RandomForestClassifier2.png)
 
 ## [Modelisation](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 Four different models were tested and evaluated, using the learning curve method.
 
 <ins>RandomForest :</ins>
-Very flexible and can be applied to both classification and regression.
+Very flexible - can be applied to both classification and regression.
 ![RandomForest](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/RandomForest.png)
 
 <ins>AdaBoost :</ins>
