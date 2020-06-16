@@ -12,9 +12,10 @@ from tqdm import tqdm
 # Exploration of DATA
 def load_dataset(dataset_path):
     """
-    Load the dataset and work on a copy
+     Load the dataset and work on a copy
     :param dataset_path: Global variable to define the path where the dataset is located
     :return: Return the copy of the dataset loaded
+
     """
     data = pd.read_excel(dataset_path)
     df = data.copy()
@@ -23,8 +24,9 @@ def load_dataset(dataset_path):
 
 def general_info(df, nb_column):
     """
-    Display quickly some inforrmation to get started with the analysis of a dataframe
+     Display quickly some inforrmation to get started with the analysis of a dataframe
     :param df: Dataframe used
+
     """
     displayHead(df, 111, True, True, nb_column)
     shapeOfDF(df)
@@ -33,13 +35,15 @@ def general_info(df, nb_column):
 
 def displayHead(df, nb_column, every_column=False, every_row=False):
     """
-    Display the head of the dataframe df - 5 rows by default
-    Using the boolean for every_column and every_row, it's possible to display more
+
+     Display the head of the dataframe df - 5 rows by default
+     Using the boolean for every_column and every_row, it's possible to display more
     :param nb_column: Number of column to visualize
     :param df: Dataframe used
     :param every_column: Default is False, if True every column is displayed
     :param every_row: Default is False, if True every row is displayed
-    :return:
+    :return: Head of the dataframe
+
     """
     if every_column:
         pd.set_option('display.max_column', nb_column)
@@ -53,9 +57,10 @@ def displayHead(df, nb_column, every_column=False, every_row=False):
 
 def shapeOfDF(df):
     """
-    Give the shape of the dataframe
+     Give the shape of the dataframe
     :param df: Dataframe used
     :return: (row_number, column_number)
+
     """
     print("Shape is : {}".format(df.shape))
     return df.shape
@@ -63,9 +68,10 @@ def shapeOfDF(df):
 
 def typeOfDFValues(df):
     """
-    Print the types of the values contained in the dataframe
+     Print the types of the values contained in the dataframe
     :param df: Dataframe used
     :return: Return a Series containing counts of unique values
+
     """
     print(df.dtypes.value_counts())
     return df.dtypes.value_counts()
@@ -73,11 +79,12 @@ def typeOfDFValues(df):
 
 def checkNan(df):
     """
-    Detect missing values.
+     Detect missing values.
     :param df: Dataframe used
     :return: Return a boolean same-sized object indicating if the values are NA. NA values, such as None or numpy.NaN,
      gets mapped to True values. Everything else gets mapped to False values
      Characters such as empty strings '' or numpy.inf are not considered NA values
+
     """
     print(df.isna())
     return df.isna()
@@ -85,10 +92,10 @@ def checkNan(df):
 
 def constructHeatMap(data, show=False):
     """
-    Build a heatmap of the variables
+     Build a heatmap of the variables
     :param data: Variables that will build the heatmap
     :param show: Display the plot (Default: False)
-    :return:
+
     """
     plt.figure(figsize=(20, 10))
     sns.heatmap(data, cbar=False)
@@ -98,10 +105,11 @@ def constructHeatMap(data, show=False):
 
 def missing_values_percentage(df, rate_checked):
     """
-    Print out the percentage of the missing values, compared to the rate checked
+     Print out the percentage of the missing values, compared to the rate checked
     :param rate_checked: How many values are missing compared to this rate
     :param df: Dataframe used
     :return: The global percentage of missing values in the dataset
+
     """
     missing_values = (checkNan(df).sum() / df.shape[0]).sort_values(ascending=True)
     print(len(missing_values[missing_values > rate_checked])  # Ex : rate_checked = 0.98 : 98% of missing values
@@ -112,19 +120,21 @@ def missing_values_percentage(df, rate_checked):
 
 def missing_rate(df):
     """
-    Get for each column (feature) the percentage of missing value
+     Get for each column (feature) the percentage of missing value
     :param df: Dataframe used
     :return: Percentage of missing value
+
     """
     return df.isna().sum() / df.shape[0]
 
 
 def keep_values(df, percentage_to_keep=0.9):
     """
-    Keeps the values where there are less than a certain percentage of missing values
+     Keeps the values where there are less than a certain percentage of missing values
     :param df: Dataframe used
     :param percentage_to_keep: Percentage to conserve
     :return: A new dataframe where the variables with more than percentage_to_keep are conserved
+
     """
     return df[df.columns[df.isna().sum() / df.shape[0] < percentage_to_keep]]  # Keep the values where there are
     # less than 90% of missing values
@@ -132,17 +142,18 @@ def keep_values(df, percentage_to_keep=0.9):
 
 def dropColumn(df, columnName):
     """
-    Remove a column
+     Remove a column
     :param df: Dataframe used
     :param columnName: Name of the column to remove
     :return: A dataframe without the column droped
+
     """
     return df.drop(columnName, axis=1)
 
 
 def analyse_target(df, target, normalized=False):
     """
-    Compares the number (or percentage) of each value taken by the feature
+     Compares the number (or percentage) of each value taken by the feature
     :param df: Dataframe used
     :param target: The feature analyzed
     :param normalized: True: Give the proportion of each value taken by the feature
@@ -154,6 +165,7 @@ def analyse_target(df, target, normalized=False):
 
     negative    0.1
     positive    0.9
+
     """
     print(df[target].value_counts(normalize=normalized))
     return df[target].value_counts(normalize=normalized)
@@ -161,10 +173,11 @@ def analyse_target(df, target, normalized=False):
 
 def draw_histograms(df, data_type='float', nb_columns=4):
     """
-    Draw the histograms/plot pie of the quantitatives/qualitatives variables
+     Draw the histograms/plot pie of the quantitatives/qualitatives variables
     :param df: Dataframe used
     :param data_type: type of the data : int, int64, float, float64 or object
     :param nb_columns: Number of column for the subplot created to display the plots
+
     """
     cols = df.select_dtypes(data_type)
     ceiling = math.ceil(len(cols.columns) / nb_columns)
@@ -190,29 +203,31 @@ def description_object(df, target):
     :param df: Dataframe used
     :param target: Target we want to find unique()
     :return: numpy.ndarray or ExtensionArray
+
     """
     return df[target].unique()
 
 
 def qual_to_quan(df, target, criteria):
     """
-    Creates a subset (or collection) of the target with a certain criteria
-    Ex: positive_df = qual_to_quan(df, "SARS-Cov-2 exam result", 'positive') creates a subset of the positive results
-    to the Covid19 exam
+     Creates a subset (or collection) of the target with a certain criteria
+     Ex: positive_df = qual_to_quan(df, "SARS-Cov-2 exam result", 'positive') creates a subset of the positive results
+     to the Covid19 exam
     :param df: Dataframe used
     :param target: Target we want to create a subset from
     :param criteria: Criteria used to create a subset
     :return: A dataframe responding to the criteria chosed
+
     """
     return df[df[target] == criteria]
 
 
 def rate_borned(df, missing_rate, rate_inf, rate_sup):
     """
-    Creates a subset based on the missing rates
-    Ex:
-    blood_columns = rate_borned(df, MR, 0.88, 0.9) create column where the missing rate MR is included between
-    0.88 and 0.9
+     Creates a subset based on the missing rates
+     Ex:
+     blood_columns = rate_borned(df, MR, 0.88, 0.9) create column where the missing rate MR is included between
+     0.88 and 0.9
     :param df: Dataframe used
     :param missing_rate: missing_rate to compare the rates
     :param rate_inf: Decision rate inf
@@ -225,13 +240,13 @@ def rate_borned(df, missing_rate, rate_inf, rate_sup):
 
 def display_relations(column_name, relation):
     """
-    Display the relation between diff
-    display_relations(blood_columns, relation)
+     Display the relation between diff
+     display_relations(blood_columns, relation)
+     Ex : relation = [(positive_df, 'positive'), (negative_df, 'negative')] shows the relation between the
+     blood_column and the positive and negative results
     :param column_name: Column the relation are being tested with
     :param relation: List of relation to observe
-    Ex : relation = [(positive_df, 'positive'), (negative_df, 'negative')] shows the relation between the
-    blood_column and the positive and negative results
-    :return:
+
     """
     for col in column_name:
         plt.figure()
@@ -243,11 +258,12 @@ def display_relations(column_name, relation):
 
 def count_histogram(df, x, hue, show=True):
     """
-    Shows the counts of observations in each categorical bin using bars
+     Shows the counts of observations in each categorical bin using bars
     :param show: True to display the plot
     :param df: Dataframe used
     :param x: abscisse
     :param hue:Legend title
+
     """
     sns.countplot(x=x, hue=hue, data=df)
     if show:
@@ -256,21 +272,23 @@ def count_histogram(df, x, hue, show=True):
 
 def crossTable(df, cross1, cross2):
     """
-    Compute a simple cross tabulation of two (or more) factors
+     Compute a simple cross tabulation of two (or more) factors
     :param df: Dataframe used
     :param cross1: First variable to cross with
     :param cross2: Second variable to cross with
     :return: Cross tabulation of the data
+
     """
     return pd.crosstab(df[cross1], df[cross2])
 
 
 def crossTables(df, column_name, cross):
     """
-    Compute a cross tab for every value of the column with a parameter
+     Compute a cross tab for every value of the column with a parameter
     :param df: Dataframe used
     :param column_name: The column where the values are taken from
     :param cross: The parameter which the one the values are crossed with
+
     """
     cols = column_name.unique()
     ceiling = math.ceil(len(cols) / 5)
@@ -285,10 +303,11 @@ def crossTables(df, column_name, cross):
 
 def pairwise_relationships(df, variable, cluster=True):
     """
-    Display a pairplot, clustermap or heatmap
+     Display a pairplot, clustermap or heatmap
     :param df: Dataframe used
     :param variable: Variable studied
     :param cluster: True: Clustermap display, False: Heatmap displayed
+
     """
     sns.pairplot(df[variable])
     if cluster:
@@ -300,13 +319,14 @@ def pairwise_relationships(df, variable, cluster=True):
 
 def view_regression(df, column_name, absc, discrimination):
     """
-    Plot data and regression model fits across a FacetGrid
-    Ex:
-    view_regression(df, blood_columns, "Patient age quantile", "SARS-Cov-2 exam result")
+     Plot data and regression model fits across a FacetGrid
+     Ex:
+     view_regression(df, blood_columns, "Patient age quantile", "SARS-Cov-2 exam result")
     :param df: Dataframe used
     :param column_name: Columns
     :param absc: Abscisse
     :param discrimination: Discrimination parameter
+
     """
     for col in column_name:
         plt.figure()
@@ -316,10 +336,12 @@ def view_regression(df, column_name, absc, discrimination):
 
 def check_correlation(df, value_for_correlation):
     """
-    Check if the featurs are correlated
+     Check if the features are correlated
+     check_correlation(df, value_for_correlation)
     :param df: Dataframe used
     :param value_for_correlation: Specified the value with which every other parameter would be correlated checked
     :return: The values corresponding to the correation between value_for_correlation and every other parameters
+
     """
     print(df.corr()[value_for_correlation].sort_values())
     return df.corr()[value_for_correlation].sort_values()
@@ -327,12 +349,12 @@ def check_correlation(df, value_for_correlation):
 
 def relation_in_newcol(df, column, newcol, show=False):
     """
-    Display the relation between a specified column and another one
+     Display the relation between a specified column and another one
     :param show: True: Display the plot(s)
     :param df: Dataframe used
     :param column: First column
     :param newcol: Second column
-    :return:
+
     """
     cols = column.unique()
     ceiling = math.ceil(len(cols) / 5)
@@ -351,14 +373,15 @@ def relation_in_newcol(df, column, newcol, show=False):
 
 def t_test(col, a, b, alpha):
     """
-    Calculates the T-test for the means of two independent samples of scores
-    This is a two-sided test for the null hypothesis that 2 independent samples have identical average (expected) values
-    This test assumes that the populations have identical variances by default
+     Calculates the T-test for the means of two independent samples of scores
+     This is a two-sided test for the null hypothesis that 2 independent samples have identical average (expected) values
+     This test assumes that the populations have identical variances by default
     :param col: Column concerned
     :param alpha: Statistic parameter
     :param a: Subset A
     :param b: Subset B
     :return: String
+
     """
     stat, p = ttest_ind(a[col].dropna(), b[col].dropna())
     if p < alpha:
@@ -369,9 +392,10 @@ def t_test(col, a, b, alpha):
 
 def student_test(column, a, b, alpha=0.02):
     """
-    Print for each column, the result of the Student's test
+     Print for each column, the result of the Student's test
     :param column: Column
     :param t_test: Student test
+
     """
     for col in column:
         print(f'{col :-<50} {t_test(col, a, b, alpha)}')
@@ -381,11 +405,12 @@ def student_test(column, a, b, alpha=0.02):
 
 def encoding(df, type_values, swap_these_values):
     """
-    Encode qualitatives values
+     Encode qualitatives values
     :param df: Dataframe used
     :param type_values: Type of the value worked with
     :param swap_these_values: Swap the values {"Value 0": 0, "Value1": 1, ...}
     :return: A dataframe with the qualitatives values swaped to quantitatives values
+
     """
     for col in df.select_dtypes(type_values).columns:
         df.loc[:, col] = df[col].map(swap_these_values)
@@ -394,10 +419,11 @@ def encoding(df, type_values, swap_these_values):
 
 def feature_engineering(df, column):
     """
-    Feature engineering on column
+     Feature engineering on column
     :param df: Dataframe used
     :param column: Column targeted with the feature engineering
     :return: A dataframe fetaure engineered
+
     """
     # df['is sick'] = 'no'
     missing_rate = df.isna().sum() / df.shape[0]
@@ -409,9 +435,10 @@ def feature_engineering(df, column):
 
 def imputation(df):
     """
-    Imputation function
+     Imputation function
     :param df: Dataframe used
     :return: The dataframe with the imputation applied
+
     """
     df = df.dropna(axis=0)  # Remove the data too violently
     # df['is na'] = (df['Parainfluenza 3'].isna()) | (df['Leukocytes'].isna())
@@ -421,7 +448,7 @@ def imputation(df):
 
 def preprocessing(df, Target, type_values, swap_these_values, new_feature, column):
     """
-    Global preprocessing function
+     Global preprocessing function
     :param df: Dataframe used
     :param Target: Target variable wanted predicted
     :param type_values: Type of the values
@@ -429,6 +456,7 @@ def preprocessing(df, Target, type_values, swap_these_values, new_feature, colum
     :param new_feature: New_feature used for the feature engineering
     :param column: Column concerned by the feature engineering
     :return: X: Features and y: Target to predict
+
     """
     df = encoding(df, type_values, swap_these_values)
     df = feature_engineering(df, column)
@@ -440,14 +468,15 @@ def preprocessing(df, Target, type_values, swap_these_values, new_feature, colum
 
 def evaluation(model, X_train, y_train, X_test, y_test):
     """
-    Evaluation of the model, compare on the same plot the prediction on the trainset and the testset
-    Display the confusion matrix and classification report
-    Shows the overfitting/undefitting
+     Evaluation of the model, compare on the same plot the prediction on the trainset and the testset
+     Display the confusion matrix and classification report
+     Shows the overfitting/undefitting
     :param model: model used
     :param X_train: X trainset
     :param y_train: y trainset
     :param X_test: X testset
     :param y_test: y testset
+
     """
     model.fit(X_train, y_train)
     ypred = model.predict(X_test)
@@ -482,10 +511,11 @@ def graph(model, X_train, y_train):
 
 def build_feature_importance(model, X_train, y_train):
     """
-    Build a graph with the importance of the features
+     Build a graph with the importance of the features
     :param model: model tested
     :param X_train: Train dataset feature
     :param y_train: Result of the train dataset
+
     """
     # model = RandomForestClassifier(criterion='entropy', random_state=11, oob_score=True, n_jobs=-1, \
     #                                 max_depth=25, min_samples_leaf=80, min_samples_split=3, n_estimators=70)
@@ -501,10 +531,11 @@ def build_feature_importance(model, X_train, y_train):
 
 def precision_recall(X_test, y_test, gs):
     """
-    Plot the precision and recall curves on the same graph
+     Plot the precision and recall curves on the same graph
     :param X_test: Test dataset
     :param y_test: Target dataset
     :param gs: model with hyperparameters improved
+
     """
     precision, recall, threshold = precision_recall_curve(y_test, gs.best_estimator_.decision_function(X_test))
     plt.plot(threshold, precision[:-1], label="Precision")
@@ -515,10 +546,11 @@ def precision_recall(X_test, y_test, gs):
 
 def model_final(model, X, threshold=0):
     """
-    Classifiication problem : Determine the decision threshold
+     Classification problem : Determine the decision threshold
     :param model: model tested
     :param X: Feature dataset
     :param threshold: Decision threshold
     :return: True if above the decision threshold, False otherwise
+
     """
     return model.decision_function(X) > threshold
