@@ -24,6 +24,8 @@
 
 [Conclusion](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#conclusion)
 
+[Annexes](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#annexes)
+
 
 ## [Project overview](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 The Covid-19 virus crushed the world during the year 2019-2020, killing thousands of people, destroyed companies and the economy of many countries - among other things. It became primarly important to analyze every aspect known of the virus to prevent another outbreak, synthesize a vaccine or understand how to manage the people likely to be contaminated considering their symptoms.
@@ -41,6 +43,7 @@ One of the motivations for this challenge is the fact that in the context of an 
 
 **Dataset :** https://www.kaggle.com/einsteindata4u/covid19
 
+**Documentation of the library created:** [Data library documentation](https://ackermannq.github.io/Data_lib_documentation/)
 
 ## [Exploratory Data Analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 
@@ -1003,3 +1006,7 @@ Ideas to improve the result:
 * Filtering differently the data
 * Playing a bit more with different parameters of the SVM model
 * As we explained, the dataset is very unbalanced (many negative result cases compared to the positive exam result), we could try some oversampling 
+
+
+## [Annexes](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
+Feel free to consult the documentation of the library I developped : [Data library documentation](https://ackermannq.github.io/Data_lib_documentation/)
