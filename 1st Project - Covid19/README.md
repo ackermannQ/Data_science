@@ -993,3 +993,13 @@ print(recall_score(y_test, y_pred))
 f1_score | recall_score
 ----- | -----
 0.4888888888888889 | 0.6875
+
+<ins>Reminder :</ins> The best value for the f1 and recall score is 1, meaning that our prediction is not very good, but the recall is appropriated
+
+**Our classification algorithm could be improved !**
+
+Ideas to improve the result:
+* Creating a more advanced feature_engineering function 
+* Filtering differently the data
+* Playing a bit more with different parameters of the SVM model
+* As we explained, the dataset is very unbalanced (many negative result cases compared to the positive exam result), we could try some oversampling 
