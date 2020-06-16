@@ -501,3 +501,7 @@ def precision_recall(X_test, y_test, gs):
     plt.plot(threshold, recall[:-1], label="Recall")
     plt.legend()
     plt.show()
+
+
+def model_final(model, X, threshold=0):
+    return model.decision_function(X) > threshold

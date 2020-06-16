@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split, StratifiedKFold, GridSearc
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import f1_score, confusion_matrix, classification_report, roc_auc_score
+from sklearn.metrics import f1_score, confusion_matrix, classification_report, roc_auc_score, recall_score
 from sklearn.model_selection import learning_curve
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.pipeline import make_pipeline
@@ -195,3 +195,7 @@ if __name__ == "__main__":
 
     # evaluation(gs.best_estimator_, X_train, y_train, X_test, y_test)
     precision_recall(X_test, y_test, gs)
+
+    y_pred = model_final(gs.best_estimator_, X_test, threshold=-1)
+    print(f1_score(y_test, y_pred))
+    print(recall_score(y_test, y_pred))
