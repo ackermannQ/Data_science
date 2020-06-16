@@ -20,6 +20,7 @@
 [Modelisation](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#modelisation)
 * [Set of models tested](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#set-of-models-tested)
 * [Model optimization](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#model-optimization)
+* [Prediction Recall Curve](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#prediction-recall-curve)
 
 [Conclusion](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#conclusion)
 
@@ -954,5 +955,23 @@ macro avg | 0.72 | 0.69 | 0.70 | 111
 weighted avg | 0.85 | 0.86 | 0.86 | 111
 
 ![Trained2](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/Variables_plots/Trained2.png)
+
+As displayed on the plot above, even if the model start to overfit a bit, we globally have better predictions on the validation test set
+More parameters could be modified to improve this model and would be done in the future
+
+### [Precision Recall Curve](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
+Now, the precision and recall are observed on the same plot
+
+```python
+precision, recall, threshold = precision_recall_curve(y_test, gs.best_estimator_.decision_function(X_test))
+plt.plot(threshold, precision[:-1], label="Precision")
+plt.plot(threshold, recall[:-1], label="Recall")
+plt.legend()
+plt.show()
+```
+
+![Precision recall](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/Variables_plots/Precision_recall.png.png)
+
+
 
 ## [Conclusion](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
