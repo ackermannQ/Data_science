@@ -23,6 +23,7 @@
 * [Prediction Recall Curve](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#precision-recall-curve)
 
 [Conclusion](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#conclusion)
+[Annexes](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#annexes)
 
 
 ## [Project overview](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
@@ -41,6 +42,7 @@ One of the motivations for this challenge is the fact that in the context of an 
 
 **Dataset :** https://www.kaggle.com/einsteindata4u/covid19
 
+**Documentation of the library created:** [Data library documentation](https://ackermannq.github.io/Data_lib_documentation/)
 
 ## [Exploratory Data Analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 
@@ -1003,3 +1005,7 @@ Ideas to improve the result:
 * Filtering differently the data
 * Playing a bit more with different parameters of the SVM model
 * As we explained, the dataset is very unbalanced (many negative result cases compared to the positive exam result), we could try some oversampling 
+
+
+## [Annexes](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
+Feel free to consult the documentation of the library I developped : [Data library documentation](https://ackermannq.github.io/Data_lib_documentation/)
