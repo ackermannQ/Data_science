@@ -13,10 +13,15 @@
 * [Conclusions](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#conclusions)
 
 [Preprocessing and encoding](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#preprocessing-and-encoding)
+* [Preprocessing](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#preprocessing)
+* [Encoding](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#encoding)
+* [Conclusions](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#conclusions-1)
 
 [Modelisation](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#modelisation)
+* [Set of models tested](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#set-of-models-tested)
+* [Model optimization](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#model-optimization)
 
-Conclusion
+[Conclusion](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#conclusion)
 
 
 ## [Project overview](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
@@ -579,6 +584,7 @@ X | X | H0 rejected | X | X | X | X | H0 rejected | X | X | H0 rejected | X | H0
 
 
 ## [Preprocessing and encoding](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
+### [Preprocessing](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 * We create a brand new dataset we can work on without corrupting the previous one
 * The missing values are eliminated
 * The dataset is splitted between a trainset and a trainset
@@ -595,7 +601,7 @@ df2 = df2[important_columns + blood_columns2 + viral_columns2]
 trainset, testset = train_test_split(df2, test_size=0.2, random_state=0)
 ```    
 
-### Encoding 
+### [Encoding](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 Creation of a dictionnary to change the qualitative values to quantitatives
 ```python
 def encoding(df, type_values, swap_these_values):
@@ -699,13 +705,14 @@ evaluation(model, X_train, y_train, X_test, y_test)
 [[87  8]<br/>
  [10  6]]
  
-      X      | precision  |  recall | f1-score |  support
-           0    |   0.90  |    0.92  |    0.91   |     95
-           1    |   0.43   |   0.38  |    0.40   |     16
-    accuracy    |     X    |   X     |    0.84   |    111
-    macro avg    |   0.66   |   0.65  |    0.65   |    111   
-    weighted avg    |   0.83   |   0.84  |    0.83   |    111
-
+ X | precision | recall | f1-score | support
+ ---- | ---- | ---- | ---- | ----
+ 0 | 0.90 | 0.92 | 0.91 | 95
+ 1 | 0.43 | 0.38 | 0.40 | 16
+ accuracy | | | 0.84 | 111
+ macro avg | 0.66 | 0.65 | 0.65 | 111
+ weighted avg | 0.83 | 0.84 | 0.83 | 111
+ 
 When the learning curves are plotted,  immediately it seems that our model is overfitting : the train set is perfectly learnt but the machine can't adjust to the testing set
 
 **One option is to increase the amount of data given to the machine to balance the overfitting**
@@ -748,7 +755,7 @@ def build_feature_importance(model, X_train, y_train):
 build_feature_importance(DecisionTreeClassifier, X_train, y_train)
 ```
 
-![DecisionTreeClassifier2](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Feature_importance.png)
+![Feature_importance](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Feature_importance.png)
 
 It's interesting to see that for our model, the most important values are related to the blood, so we can remove the virus_column from our dataset
 
@@ -802,23 +809,145 @@ accuracy |  |  | 0.89 | 111
 macro avg | 0.83 | 0.68 | 0.72 | 111
 weighted avg | 0.88 | 0.89 | 0.88 | 111
 
-Only 38% of sick people are indeed detected, so the model needs to be enhanced
-However, on the following curve appears a rising slope for the testset so the model is begining to improve:
 
+### [Conclusions](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
+Only 38% of sick people are indeed detected, so the model needs to be enhanced
+However, on the following curve appears a rising slope for the testset so the model is starting to improve:
 ![RandomForestClassifier2](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/RandomForestClassifier2.png)
+
 
 ## [Modelisation](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 Four different models were tested and evaluated, using the learning curve method.
 
+### [Set of models tested](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 <ins>RandomForest :</ins>
 Very flexible - can be applied to both classification and regression.
 ![RandomForest](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/RandomForest.png)
+[[89  6]<br>
+ [10  6]]
+ 
+X | precision | recall | f1-score | support
+---- | ---- | ---- | ---- | ----
+0 | 0.90 | 0.94 | 0.92 | 95
+1 | 0.50 | 0.38 | 0.43 | 16
+accuracy |  |  | 0.86 | 111
+macro avg | 0.70 | 0.66 | 0.67 | 111
+weighted avg | 0.84 | 0.86 | 0.85 | 111
+
+ Rising slope for the validation set so the model is starting to improve
 
 <ins>AdaBoost :</ins>
 ![AdaBoost](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/Adaboost.png)
 
+[[87  8]<br>
+ [9  7]]
+ 
+X | precision | recall | f1-score | support
+---- | ---- | ---- | ---- | ----
+0 | 0.91 | 0.92 | 0.91 | 95
+1 | 0.47 | 0.44 | 0.45 | 16
+accuracy |  |  | 0.85 | 111
+macro avg | 0.69 | 0.68 | 0.68 | 111
+weighted avg | 0.84 | 0.85 | 0.84 | 111
+
+Rising slope for the validation set so the model is starting to improve, even betten than the Random Forest model
+
 <ins>Svm :</ins>
 ![Svm](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/SVM.png)
 
+[[92  3]<br>
+ [11  5]]
+ 
+X | precision | recall | f1-score | support
+---- | ---- | ---- | ---- | ----
+0 | 0.89 | 0.97 | 0.93 | 95
+1 | 0.62 | 0.31 | 0.42 | 16
+accuracy |  |  | 0.87 | 111
+macro avg | 0.76 | 0.64 | 0.67 | 111
+weighted avg | 0.85 | 0.87 | 0.86 | 111
+
+The shape of the curve indicates that the model in not anymore in overfitting, the score on the train set decreased but rejoined the validation set, it's good !
+
 <ins>KNN :</ins>
 ![KNN](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/KNN.png)
+
+[[90  5]<br>
+ [11  5]]
+ 
+X | precision | recall | f1-score | support
+---- | ---- | ---- | ---- | ----
+0 | 0.89 | 0.95 | 0.92 | 95
+1 | 0.50 | 0.31 | 0.38 | 16
+accuracy |  |  | 0.86 | 111
+macro avg | 0.70 | 0.63 | 0.65 | 111
+weighted avg | 0.83 | 0.86 | 0.84 | 111
+
+Good scores are reached, even if the performances of the trainset decreased, it doesn't matter as long as it rejoins the validation set. The gap is reduced, so the model learnt well and can generalize (no overfitting)
+
+
+<ins>Sum-up:</ins>
+Model | f1-score for class "1"
+---- | ----
+RandomForest | 0.40
+Adaboost | 0.52
+SVM | 0.48
+KNN | 0.52
+
+
+### [Model optimization](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
+In this part, only the SVM model would be improved. An analog procedure could be followed to determine the best parameters for the other models. Since this one is likely to present good results, we will focuse on it
+Using GridSearchCV, two parameters are optimized:
+* gamma:
+* C:
+
+```python
+gs = GridSearchCV(SVM, param_grid=grid_params,
+                  scoring='recall', cv=4)
+
+gs.fit(X_train, y_train)
+print(gs.best_params_)
+y_pred = gs.predict(X_test)
+
+print(classification_report(y_test, y_pred))
+
+evaluation(gs.best_estimator_, X_train, y_train, X_test, y_test)
+```
+
+The model is definitely not overfitting, even if the precision is still not really good, it's capable of generalisation. The trainset and validation set are rejoining
+![Trained1](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/Variables_plots/Trained1.png)
+
+To go further, RandomizedSearchCV is used. This optimizer is going to search randomly different combinations of parameters to find the best configuration
+
+```python
+grid_params = [{
+    'svc__gamma': [1e-3, 1e-4],
+    'svc__C': [1, 10, 100, 1000],
+    'pipeline__polynomialfeatures__degree': [2, 3, 4],
+    'pipeline__selectkbest__k': range(48, 58)
+}]
+
+gs = RandomizedSearchCV(SVM, grid_params,
+                        scoring='recall', cv=4, n_iter=300)
+
+gs.fit(X_train, y_train)
+print(gs.best_params_)
+y_pred = gs.predict(X_test)
+
+print(classification_report(y_test, y_pred))
+
+evaluation(gs.best_estimator_, X_train, y_train, X_test, y_test)
+```
+
+{'svc__gamma': 0.001, 'svc__C': 1000, 'pipeline__selectkbest__k': 49,
+'pipeline__polynomialfeatures__degree': 3}
+
+X | precision | recall | f1-score | support
+---- | ---- | ---- | ---- | ----
+0 | 0.91 | 0.94 | 0.92 | 95
+1 | 0.54 | 0.44 | 0.48 | 16
+accuracy |  |  | 0.86 | 111
+macro avg | 0.72 | 0.69 | 0.70 | 111
+weighted avg | 0.85 | 0.86 | 0.86 | 111
+
+
+## [Conclusion](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
