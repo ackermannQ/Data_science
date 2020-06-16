@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module data_lib</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>data_lib</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:d%3A%5Cusers%5Cqackerma%5Cdesktop%5Cdata_science%5C1st%20project%20-%20covid19%5Cdata_lib.py">d:\users\qackerma\desktop\data_science\1st project - covid19\data_lib.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="math.html">math</a><br>
+<a href="numpy.html">numpy</a><br>
+</td><td width="25%" valign=top><a href="pandas.html">pandas</a><br>
+<a href="matplotlib.pyplot.html">matplotlib.pyplot</a><br>
+</td><td width="25%" valign=top><a href="pydoc.html">pydoc</a><br>
+<a href="seaborn.html">seaborn</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-analyse_target"><strong>analyse_target</strong></a>(df, target, normalized=False)</dt><dd><tt>Compares&nbsp;the&nbsp;number&nbsp;(or&nbsp;percentage)&nbsp;of&nbsp;each&nbsp;value&nbsp;taken&nbsp;by&nbsp;the&nbsp;feature<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:param&nbsp;target:&nbsp;The&nbsp;feature&nbsp;analyzed<br>
+:param&nbsp;normalized:&nbsp;True:&nbsp;Give&nbsp;the&nbsp;proportion&nbsp;of&nbsp;each&nbsp;value&nbsp;taken&nbsp;by&nbsp;the&nbsp;feature<br>
+:return:&nbsp;The&nbsp;number/proportion&nbsp;of&nbsp;each&nbsp;value&nbsp;taken&nbsp;by&nbsp;the&nbsp;feature&nbsp;(ex&nbsp;:<br>
+negative&nbsp;&nbsp;&nbsp;&nbsp;1<br>
+positive&nbsp;&nbsp;&nbsp;&nbsp;9<br>
+&nbsp;<br>
+or<br>
+&nbsp;<br>
+negative&nbsp;&nbsp;&nbsp;&nbsp;0.1<br>
+positive&nbsp;&nbsp;&nbsp;&nbsp;0.9</tt></dd></dl>
+ <dl><dt><a name="-build_feature_importance"><strong>build_feature_importance</strong></a>(model, X_train, y_train)</dt><dd><tt>Build&nbsp;a&nbsp;graph&nbsp;with&nbsp;the&nbsp;importance&nbsp;of&nbsp;the&nbsp;features<br>
+:param&nbsp;model:&nbsp;model&nbsp;tested<br>
+:param&nbsp;X_train:&nbsp;Train&nbsp;dataset&nbsp;feature<br>
+:param&nbsp;y_train:&nbsp;Result&nbsp;of&nbsp;the&nbsp;train&nbsp;dataset</tt></dd></dl>
+ <dl><dt><a name="-checkNan"><strong>checkNan</strong></a>(df)</dt><dd><tt>Detect&nbsp;missing&nbsp;values.<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:return:&nbsp;Return&nbsp;a&nbsp;boolean&nbsp;same-sized&nbsp;object&nbsp;indicating&nbsp;if&nbsp;the&nbsp;values&nbsp;are&nbsp;NA.&nbsp;NA&nbsp;values,&nbsp;such&nbsp;as&nbsp;None&nbsp;or&nbsp;numpy.NaN,<br>
+&nbsp;gets&nbsp;mapped&nbsp;to&nbsp;True&nbsp;values.&nbsp;Everything&nbsp;else&nbsp;gets&nbsp;mapped&nbsp;to&nbsp;False&nbsp;values<br>
+&nbsp;Characters&nbsp;such&nbsp;as&nbsp;empty&nbsp;strings&nbsp;''&nbsp;or&nbsp;numpy.inf&nbsp;are&nbsp;not&nbsp;considered&nbsp;NA&nbsp;values</tt></dd></dl>
+ <dl><dt><a name="-check_correlation"><strong>check_correlation</strong></a>(df, value_for_correlation)</dt><dd><tt>Check&nbsp;if&nbsp;the&nbsp;featurs&nbsp;are&nbsp;correlated<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:param&nbsp;value_for_correlation:&nbsp;Specified&nbsp;the&nbsp;value&nbsp;with&nbsp;which&nbsp;every&nbsp;other&nbsp;parameter&nbsp;would&nbsp;be&nbsp;correlated&nbsp;checked<br>
+:return:&nbsp;The&nbsp;values&nbsp;corresponding&nbsp;to&nbsp;the&nbsp;correation&nbsp;between&nbsp;value_for_correlation&nbsp;and&nbsp;every&nbsp;other&nbsp;parameters</tt></dd></dl>
+ <dl><dt><a name="-constructHeatMap"><strong>constructHeatMap</strong></a>(data, show=False)</dt><dd><tt>Build&nbsp;a&nbsp;heatmap&nbsp;of&nbsp;the&nbsp;variables<br>
+:param&nbsp;data:&nbsp;Variables&nbsp;that&nbsp;will&nbsp;build&nbsp;the&nbsp;heatmap<br>
+:param&nbsp;show:&nbsp;Display&nbsp;the&nbsp;plot&nbsp;(Default:&nbsp;False)<br>
+:return:</tt></dd></dl>
+ <dl><dt><a name="-count_histogram"><strong>count_histogram</strong></a>(df, x, hue, show=True)</dt><dd><tt>Shows&nbsp;the&nbsp;counts&nbsp;of&nbsp;observations&nbsp;in&nbsp;each&nbsp;categorical&nbsp;bin&nbsp;using&nbsp;bars<br>
+:param&nbsp;show:&nbsp;True&nbsp;to&nbsp;display&nbsp;the&nbsp;plot<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:param&nbsp;x:&nbsp;abscisse<br>
+:param&nbsp;hue:Legend&nbsp;title</tt></dd></dl>
+ <dl><dt><a name="-crossTable"><strong>crossTable</strong></a>(df, cross1, cross2)</dt><dd><tt>Compute&nbsp;a&nbsp;simple&nbsp;cross&nbsp;tabulation&nbsp;of&nbsp;two&nbsp;(or&nbsp;more)&nbsp;factors<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:param&nbsp;cross1:&nbsp;First&nbsp;variable&nbsp;to&nbsp;cross&nbsp;with<br>
+:param&nbsp;cross2:&nbsp;Second&nbsp;variable&nbsp;to&nbsp;cross&nbsp;with<br>
+:return:&nbsp;Cross&nbsp;tabulation&nbsp;of&nbsp;the&nbsp;data</tt></dd></dl>
+ <dl><dt><a name="-crossTables"><strong>crossTables</strong></a>(df, column_name, cross)</dt><dd><tt>Compute&nbsp;a&nbsp;cross&nbsp;tab&nbsp;for&nbsp;every&nbsp;value&nbsp;of&nbsp;the&nbsp;column&nbsp;with&nbsp;a&nbsp;parameter<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:param&nbsp;column_name:&nbsp;The&nbsp;column&nbsp;where&nbsp;the&nbsp;values&nbsp;are&nbsp;taken&nbsp;from<br>
+:param&nbsp;cross:&nbsp;The&nbsp;parameter&nbsp;which&nbsp;the&nbsp;one&nbsp;the&nbsp;values&nbsp;are&nbsp;crossed&nbsp;with</tt></dd></dl>
+ <dl><dt><a name="-description_object"><strong>description_object</strong></a>(df, target)</dt><dd><tt>&nbsp;Function&nbsp;used&nbsp;on&nbsp;a&nbsp;variable&nbsp;of&nbsp;interest&nbsp;to&nbsp;get&nbsp;the&nbsp;unique&nbsp;values&nbsp;of&nbsp;the&nbsp;column<br>
+&nbsp;For&nbsp;example,&nbsp;let&nbsp;us&nbsp;say&nbsp;we&nbsp;want&nbsp;to&nbsp;find&nbsp;the&nbsp;unique&nbsp;values&nbsp;of&nbsp;column&nbsp;'continent'<br>
+&nbsp;in&nbsp;a&nbsp;data&nbsp;frame.&nbsp;This&nbsp;would&nbsp;result&nbsp;in&nbsp;all&nbsp;continents&nbsp;in&nbsp;the&nbsp;dataframe.<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:param&nbsp;target:&nbsp;Target&nbsp;we&nbsp;want&nbsp;to&nbsp;find&nbsp;unique()<br>
+:return:&nbsp;numpy.ndarray&nbsp;or&nbsp;ExtensionArray</tt></dd></dl>
+ <dl><dt><a name="-displayHead"><strong>displayHead</strong></a>(df, nb_column, every_column=False, every_row=False)</dt><dd><tt>Display&nbsp;the&nbsp;head&nbsp;of&nbsp;the&nbsp;dataframe&nbsp;df&nbsp;-&nbsp;5&nbsp;rows&nbsp;by&nbsp;default<br>
+Using&nbsp;the&nbsp;boolean&nbsp;for&nbsp;every_column&nbsp;and&nbsp;every_row,&nbsp;it's&nbsp;possible&nbsp;to&nbsp;display&nbsp;more<br>
+:param&nbsp;nb_column:&nbsp;Number&nbsp;of&nbsp;column&nbsp;to&nbsp;visualize<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:param&nbsp;every_column:&nbsp;Default&nbsp;is&nbsp;False,&nbsp;if&nbsp;True&nbsp;every&nbsp;column&nbsp;is&nbsp;displayed<br>
+:param&nbsp;every_row:&nbsp;Default&nbsp;is&nbsp;False,&nbsp;if&nbsp;True&nbsp;every&nbsp;row&nbsp;is&nbsp;displayed<br>
+:return:</tt></dd></dl>
+ <dl><dt><a name="-display_relations"><strong>display_relations</strong></a>(column_name, relation)</dt><dd><tt>Display&nbsp;the&nbsp;relation&nbsp;between&nbsp;diff<br>
+<a href="#-display_relations">display_relations</a>(blood_columns,&nbsp;relation)<br>
+:param&nbsp;column_name:&nbsp;Column&nbsp;the&nbsp;relation&nbsp;are&nbsp;being&nbsp;tested&nbsp;with<br>
+:param&nbsp;relation:&nbsp;List&nbsp;of&nbsp;relation&nbsp;to&nbsp;observe<br>
+Ex&nbsp;:&nbsp;relation&nbsp;=&nbsp;[(positive_df,&nbsp;'positive'),&nbsp;(negative_df,&nbsp;'negative')]&nbsp;shows&nbsp;the&nbsp;relation&nbsp;between&nbsp;the<br>
+blood_column&nbsp;and&nbsp;the&nbsp;positive&nbsp;and&nbsp;negative&nbsp;results<br>
+:return:</tt></dd></dl>
+ <dl><dt><a name="-draw_histograms"><strong>draw_histograms</strong></a>(df, data_type='float', nb_columns=4)</dt><dd><tt>Draw&nbsp;the&nbsp;histograms/plot&nbsp;pie&nbsp;of&nbsp;the&nbsp;quantitatives/qualitatives&nbsp;variables<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:param&nbsp;data_type:&nbsp;type&nbsp;of&nbsp;the&nbsp;data&nbsp;:&nbsp;int,&nbsp;int64,&nbsp;float,&nbsp;float64&nbsp;or&nbsp;object<br>
+:param&nbsp;nb_columns:&nbsp;Number&nbsp;of&nbsp;column&nbsp;for&nbsp;the&nbsp;subplot&nbsp;created&nbsp;to&nbsp;display&nbsp;the&nbsp;plots</tt></dd></dl>
+ <dl><dt><a name="-dropColumn"><strong>dropColumn</strong></a>(df, columnName)</dt><dd><tt>Remove&nbsp;a&nbsp;column<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:param&nbsp;columnName:&nbsp;Name&nbsp;of&nbsp;the&nbsp;column&nbsp;to&nbsp;remove<br>
+:return:&nbsp;A&nbsp;dataframe&nbsp;without&nbsp;the&nbsp;column&nbsp;droped</tt></dd></dl>
+ <dl><dt><a name="-encoding"><strong>encoding</strong></a>(df, type_values, swap_these_values)</dt><dd><tt>Encode&nbsp;qualitatives&nbsp;values<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:param&nbsp;type_values:&nbsp;Type&nbsp;of&nbsp;the&nbsp;value&nbsp;worked&nbsp;with<br>
+:param&nbsp;swap_these_values:&nbsp;Swap&nbsp;the&nbsp;values&nbsp;{"Value&nbsp;0":&nbsp;0,&nbsp;"Value1":&nbsp;1,&nbsp;...}<br>
+:return:&nbsp;A&nbsp;dataframe&nbsp;with&nbsp;the&nbsp;qualitatives&nbsp;values&nbsp;swaped&nbsp;to&nbsp;quantitatives&nbsp;values</tt></dd></dl>
+ <dl><dt><a name="-evaluation"><strong>evaluation</strong></a>(model, X_train, y_train, X_test, y_test)</dt><dd><tt>Evaluation&nbsp;of&nbsp;the&nbsp;model,&nbsp;compare&nbsp;on&nbsp;the&nbsp;same&nbsp;plot&nbsp;the&nbsp;prediction&nbsp;on&nbsp;the&nbsp;trainset&nbsp;and&nbsp;the&nbsp;testset<br>
+Display&nbsp;the&nbsp;confusion&nbsp;matrix&nbsp;and&nbsp;classification&nbsp;report<br>
+Shows&nbsp;the&nbsp;overfitting/undefitting<br>
+:param&nbsp;model:&nbsp;model&nbsp;used<br>
+:param&nbsp;X_train:&nbsp;X&nbsp;trainset<br>
+:param&nbsp;y_train:&nbsp;y&nbsp;trainset<br>
+:param&nbsp;X_test:&nbsp;X&nbsp;testset<br>
+:param&nbsp;y_test:&nbsp;y&nbsp;testset</tt></dd></dl>
+ <dl><dt><a name="-feature_engineering"><strong>feature_engineering</strong></a>(df, column)</dt><dd><tt>Feature&nbsp;engineering&nbsp;on&nbsp;column<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:param&nbsp;column:&nbsp;Column&nbsp;targeted&nbsp;with&nbsp;the&nbsp;feature&nbsp;engineering<br>
+:return:&nbsp;A&nbsp;dataframe&nbsp;fetaure&nbsp;engineered</tt></dd></dl>
+ <dl><dt><a name="-general_info"><strong>general_info</strong></a>(df, nb_column)</dt><dd><tt>Display&nbsp;quickly&nbsp;some&nbsp;inforrmation&nbsp;to&nbsp;get&nbsp;started&nbsp;with&nbsp;the&nbsp;analysis&nbsp;of&nbsp;a&nbsp;dataframe<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used</tt></dd></dl>
+ <dl><dt><a name="-graph"><strong>graph</strong></a>(model, X_train, y_train)</dt></dl>
+ <dl><dt><a name="-imputation"><strong>imputation</strong></a>(df)</dt><dd><tt>Imputation&nbsp;function<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:return:&nbsp;The&nbsp;dataframe&nbsp;with&nbsp;the&nbsp;imputation&nbsp;applied</tt></dd></dl>
+ <dl><dt><a name="-keep_values"><strong>keep_values</strong></a>(df, percentage_to_keep=0.9)</dt><dd><tt>Keeps&nbsp;the&nbsp;values&nbsp;where&nbsp;there&nbsp;are&nbsp;less&nbsp;than&nbsp;a&nbsp;certain&nbsp;percentage&nbsp;of&nbsp;missing&nbsp;values<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:param&nbsp;percentage_to_keep:&nbsp;Percentage&nbsp;to&nbsp;conserve<br>
+:return:&nbsp;A&nbsp;new&nbsp;dataframe&nbsp;where&nbsp;the&nbsp;variables&nbsp;with&nbsp;more&nbsp;than&nbsp;percentage_to_keep&nbsp;are&nbsp;conserved</tt></dd></dl>
+ <dl><dt><a name="-load_dataset"><strong>load_dataset</strong></a>(dataset_path)</dt><dd><tt>Load&nbsp;the&nbsp;dataset&nbsp;and&nbsp;work&nbsp;on&nbsp;a&nbsp;copy<br>
+:param&nbsp;dataset_path:&nbsp;Global&nbsp;variable&nbsp;to&nbsp;define&nbsp;the&nbsp;path&nbsp;where&nbsp;the&nbsp;dataset&nbsp;is&nbsp;located<br>
+:return:&nbsp;Return&nbsp;the&nbsp;copy&nbsp;of&nbsp;the&nbsp;dataset&nbsp;loaded</tt></dd></dl>
+ <dl><dt><a name="-missing_rate"><strong>missing_rate</strong></a>(df)</dt><dd><tt>Get&nbsp;for&nbsp;each&nbsp;column&nbsp;(feature)&nbsp;the&nbsp;percentage&nbsp;of&nbsp;missing&nbsp;value<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:return:&nbsp;Percentage&nbsp;of&nbsp;missing&nbsp;value</tt></dd></dl>
+ <dl><dt><a name="-missing_values_percentage"><strong>missing_values_percentage</strong></a>(df, rate_checked)</dt><dd><tt>Print&nbsp;out&nbsp;the&nbsp;percentage&nbsp;of&nbsp;the&nbsp;missing&nbsp;values,&nbsp;compared&nbsp;to&nbsp;the&nbsp;rate&nbsp;checked<br>
+:param&nbsp;rate_checked:&nbsp;How&nbsp;many&nbsp;values&nbsp;are&nbsp;missing&nbsp;compared&nbsp;to&nbsp;this&nbsp;rate<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:return:&nbsp;The&nbsp;global&nbsp;percentage&nbsp;of&nbsp;missing&nbsp;values&nbsp;in&nbsp;the&nbsp;dataset</tt></dd></dl>
+ <dl><dt><a name="-model_final"><strong>model_final</strong></a>(model, X, threshold=0)</dt><dd><tt>Classifiication&nbsp;problem&nbsp;:&nbsp;Determine&nbsp;the&nbsp;decision&nbsp;threshold<br>
+:param&nbsp;model:&nbsp;model&nbsp;tested<br>
+:param&nbsp;X:&nbsp;Feature&nbsp;dataset<br>
+:param&nbsp;threshold:&nbsp;Decision&nbsp;threshold<br>
+:return:&nbsp;True&nbsp;if&nbsp;above&nbsp;the&nbsp;decision&nbsp;threshold,&nbsp;False&nbsp;otherwise</tt></dd></dl>
+ <dl><dt><a name="-pairwise_relationships"><strong>pairwise_relationships</strong></a>(df, variable, cluster=True)</dt><dd><tt>Display&nbsp;a&nbsp;pairplot,&nbsp;clustermap&nbsp;or&nbsp;heatmap<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:param&nbsp;variable:&nbsp;Variable&nbsp;studied<br>
+:param&nbsp;cluster:&nbsp;True:&nbsp;Clustermap&nbsp;display,&nbsp;False:&nbsp;Heatmap&nbsp;displayed</tt></dd></dl>
+ <dl><dt><a name="-precision_recall"><strong>precision_recall</strong></a>(X_test, y_test, gs)</dt><dd><tt>Plot&nbsp;the&nbsp;precision&nbsp;and&nbsp;recall&nbsp;curves&nbsp;on&nbsp;the&nbsp;same&nbsp;graph<br>
+:param&nbsp;X_test:&nbsp;Test&nbsp;dataset<br>
+:param&nbsp;y_test:&nbsp;Target&nbsp;dataset<br>
+:param&nbsp;gs:&nbsp;model&nbsp;with&nbsp;hyperparameters&nbsp;improved</tt></dd></dl>
+ <dl><dt><a name="-preprocessing"><strong>preprocessing</strong></a>(df, Target, type_values, swap_these_values, new_feature, column)</dt><dd><tt>Global&nbsp;preprocessing&nbsp;function<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:param&nbsp;Target:&nbsp;Target&nbsp;variable&nbsp;wanted&nbsp;predicted<br>
+:param&nbsp;type_values:&nbsp;Type&nbsp;of&nbsp;the&nbsp;values<br>
+:param&nbsp;swap_these_values:&nbsp;Values&nbsp;swaped<br>
+:param&nbsp;new_feature:&nbsp;New_feature&nbsp;used&nbsp;for&nbsp;the&nbsp;feature&nbsp;engineering<br>
+:param&nbsp;column:&nbsp;Column&nbsp;concerned&nbsp;by&nbsp;the&nbsp;feature&nbsp;engineering<br>
+:return:&nbsp;X:&nbsp;Features&nbsp;and&nbsp;y:&nbsp;Target&nbsp;to&nbsp;predict</tt></dd></dl>
+ <dl><dt><a name="-qual_to_quan"><strong>qual_to_quan</strong></a>(df, target, criteria)</dt><dd><tt>Creates&nbsp;a&nbsp;subset&nbsp;(or&nbsp;collection)&nbsp;of&nbsp;the&nbsp;target&nbsp;with&nbsp;a&nbsp;certain&nbsp;criteria<br>
+Ex:&nbsp;positive_df&nbsp;=&nbsp;<a href="#-qual_to_quan">qual_to_quan</a>(df,&nbsp;"SARS-Cov-2&nbsp;exam&nbsp;result",&nbsp;'positive')&nbsp;creates&nbsp;a&nbsp;subset&nbsp;of&nbsp;the&nbsp;positive&nbsp;results<br>
+to&nbsp;the&nbsp;Covid19&nbsp;exam<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:param&nbsp;target:&nbsp;Target&nbsp;we&nbsp;want&nbsp;to&nbsp;create&nbsp;a&nbsp;subset&nbsp;from<br>
+:param&nbsp;criteria:&nbsp;Criteria&nbsp;used&nbsp;to&nbsp;create&nbsp;a&nbsp;subset<br>
+:return:&nbsp;A&nbsp;dataframe&nbsp;responding&nbsp;to&nbsp;the&nbsp;criteria&nbsp;chosed</tt></dd></dl>
+ <dl><dt><a name="-rate_borned"><strong>rate_borned</strong></a>(df, missing_rate, rate_inf, rate_sup)</dt><dd><tt>Creates&nbsp;a&nbsp;subset&nbsp;based&nbsp;on&nbsp;the&nbsp;missing&nbsp;rates<br>
+Ex:<br>
+blood_columns&nbsp;=&nbsp;<a href="#-rate_borned">rate_borned</a>(df,&nbsp;MR,&nbsp;0.88,&nbsp;0.9)&nbsp;create&nbsp;column&nbsp;where&nbsp;the&nbsp;missing&nbsp;rate&nbsp;MR&nbsp;is&nbsp;included&nbsp;between<br>
+0.88&nbsp;and&nbsp;0.9<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:param&nbsp;missing_rate:&nbsp;missing_rate&nbsp;to&nbsp;compare&nbsp;the&nbsp;rates<br>
+:param&nbsp;rate_inf:&nbsp;Decision&nbsp;rate&nbsp;inf<br>
+:param&nbsp;rate_sup:&nbsp;Decision&nbsp;rate&nbsp;sups<br>
+:return:&nbsp;The&nbsp;column&nbsp;labels&nbsp;of&nbsp;the&nbsp;DataFrame&nbsp;corresponding&nbsp;to&nbsp;the&nbsp;criteria&nbsp;missing&nbsp;rate,&nbsp;rate&nbsp;inf&nbsp;and&nbsp;sup</tt></dd></dl>
+ <dl><dt><a name="-relation_in_newcol"><strong>relation_in_newcol</strong></a>(df, column, newcol, show=False)</dt><dd><tt>Display&nbsp;the&nbsp;relation&nbsp;between&nbsp;a&nbsp;specified&nbsp;column&nbsp;and&nbsp;another&nbsp;one<br>
+:param&nbsp;show:&nbsp;True:&nbsp;Display&nbsp;the&nbsp;plot(s)<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:param&nbsp;column:&nbsp;First&nbsp;column<br>
+:param&nbsp;newcol:&nbsp;Second&nbsp;column<br>
+:return:</tt></dd></dl>
+ <dl><dt><a name="-shapeOfDF"><strong>shapeOfDF</strong></a>(df)</dt><dd><tt>Give&nbsp;the&nbsp;shape&nbsp;of&nbsp;the&nbsp;dataframe<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:return:&nbsp;(row_number,&nbsp;column_number)</tt></dd></dl>
+ <dl><dt><a name="-student_test"><strong>student_test</strong></a>(column, a, b, alpha=0.02)</dt><dd><tt>Print&nbsp;for&nbsp;each&nbsp;column,&nbsp;the&nbsp;result&nbsp;of&nbsp;the&nbsp;Student's&nbsp;test<br>
+:param&nbsp;column:&nbsp;Column<br>
+:param&nbsp;t_test:&nbsp;Student&nbsp;test</tt></dd></dl>
+ <dl><dt><a name="-t_test"><strong>t_test</strong></a>(col, a, b, alpha)</dt><dd><tt>Calculates&nbsp;the&nbsp;T-test&nbsp;for&nbsp;the&nbsp;means&nbsp;of&nbsp;two&nbsp;independent&nbsp;samples&nbsp;of&nbsp;scores<br>
+This&nbsp;is&nbsp;a&nbsp;two-sided&nbsp;test&nbsp;for&nbsp;the&nbsp;null&nbsp;hypothesis&nbsp;that&nbsp;2&nbsp;independent&nbsp;samples&nbsp;have&nbsp;identical&nbsp;average&nbsp;(expected)&nbsp;values<br>
+This&nbsp;test&nbsp;assumes&nbsp;that&nbsp;the&nbsp;populations&nbsp;have&nbsp;identical&nbsp;variances&nbsp;by&nbsp;default<br>
+:param&nbsp;col:&nbsp;Column&nbsp;concerned<br>
+:param&nbsp;alpha:&nbsp;Statistic&nbsp;parameter<br>
+:param&nbsp;a:&nbsp;Subset&nbsp;A<br>
+:param&nbsp;b:&nbsp;Subset&nbsp;B<br>
+:return:&nbsp;String</tt></dd></dl>
+ <dl><dt><a name="-typeOfDFValues"><strong>typeOfDFValues</strong></a>(df)</dt><dd><tt>Print&nbsp;the&nbsp;types&nbsp;of&nbsp;the&nbsp;values&nbsp;contained&nbsp;in&nbsp;the&nbsp;dataframe<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:return:&nbsp;Return&nbsp;a&nbsp;Series&nbsp;containing&nbsp;counts&nbsp;of&nbsp;unique&nbsp;values</tt></dd></dl>
+ <dl><dt><a name="-view_regression"><strong>view_regression</strong></a>(df, column_name, absc, discrimination)</dt><dd><tt>Plot&nbsp;data&nbsp;and&nbsp;regression&nbsp;model&nbsp;fits&nbsp;across&nbsp;a&nbsp;FacetGrid<br>
+Ex:<br>
+<a href="#-view_regression">view_regression</a>(df,&nbsp;blood_columns,&nbsp;"Patient&nbsp;age&nbsp;quantile",&nbsp;"SARS-Cov-2&nbsp;exam&nbsp;result")<br>
+:param&nbsp;df:&nbsp;Dataframe&nbsp;used<br>
+:param&nbsp;column_name:&nbsp;Columns<br>
+:param&nbsp;absc:&nbsp;Abscisse<br>
+:param&nbsp;discrimination:&nbsp;Discrimination&nbsp;parameter</tt></dd></dl>
+</td></tr></table>
+</body></html>

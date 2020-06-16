@@ -1,5 +1,4 @@
 import math
-
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -7,7 +6,6 @@ import numpy as np
 from scipy.stats import ttest_ind
 from sklearn.metrics import f1_score, confusion_matrix, classification_report, precision_recall_curve
 from sklearn.model_selection import learning_curve
-from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from tqdm import tqdm
 
 
@@ -483,10 +481,16 @@ def graph(model, X_train, y_train):
 
 
 def build_feature_importance(model, X_train, y_train):
-    models = RandomForestClassifier(criterion='entropy', random_state=11, oob_score=True, n_jobs=-1, \
-                                    max_depth=25, min_samples_leaf=80, min_samples_split=3, n_estimators=70)
-    models.fit(X_train, y_train)
-    data = pd.DataFrame(models.feature_importances_, X_train.columns, columns=["feature"])
+    """
+    Build a graph with the importance of the features
+    :param model: model tested
+    :param X_train: Train dataset feature
+    :param y_train: Result of the train dataset
+    """
+    # model = RandomForestClassifier(criterion='entropy', random_state=11, oob_score=True, n_jobs=-1, \
+    #                                 max_depth=25, min_samples_leaf=80, min_samples_split=3, n_estimators=70)
+    model.fit(X_train, y_train)
+    data = pd.DataFrame(model.feature_importances_, X_train.columns, columns=["feature"])
     data = data.sort_values(by='feature', ascending=False).reset_index()
     plt.figure(figsize=[6, 6])
     sns.barplot(x='index', y='feature', data=data[:10], palette="Blues_d")
@@ -496,6 +500,12 @@ def build_feature_importance(model, X_train, y_train):
 
 
 def precision_recall(X_test, y_test, gs):
+    """
+    Plot the precision and recall curves on the same graph
+    :param X_test: Test dataset
+    :param y_test: Target dataset
+    :param gs: model with hyperparameters improved
+    """
     precision, recall, threshold = precision_recall_curve(y_test, gs.best_estimator_.decision_function(X_test))
     plt.plot(threshold, precision[:-1], label="Precision")
     plt.plot(threshold, recall[:-1], label="Recall")
@@ -504,4 +514,11 @@ def precision_recall(X_test, y_test, gs):
 
 
 def model_final(model, X, threshold=0):
+    """
+    Classifiication problem : Determine the decision threshold
+    :param model: model tested
+    :param X: Feature dataset
+    :param threshold: Decision threshold
+    :return: True if above the decision threshold, False otherwise
+    """
     return model.decision_function(X) > threshold

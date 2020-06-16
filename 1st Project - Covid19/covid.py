@@ -1,12 +1,4 @@
-import math
-
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-import numpy as np
-from scipy.stats import ttest_ind
 from sklearn.model_selection import train_test_split, StratifiedKFold, GridSearchCV, RandomizedSearchCV
-from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import f1_score, confusion_matrix, classification_report, roc_auc_score, recall_score
@@ -136,13 +128,13 @@ if __name__ == "__main__":
     X_test, y_test = preprocessing(testset, target, 'object', swap_values, 'is sick',
                                    viral_columns2)
 
-    # model1 = RandomForestClassifier(random_state=0)
-    # build_feature_importance(RandomForestClassifier, X_train, y_train)
-    # evaluation(model1, X_train, y_train, X_test, y_test)
+    model1 = RandomForestClassifier(random_state=0)
+    build_feature_importance(RandomForestClassifier, X_train, y_train)
+    evaluation(model1, X_train, y_train, X_test, y_test)
 
     # Modelisation
-    # model2 = make_pipeline(SelectKBest(f_classif, k=7), RandomForestClassifier(random_state=0))
-    # evaluation(model2, X_train, y_train, X_test, y_test)
+    model2 = make_pipeline(SelectKBest(f_classif, k=7), RandomForestClassifier(random_state=0))
+    evaluation(model2, X_train, y_train, X_test, y_test)
 
     # Multiple machine Learning models tests
     preprocessor = make_pipeline(PolynomialFeatures(2, include_bias=False), SelectKBest(f_classif, k=10))
@@ -154,27 +146,27 @@ if __name__ == "__main__":
                       'SVM': SVM, 'KNN': KNN}
 
     # Evaluation Procedure
-    # for name, model in list_of_models.items():
-    #     print(name)
-    #     evaluation(model, X_train, y_train, X_test, y_test)
+    for name, model in list_of_models.items():
+        print(name)
+        evaluation(model, X_train, y_train, X_test, y_test)
 
     # Optimization of the SVM model
     # Simple
-    # grid_params = [{
-    #     'svc__gamma': [1e-3, 1e-4],
-    #     'svc__C': [1, 10, 100, 1000]
-    # }]
-    #
-    # gs = GridSearchCV(SVM, param_grid=grid_params,
-    #                   scoring='recall', cv=4)
-    #
-    # gs.fit(X_train, y_train)
-    # print(gs.best_params_)
-    # y_pred = gs.predict(X_test)
-    #
-    # print(classification_report(y_test, y_pred))
-    #
-    # evaluation(gs.best_estimator_, X_train, y_train, X_test, y_test)
+    grid_params = [{
+        'svc__gamma': [1e-3, 1e-4],
+        'svc__C': [1, 10, 100, 1000]
+    }]
+
+    gs = GridSearchCV(SVM, param_grid=grid_params,
+                      scoring='recall', cv=4)
+
+    gs.fit(X_train, y_train)
+    print(gs.best_params_)
+    y_pred = gs.predict(X_test)
+
+    print(classification_report(y_test, y_pred))
+
+    evaluation(gs.best_estimator_, X_train, y_train, X_test, y_test)
 
     # Advanced
     grid_params = [{
