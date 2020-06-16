@@ -893,12 +893,16 @@ Adaboost | 0.52
 SVM | 0.48
 KNN | 0.52
 
+Adaboost, KNN and SVM seems to give good results
+
+However KNN is not really use in these case so we will focuse on SVM for the optimization 
 
 ### [Model optimization](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 In this part, only the SVM model would be improved. An analog procedure could be followed to determine the best parameters for the other models. Since this one is likely to present good results, we will focuse on it
+
 Using GridSearchCV, two parameters are optimized:
-* gamma:
-* C:
+* gamma: Kernel coefficient for ‘rbf’, ‘poly’ and ‘sigmoid’.
+* C: Regularization parameter. The strength of the regularization is inversely proportional to C. Must be strictly positive. The penalty is a squared l2 penalty.
 
 ```python
 gs = GridSearchCV(SVM, param_grid=grid_params,
@@ -949,5 +953,6 @@ accuracy |  |  | 0.86 | 111
 macro avg | 0.72 | 0.69 | 0.70 | 111
 weighted avg | 0.85 | 0.86 | 0.86 | 111
 
+![Trained2](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/Variables_plots/Trained2.png)
 
 ## [Conclusion](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
