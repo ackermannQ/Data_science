@@ -896,6 +896,58 @@ KNN | 0.52
 
 ### [Model optimization](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 In this part, only the SVM model would be improved. An analog procedure could be followed to determine the best parameters for the other models. Since this one is likely to present good results, we will focuse on it
+Using GridSearchCV, two parameters are optimized:
+* gamma:
+* C:
+
+```python
+gs = GridSearchCV(SVM, param_grid=grid_params,
+                  scoring='recall', cv=4)
+
+gs.fit(X_train, y_train)
+print(gs.best_params_)
+y_pred = gs.predict(X_test)
+
+print(classification_report(y_test, y_pred))
+
+evaluation(gs.best_estimator_, X_train, y_train, X_test, y_test)
+```
+
+The model is definitely not overfitting, even if the precision is still not really good, it's capable of generalisation. The trainset and validation set are rejoining
+![Trained1](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/Variables_plots/Trained1.png)
+
+To go further, RandomizedSearchCV is used. This optimizer is going to search randomly different combinations of parameters to find the best configuration
+
+```python
+grid_params = [{
+    'svc__gamma': [1e-3, 1e-4],
+    'svc__C': [1, 10, 100, 1000],
+    'pipeline__polynomialfeatures__degree': [2, 3, 4],
+    'pipeline__selectkbest__k': range(48, 58)
+}]
+
+gs = RandomizedSearchCV(SVM, grid_params,
+                        scoring='recall', cv=4, n_iter=300)
+
+gs.fit(X_train, y_train)
+print(gs.best_params_)
+y_pred = gs.predict(X_test)
+
+print(classification_report(y_test, y_pred))
+
+evaluation(gs.best_estimator_, X_train, y_train, X_test, y_test)
+```
+
+{'svc__gamma': 0.001, 'svc__C': 1000, 'pipeline__selectkbest__k': 49,
+'pipeline__polynomialfeatures__degree': 3}
+
+X | precision | recall | f1-score | support
+---- | ---- | ---- | ---- | ----
+0 | 0.91 | 0.94 | 0.92 | 95
+1 | 0.54 | 0.44 | 0.48 | 16
+accuracy |  |  | 0.86 | 111
+macro avg | 0.72 | 0.69 | 0.70 | 111
+weighted avg | 0.85 | 0.86 | 0.86 | 111
 
 
 ## [Conclusion](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
