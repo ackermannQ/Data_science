@@ -20,6 +20,7 @@
 [Modelisation](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#modelisation)
 * [Set of models tested](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#set-of-models-tested)
 * [Model optimization](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#model-optimization)
+* [Prediction Recall Curve](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#precision-recall-curve)
 
 [Conclusion](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#conclusion)
 
@@ -955,4 +956,50 @@ weighted avg | 0.85 | 0.86 | 0.86 | 111
 
 ![Trained2](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/Variables_plots/Trained2.png)
 
+As displayed on the plot above, even if the model start to overfit a bit, we globally have better predictions on the validation test set
+More parameters could be modified to improve this model and would be done in the future
+
+### [Precision Recall Curve](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
+Now, the precision and recall are observed on the same plot
+
+```python
+def precision_recall(X_test, y_test, gs):
+    precision, recall, threshold = precision_recall_curve(y_test, gs.best_estimator_.decision_function(X_test))
+    plt.plot(threshold, precision[:-1], label="Precision")
+    plt.plot(threshold, recall[:-1], label="Recall")
+    plt.legend()
+    plt.show()
+
+precision_recall(X_test, y_test, gs)    
+```
+![Precision recall](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Precision_recall.png)
+
+The recall is 1 with a recall 0, meaning that every patient is declared with Covid19 which is a very poor prediction.
+Then, the recall increased as the precision decrease
+Finally, we have a very good precision with a very low recall
+
+
 ## [Conclusion](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
+
+Finally, the idea is to find the decision threshold with this SVM model, giving the best recall with the best precision
+Generally, it's at the intersection of the two curves represented on the plot above (around threshold=-1)
+
+```python
+y_pred = model_final(gs.best_estimator_, X_test, threshold=-0.5)
+print(f1_score(y_test, y_pred))
+print(recall_score(y_test, y_pred))
+```
+
+f1_score | recall_score
+----- | -----
+0.4888888888888889 | 0.6875
+
+<ins>Reminder :</ins> The best value for the f1 and recall score is 1, meaning that our prediction is not very good, but the recall is appropriated
+
+**Our classification algorithm could be improved !**
+
+Ideas to improve the result:
+* Creating a more advanced feature_engineering function 
+* Filtering differently the data
+* Playing a bit more with different parameters of the SVM model
+* As we explained, the dataset is very unbalanced (many negative result cases compared to the positive exam result), we could try some oversampling 
