@@ -705,7 +705,7 @@ evaluation(model, X_train, y_train, X_test, y_test)
 [[87  8]<br/>
  [10  6]]
  
-  | precision | recall | f1-score | support
+ X | precision | recall | f1-score | support
  ---- | ---- | ---- | ---- | ----
  0 | 0.90 | 0.92 | 0.91 | 95
  1 | 0.43 | 0.38 | 0.40 | 16
@@ -801,7 +801,7 @@ Result:
 [[93  2]<br>
  [10  6]]
  
- | precision | recall | f1-score | support
+X | precision | recall | f1-score | support
 ---- | ---- | ---- | ---- | ----
 0 | 0.90 | 0.98 | 0.94 | 95
 1 | 0.75 | 0.38 | 0.50 | 16
@@ -826,7 +826,7 @@ Very flexible - can be applied to both classification and regression.
 [[89  6]<br>
  [10  6]]
  
- | precision | recall | f1-score | support
+X | precision | recall | f1-score | support
 ---- | ---- | ---- | ---- | ----
 0 | 0.90 | 0.94 | 0.92 | 95
 1 | 0.50 | 0.38 | 0.43 | 16
@@ -842,7 +842,7 @@ weighted avg | 0.84 | 0.86 | 0.85 | 111
 [[87  8]<br>
  [9  7]]
  
- | precision | recall | f1-score | support
+X | precision | recall | f1-score | support
 ---- | ---- | ---- | ---- | ----
 0 | 0.91 | 0.92 | 0.91 | 95
 1 | 0.47 | 0.44 | 0.45 | 16
@@ -858,7 +858,7 @@ Rising slope for the validation set so the model is starting to improve, even be
 [[92  3]<br>
  [11  5]]
  
- | precision | recall | f1-score | support
+X | precision | recall | f1-score | support
 ---- | ---- | ---- | ---- | ----
 0 | 0.89 | 0.97 | 0.93 | 95
 1 | 0.62 | 0.31 | 0.42 | 16
@@ -874,7 +874,7 @@ The shape of the curve indicates that the model in not anymore in overfitting, t
 [[90  5]<br>
  [11  5]]
  
- | precision | recall | f1-score | support
+X | precision | recall | f1-score | support
 ---- | ---- | ---- | ---- | ----
 0 | 0.89 | 0.95 | 0.92 | 95
 1 | 0.50 | 0.31 | 0.38 | 16
