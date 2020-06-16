@@ -970,7 +970,7 @@ plt.legend()
 plt.show()
 ```
 
-![Precision recall](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/Variables_plots/Precision_recall.png.png)
+![Precision recall](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Precision_recall.png)
 
 
 
