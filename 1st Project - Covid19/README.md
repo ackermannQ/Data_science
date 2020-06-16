@@ -18,8 +18,10 @@
 * [Conclusions](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#conclusions-1)
 
 [Modelisation](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#modelisation)
+* [Set of models tested](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#set-of-models-tested)
+* [Models optimization](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#models-optimization)
 
-Conclusion
+[Conclusion](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#conclusion)
 
 
 ## [Project overview](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
@@ -809,25 +811,88 @@ weighted avg | 0.88 | 0.89 | 0.88 | 111
 
 
 ### [Conclusions](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
-
 Only 38% of sick people are indeed detected, so the model needs to be enhanced
 However, on the following curve appears a rising slope for the testset so the model is starting to improve:
-
 ![RandomForestClassifier2](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/RandomForestClassifier2.png)
 
 
 ## [Modelisation](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 Four different models were tested and evaluated, using the learning curve method.
 
+### [Set of models tested](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 <ins>RandomForest :</ins>
 Very flexible - can be applied to both classification and regression.
 ![RandomForest](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/RandomForest.png)
+[[89  6]<br>
+ [10  6]]
+ 
+X | precision | recall | f1-score | support
+---- | ---- | ---- | ---- | ----
+0 | 0.90 | 0.94 | 0.92 | 95
+1 | 0.50 | 0.38 | 0.43 | 16
+accuracy |  |  | 0.86 | 111
+macro avg | 0.70 | 0.66 | 0.67 | 111
+weighted avg | 0.84 | 0.86 | 0.85 | 111
+
+ Rising slope for the validation set so the model is starting to improve
 
 <ins>AdaBoost :</ins>
 ![AdaBoost](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/Adaboost.png)
 
+[[87  8]<br>
+ [9  7]]
+ 
+X | precision | recall | f1-score | support
+---- | ---- | ---- | ---- | ----
+0 | 0.91 | 0.92 | 0.91 | 95
+1 | 0.47 | 0.44 | 0.45 | 16
+accuracy |  |  | 0.85 | 111
+macro avg | 0.69 | 0.68 | 0.68 | 111
+weighted avg | 0.84 | 0.85 | 0.84 | 111
+
+Rising slope for the validation set so the model is starting to improve, even betten than the Random Forest model
+
 <ins>Svm :</ins>
 ![Svm](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/SVM.png)
 
+[[92  3]<br>
+ [11  5]]
+ 
+X | precision | recall | f1-score | support
+---- | ---- | ---- | ---- | ----
+0 | 0.89 | 0.97 | 0.93 | 95
+1 | 0.62 | 0.31 | 0.42 | 16
+accuracy |  |  | 0.87 | 111
+macro avg | 0.76 | 0.64 | 0.67 | 111
+weighted avg | 0.85 | 0.87 | 0.86 | 111
+
+The shape of the curve indicates that the model in not anymore in overfitting, the score on the train set decreased but rejoined the validation set, it's good !
+
 <ins>KNN :</ins>
 ![KNN](https://raw.githubusercontent.com/ackermannQ/MachineLearning/master/1st%20Project%20-%20Covid19/images/KNN.png)
+
+[[90  5]<br>
+ [11  5]]
+ 
+X | precision | recall | f1-score | support
+---- | ---- | ---- | ---- | ----
+0 | 0.89 | 0.95 | 0.92 | 95
+1 | 0.50 | 0.31 | 0.38 | 16
+accuracy |  |  | 0.86 | 111
+macro avg | 0.70 | 0.63 | 0.65 | 111
+weighted avg | 0.83 | 0.86 | 0.84 | 111
+
+
+Model | f1-score for class "1"
+---- | ----
+RandomForest | 0.40
+Adaboost | 0.52
+SVM | 0.48
+KNN | 0.52
+
+Good scores are reached, even if the performances of the trainset decreased, it doesn't matter as long as it rejoins the validation set. The gap is reduced, so the model learnt well and can generalize (no overfitting)
+
+
+### [Models optimization](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
+
+## [Conclusion](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
