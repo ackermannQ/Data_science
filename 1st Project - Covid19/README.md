@@ -699,13 +699,14 @@ evaluation(model, X_train, y_train, X_test, y_test)
 [[87  8]<br/>
  [10  6]]
  
-      X      | precision  |  recall | f1-score |  support
-           0    |   0.90  |    0.92  |    0.91   |     95
-           1    |   0.43   |   0.38  |    0.40   |     16
-    accuracy    |     X    |   X     |    0.84   |    111
-    macro avg    |   0.66   |   0.65  |    0.65   |    111   
-    weighted avg    |   0.83   |   0.84  |    0.83   |    111
-
+ X | precision | recall | f1-score | support
+ ---- | ---- | ---- | ---- | ----
+ 0 | 0.90 | 0.92 | 0.91 | 95
+ 1 | 0.43 | 0.38 | 0.40 | 16
+ accuracy | | | 0.84 | 111
+ macro avg | 0.66 | 0.65 | 0.65 | 111
+ weighted avg | 0.83 | 0.84 | 0.83 | 111
+ 
 When the learning curves are plotted,  immediately it seems that our model is overfitting : the train set is perfectly learnt but the machine can't adjust to the testing set
 
 **One option is to increase the amount of data given to the machine to balance the overfitting**
@@ -748,7 +749,7 @@ def build_feature_importance(model, X_train, y_train):
 build_feature_importance(DecisionTreeClassifier, X_train, y_train)
 ```
 
-![DecisionTreeClassifier2](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Feature_importance.png)
+![Feature_importance](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/Feature_importance.png)
 
 It's interesting to see that for our model, the most important values are related to the blood, so we can remove the virus_column from our dataset
 
@@ -803,9 +804,10 @@ macro avg | 0.83 | 0.68 | 0.72 | 111
 weighted avg | 0.88 | 0.89 | 0.88 | 111
 
 Only 38% of sick people are indeed detected, so the model needs to be enhanced
-However, on the following curve appears a rising slope for the testset so the model is begining to improve:
+However, on the following curve appears a rising slope for the testset so the model is starting to improve:
 
 ![RandomForestClassifier2](https://raw.githubusercontent.com/ackermannQ/Data_science/master/1st%20Project%20-%20Covid19/images/Variables_plots/RandomForestClassifier2.png)
+
 
 ## [Modelisation](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 Four different models were tested and evaluated, using the learning curve method.
