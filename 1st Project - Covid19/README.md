@@ -19,7 +19,7 @@
 
 [Modelisation](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#modelisation)
 * [Set of models tested](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#set-of-models-tested)
-* [Models optimization](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#models-optimization)
+* [Model optimization](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#model-optimization)
 
 [Conclusion](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#conclusion)
 
@@ -882,7 +882,10 @@ accuracy |  |  | 0.86 | 111
 macro avg | 0.70 | 0.63 | 0.65 | 111
 weighted avg | 0.83 | 0.86 | 0.84 | 111
 
+Good scores are reached, even if the performances of the trainset decreased, it doesn't matter as long as it rejoins the validation set. The gap is reduced, so the model learnt well and can generalize (no overfitting)
 
+
+<ins>Sum-up:</ins>
 Model | f1-score for class "1"
 ---- | ----
 RandomForest | 0.40
@@ -890,9 +893,9 @@ Adaboost | 0.52
 SVM | 0.48
 KNN | 0.52
 
-Good scores are reached, even if the performances of the trainset decreased, it doesn't matter as long as it rejoins the validation set. The gap is reduced, so the model learnt well and can generalize (no overfitting)
 
+### [Model optimization](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
+In this part, only the SVM model would be improved. An analog procedure could be followed to determine the best parameters for the other models. Since this one is likely to present good results, we will focuse on it
 
-### [Models optimization](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
 
 ## [Conclusion](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
