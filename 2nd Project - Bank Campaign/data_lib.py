@@ -10,14 +10,20 @@ from tqdm import tqdm
 
 
 # Exploration of DATA
-def load_dataset(dataset_path):
+def load_dataset(dataset_path, filetype, separator):
     """
      Load the dataset and work on a copy
     :param dataset_path: Global variable to define the path where the dataset is located
+    :param filetype: CSV, XLS ...
     :return: Return the copy of the dataset loaded
 
     """
-    data = pd.read_excel(dataset_path)
+    if filetype == 'xls':
+        data = pd.read_excel(dataset_path, sep=separator)
+    
+    if filetype == 'csv':
+        data = pd.read_csv(dataset_path, sep=separator)
+        
     df = data.copy()
     return df
 
@@ -28,7 +34,7 @@ def general_info(df, nb_column):
     :param df: Dataframe used
 
     """
-    displayHead(df, 111, True, True, nb_column)
+    displayHead(df, nb_column, True, True)
     shapeOfDF(df)
     typeOfDFValues(df)
 
@@ -112,9 +118,13 @@ def missing_values_percentage(df, rate_checked):
 
     """
     missing_values = (checkNan(df).sum() / df.shape[0]).sort_values(ascending=True)
-    print(len(missing_values[missing_values > rate_checked])  # Ex : rate_checked = 0.98 : 98% of missing values
-          / len(missing_values[missing_values > 0.0]))  # Give the percentage of missing values > 90% compared to all
-    # the missing values : 68 % (more than half the variables are > 90% of NaN)
+    if len(missing_values[missing_values > 0.0]) != 0:
+        print(len(missing_values[missing_values > rate_checked])  # Ex : rate_checked = 0.98 : 98% of missing values
+            / len(missing_values[missing_values > 0.0]))  # Give the percentage of missing values > 90% compared to all
+        # the missing values : 68 % (more than half the variables are > 90% of NaN)
+    
+    else:
+        print("No value missing")
     return missing_values
 
 

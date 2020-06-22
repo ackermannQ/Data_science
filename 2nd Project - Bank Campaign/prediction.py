@@ -13,55 +13,56 @@ DATASET_PATH = 'bank-additional-full.csv'
 # Exploration of DATA
 
 if __name__ == "__main__":
-    # Preprocessing #
-    df = load_dataset(dataset_path=DATASET_PATH, separator=';')
-    # general_info(df)
-    displayHead(df, True, True)
-    # print(missing_values_percentage(df)) # None
-    # print(missing_rate(df)) # 0% missing in each category
-    # print(analyse_target(df, 'y', normalized=True))
-    # draw_histograms(df, data_type='float64')
+    # Form analysis
+    df = load_dataset(dataset_path=DATASET_PATH, filetype='csv', separator=';')
+    # print(df.head())
+    # shapeOfDF(df)
+    # typeOfDFValues(df)
+    # print(missing_values_percentage(df, 0.9)) # None
+    # print(missing_rate(df)) # 0 % missing in each category
+    # analyse_target(df, 'y', normalized=True)
+    draw_histograms(df, data_type='int', nb_columns=4)
     # print(description_object(df, 'y'))
     """
     Target/Variables relation :
     """
     # Yes and No subsets
-    yes_df = subset_creator(df, 'y', 'yes')
-    no_df = subset_creator(df, 'y', 'no')
+    # yes_df = subset_creator(df, 'y', 'yes')
+    # no_df = subset_creator(df, 'y', 'no')
     # Age, profession, mois -> y ?
     # df = df[['age', 'job', 'month', 'y']]
-    df2 = load_dataset(dataset_path=DATASET_PATH, separator=';')
-    df2.drop(['job', 'month', 'day_of_week', 'pdays', 'marital', 'default'], axis=1, inplace=True)
-    swap_values = {'yes': 1, 'no': 0, 'telephone': 0, 'cellular': 1, 'nonexistent': 0, 'failure': 0, 'success': 1}
-    encoding(df2, 'object', swap_values)
-    df2.drop(['education'], axis=1, inplace=True)
+    # df2 = load_dataset(dataset_path=DATASET_PATH, separator=';')
+    # df2.drop(['job', 'month', 'day_of_week', 'pdays', 'marital', 'default'], axis=1, inplace=True)
+    # swap_values = {'yes': 1, 'no': 0, 'telephone': 0, 'cellular': 1, 'nonexistent': 0, 'failure': 0, 'success': 1}
+    # encoding(df2, 'object', swap_values)
+    # df2.drop(['education'], axis=1, inplace=True)
 
-    trainset, testset = train_test_split(df2, test_size=0.2, random_state=0)
-    target = 'y'
+    # trainset, testset = train_test_split(df2, test_size=0.2, random_state=0)
+    # target = 'y'
     # swap_values = {'yes': 1, 'no': 0, 'mar': 0, 'apr': 1, 'may': 2, 'jun': 3, 'jul': 4, 'aug': 5, 'sep': 6, 'oct': 7,
     #                'nov': 8, 'dec': 9}
 
-    X_train, y_train = preprocessing(trainset, target, 'object', swap_values)
-    X_test, y_test = preprocessing(testset, target, 'object', swap_values)
+    # X_train, y_train = preprocessing(trainset, target, 'object', swap_values)
+    # X_test, y_test = preprocessing(testset, target, 'object', swap_values)
 
-    model = make_pipeline(SelectKBest(f_classif, k=2), RandomForestClassifier(random_state=0))
+    # model = make_pipeline(SelectKBest(f_classif, k=2), RandomForestClassifier(random_state=0))
 
-    random_state = 11
+    # random_state = 11
     # LogisticRegression
-    LR = Pipeline([('lr', LogisticRegression(random_state=random_state, max_iter=500))])
+    # LR = Pipeline([('lr', LogisticRegression(random_state=random_state, max_iter=500))])
     # RandomForestClassifier
-    RF = Pipeline([('rf', RandomForestClassifier(random_state=random_state, oob_score=True))])
+    # RF = Pipeline([('rf', RandomForestClassifier(random_state=random_state, oob_score=True))])
     # KNeighborsClassifier
-    KNN = Pipeline([('knn', KNeighborsClassifier())])
+    # KNN = Pipeline([('knn', KNeighborsClassifier())])
     # DecisionTreeClassifier
-    DT = Pipeline([('dt', DecisionTreeClassifier(random_state=random_state, max_features='auto'))])
+    # DT = Pipeline([('dt', DecisionTreeClassifier(random_state=random_state, max_features='auto'))])
     # BaggingClassifier
     # note we use SGDClassifier as classier inside BaggingClassifier
-    BAG = Pipeline([('bag', BaggingClassifier(
-        base_estimator=SGDClassifier(random_state=random_state, max_iter=1500),
-        random_state=random_state, oob_score=True))])
+    # BAG = Pipeline([('bag', BaggingClassifier(
+    #     base_estimator=SGDClassifier(random_state=random_state, max_iter=1500),
+    #     random_state=random_state, oob_score=True))])
 
-    list_of_models = [LR, RF, KNN, DT, BAG]
+    # list_of_models = [LR, RF, KNN, DT, BAG]
 
     # # # Eval Procedure
     # for model in list_of_models:
@@ -78,7 +79,7 @@ if __name__ == "__main__":
     # plt.plot(N, train_score.mean(axis=1), label='train score')
     # plt.plot(N, val_score.mean(axis=1), label='validation score')
     # plt.legend()
-
+"""
     # Model optimization
     cv = StratifiedKFold(shuffle=True, n_splits=5, random_state=random_state)
 
@@ -185,3 +186,4 @@ if __name__ == "__main__":
     # fig.show()
 
     build_feature_importance(RandomForestClassifier, X_train, y_train)
+"""
