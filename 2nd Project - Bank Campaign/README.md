@@ -118,6 +118,7 @@ draw_histograms(df, 'float')
 draw_histograms(df, 'object')
 ```
 ![MonthPie](https://raw.githubusercontent.com/ackermannQ/Data_science/master/2nd%20Project%20-%20Bank%20Campaign/Plots/Qualitatives/Pie_objects_month.png)
+
 Some months are more exploited for the prospection, maybe extending the time allocated for some of them may improve the result
 
 A better way of examining the data is to check the count plots :
