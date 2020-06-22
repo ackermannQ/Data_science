@@ -118,10 +118,30 @@ draw_histograms(df, 'float')
 draw_histograms(df, 'object')
 ```
 ![MonthPie](https://raw.githubusercontent.com/ackermannQ/Data_science/master/2nd%20Project%20-%20Bank%20Campaign/Plots/Qualitatives/Pie_objects_month.png)
+Some months are more exploited for the prospection, maybe extending the time allocated for some of them may improve the result
+
+A better way of examining the data is to check the count plots :
+
+```python
+count_histogram(df, 'job', 'y')
+count_histogram(df, 'marital', 'y')
+count_histogram(df, 'contact', 'y')
+count_histogram(df, 'loan', 'y')
+count_histogram(df, 'housing', 'y')
+count_histogram(df, 'age', 'y')
+```
+![countHisto](https://raw.githubusercontent.com/ackermannQ/Data_science/master/2nd%20Project%20-%20Bank%20Campaign/Plots/Target-variables%20relations/sumup.png)
+
+* In terms of marital situation, married consumers more often agreed to the service, in relative terms the single was responded better.
+* The best channel is celullar, probably because it's also the most commun, fewer people tend to use a landline
+* Great difference appears between consumers already using the banks services and received a loan
 
 
 ## [Advanced analysis](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
+
+
 ### [Conclusions](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
+
 
 ## [Preprocessing and encoding](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
 ### [Preprocessing](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
