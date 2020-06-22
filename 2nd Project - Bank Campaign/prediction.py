@@ -21,7 +21,14 @@ if __name__ == "__main__":
     # print(missing_values_percentage(df, 0.9)) # None
     # print(missing_rate(df)) # 0 % missing in each category
     # analyse_target(df, 'y', normalized=True)
-    draw_histograms(df, data_type='int', nb_columns=4)
+    # draw_histograms(df, data_type='int', nb_columns=4)
+    # count_histogram(df, 'job', 'y')
+    # count_histogram(df, 'marital', 'y')
+    # count_histogram(df, 'contact', 'y')
+    # count_histogram(df, 'loan', 'y')
+    # count_histogram(df, 'housing', 'y')
+    # count_histogram(df, 'age', 'y')
+    
     # print(description_object(df, 'y'))
     """
     Target/Variables relation :
