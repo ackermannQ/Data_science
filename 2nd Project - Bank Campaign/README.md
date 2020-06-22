@@ -45,41 +45,80 @@ If after all marking afforts client had agreed to place deposit - target variabl
 
 ## [Exploratory Data Analysis](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
 
-It's good to get familiair with the dataset using the pandas head() function once the dataframe is loaded in a variable called df  :
+It's good to get familiar with the dataset using the pandas head() function once the dataframe is loaded in a variable called df  :
 
-```python
-def displayHead(df, every_column=False, every_row=False, column_nbr):
-    """
-    Display the relation between diff
-    display_relations(blood_columns, relation)
-    :param column_name: Column the relation are being tested with
-    :param relation: List of relation to observe
-    Ex : relation = [(positive_df, 'positive'), (negative_df, 'negative')] shows the relation between the
-    blood_column and the positive and negative results
-    :return:
-    """
-    if every_column:
-        pd.set_option('display.max_column', column_nbr)
-
-    if every_row:
-        pd.set_option('display.max_row', column_nbr)
-
-    print(df.head())
-    return df.head()
-    
-displayHead(df, every_column=False, every_row=False, column_nbr=111)
+```python    
+df = load_dataset(dataset_path=DATASET_PATH, filetype='csv', separator=';')
+print(df.head())
+shapeOfDF(df)
+typeOfDFValues(df)
 ```
 
-Row number | Patient ID | ... | ctO2 (arterial blood gas analysis)
+Row number | age | ... | y
 ----- | ----- | ----- | ----- 
-0 | 44477f75e8169d2 | ... | NaN
-1 | 126e9dd13932f68 | ... | NaN
-2 | a46b4402a0e5696 | ... | NaN
-3 | f7d619a94f97c45 | ... | NaN
-4 | d9e41465789c2b5 | ... | NaN
+0 | 56 | ... | no
+1 | 57 | ... | no
+2 | 37 | ... | no
+3 | 40 | ... | no
+4 | 56 | ... | no
+
+[5 rows x 21 columns]
 
 ### [Form analysis](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
+The target is « y » column, taking « yes » or « no » qualitiatives values is the person subscribed or not to the offer, in a dataset of 41188 lines and 21 columns. The analysis shows 10 quantitatives and 11 qualitatives variables.
+
+It's seems that all the columns are filled up with values :
+
+```python    
+print(missing_values_percentage(df, 0.9))
+print(missing_rate(df))
+```
+
+Variable name | Percentage
+-------- | --------
+age | 0.000000
+euribor3m | 0.000000
+cons.conf.idx | 0.000000
+cons.price.idx | 0.000000
+emp.var.rate | 0.000000
+... | ...
+education | 0.000000
+marital | 0.000000
+job | 0.000000
+day_of_week | 0.000000
+y | 0.000000
+
+However, we would have to check all the values are usefull for the interpretion of the dataset
+
 ### [Substance analysis](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
+Let's analyze the target, especially the rate of positive and negative respondings :
+
+Using the analyse_target from the data science library I developed previsouly, we get :
+
+```python
+analyse_target(df, "SARS-Cov-2 exam result", True)    
+```
+
+Results for 'yes' and 'no' responses :
+
+    11% positives ;
+    89% negatives.
+
+It’s very unbalanced, so we will sample the negatives results during the subset analysis to get relevant information. Let's have a look at our variables with the draw_histograms() function :
+
+* <ins>Quantitatives :</ins>
+```python
+draw_histograms(df, 'float')
+```
+![Histograms](https://raw.githubusercontent.com/ackermannQ/Data_science/master/2nd%20Project%20-%20Bank%20Campaign/Plots/Quantitatives/Sumup.png)
+
+
+* <ins>Qualitatives :</ins>
+```python
+draw_histograms(df, 'object')
+```
+![MonthPie](https://raw.githubusercontent.com/ackermannQ/Data_science/master/2nd%20Project%20-%20Bank%20Campaign/Plots/Qualitatives/Pie_objects_month.png)
+
 
 ## [Advanced analysis](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
 ### [Conclusions](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
