@@ -1,5 +1,4 @@
-# Covid-19 Dataset Analysis
-
+# Bank Campaign
 
 [Project overview](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#project-overview)
 * [Abstract](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#abstract-)
