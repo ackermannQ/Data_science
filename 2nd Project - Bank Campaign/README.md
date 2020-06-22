@@ -1,6 +1,6 @@
 # Bank Campaign
 
-[Project overview](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#project-overview)
+[Project overview](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#project-overview)
 * [Abstract](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#abstract-)
 
 [Resources Used](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#resources-used)
@@ -26,11 +26,11 @@
 [Annexes](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#annexes)
 
 
-## [Project overview](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
+## [Project overview](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
 
-### [Abstract](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis) : 
+### [Abstract](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign) : 
 
-## [Resources Used](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
+## [Resources Used](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
 **Python Version:** 3.8.
 
 **Packages:** pandas, numpy, sklearn, matplotlib, seaborn, scipy.
@@ -39,31 +39,31 @@
 
 **Documentation of the library created:** [Data library documentation](https://ackermannq.github.io/Data_lib_documentation/)
 
-## [Exploratory Data Analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
-### [Form analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
-### [Substance analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
+## [Exploratory Data Analysis](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
+### [Form analysis](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
+### [Substance analysis](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
 
-## [Advanced analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
-### [Conclusions](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
+## [Advanced analysis](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
+### [Conclusions](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
 
-## [Preprocessing and encoding](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
-### [Preprocessing](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
+## [Preprocessing and encoding](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
+### [Preprocessing](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
 
-### [Encoding](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
+### [Encoding](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
 
-### [Conclusions](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
+### [Conclusions](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
 
-## [Modelisation](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
+## [Modelisation](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
 
-### [Set of models tested](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
+### [Set of models tested](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
 
-### [Model optimization](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
-### [Precision Recall Curve](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
-
-
-## [Conclusion](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
+### [Model optimization](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
+### [Precision Recall Curve](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
 
 
+## [Conclusion](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
 
-## [Annexes](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#covid-19-dataset-analysis)
+
+
+## [Annexes](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
 Feel free to consult the documentation of the library I developped : [Data library documentation](https://ackermannq.github.io/Data_lib_documentation/)
