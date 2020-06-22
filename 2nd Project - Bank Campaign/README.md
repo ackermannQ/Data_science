@@ -1,29 +1,29 @@
 # Bank Campaign
 
 [Project overview](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#project-overview)
-* [Abstract](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#abstract-)
+* [Abstract](https://github.com/ackermannQ/Data_science/blob/master/2nd%20Project%20-%20Bank%20Campaign/README.md#abstract-)
 
-[Resources Used](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#resources-used)
+[Resources Used](https://github.com/ackermannQ/Data_science/blob/master/2nd%20Project%20-%20Bank%20Campaign/README.md#resources-used)
 
-[Exploratory Data Analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#exploratory-data-analysis)
-* [Form analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#form-analysis)  
-* [Substance analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#substance-analysis)  
-* [Advanced analysis](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#advanced-analysis)
-* [Conclusions](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#conclusions)
+[Exploratory Data Analysis](https://github.com/ackermannQ/Data_science/blob/master/2nd%20Project%20-%20Bank%20Campaign/README.md#exploratory-data-analysis)
+* [Form analysis](https://github.com/ackermannQ/Data_science/blob/master/2nd%20Project%20-%20Bank%20Campaign/README.md#form-analysis)  
+* [Substance analysis](https://github.com/ackermannQ/Data_science/blob/master/2nd%20Project%20-%20Bank%20Campaign/README.md#substance-analysis)  
+* [Advanced analysis](https://github.com/ackermannQ/Data_science/blob/master/2nd%20Project%20-%20Bank%20Campaign/README.md#advanced-analysis)
+* [Conclusions](https://github.com/ackermannQ/Data_science/blob/master/2nd%20Project%20-%20Bank%20Campaign/README.md#conclusions)
 
-[Preprocessing and encoding](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#preprocessing-and-encoding)
-* [Preprocessing](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#preprocessing)
-* [Encoding](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#encoding)
-* [Conclusions](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#conclusions-1)
+[Preprocessing and encoding](https://github.com/ackermannQ/Data_science/blob/master/2nd%20Project%20-%20Bank%20Campaign/README.md#preprocessing-and-encoding)
+* [Preprocessing](https://github.com/ackermannQ/Data_science/blob/master/2nd%20Project%20-%20Bank%20Campaign/README.md#preprocessing)
+* [Encoding](https://github.com/ackermannQ/Data_science/blob/master/2nd%20Project%20-%20Bank%20Campaign/README.md#encoding)
+* [Conclusions](https://github.com/ackermannQ/Data_science/blob/master/2nd%20Project%20-%20Bank%20Campaign/README.md#conclusions-1)
 
-[Modelisation](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#modelisation)
-* [Set of models tested](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#set-of-models-tested)
-* [Model optimization](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#model-optimization)
-* [Prediction Recall Curve](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#precision-recall-curve)
+[Modelisation](https://github.com/ackermannQ/Data_science/blob/master/2nd%20Project%20-%20Bank%20Campaign/README.md#modelisation)
+* [Set of models tested](https://github.com/ackermannQ/Data_science/blob/master/2nd%20Project%20-%20Bank%20Campaign/README.md#set-of-models-tested)
+* [Model optimization](https://github.com/ackermannQ/Data_science/blob/master/2nd%20Project%20-%20Bank%20Campaign/README.md#model-optimization)
+* [Prediction Recall Curve](https://github.com/ackermannQ/Data_science/blob/master/2nd%20Project%20-%20Bank%20Campaign/README.md#precision-recall-curve)
 
-[Conclusion](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#conclusion)
+[Conclusion](https://github.com/ackermannQ/Data_science/blob/master/2nd%20Project%20-%20Bank%20Campaign/README.md#conclusion)
 
-[Annexes](https://github.com/ackermannQ/Data_science/blob/master/1st%20Project%20-%20Covid19/README.md#annexes)
+[Annexes](https://github.com/ackermannQ/Data_science/blob/master/2nd%20Project%20-%20Bank%20Campaign/README.md#annexes)
 
 
 ## [Project overview](https://github.com/ackermannQ/Data_science/tree/master/2nd%20Project%20-%20Bank%20Campaign#bank-campaign)
